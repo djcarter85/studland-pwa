@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/app/components/nav";
+import { config as fontawesomeConfig } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +20,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+fontawesomeConfig.autoAddCss = false;
+
 export default function RootLayout({
   children,
 }: {
@@ -24,10 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={clsx(inter.className, "bg-teal-50")}>
         <Nav />
-        <main className="max-w-xl mx-auto mb-safe pb-16 bg-teal-50 text-teal-950">
-          <div className="p-3">{children}</div>
+        <main className="pb-16">
+          <div className="max-w-xl mx-auto mb-safe p-3 text-teal-950">
+            {children}
+          </div>
         </main>
       </body>
     </html>
