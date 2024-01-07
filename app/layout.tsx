@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Nav />
-        <main>{children}</main>
+        <main className="max-w-xl mx-auto">{children}</main>
       </body>
     </html>
   );
