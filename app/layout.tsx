@@ -7,6 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Studland Site",
+  manifest: "manifest.json",
+  themeColor: "#14b8a6",
 };
 
 export default function RootLayout({
