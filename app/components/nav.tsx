@@ -14,8 +14,8 @@ function NavLink({ href, title }: { href: string; title: string }) {
 
 export default function Nav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0  w-full  h-16 bg-teal-500 ">
-      <div className="max-w-xl flex flex-row items-center justify-around h-full mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 w-full bg-teal-500 pb-safe">
+      <div className="max-w-xl flex flex-row items-center justify-around h-16 mx-auto">
         <NavLink title="Weather" href="/weather" />
         <NavLink title="Tides" href="/tides" />
         <NavLink title="Map" href="/map" />
