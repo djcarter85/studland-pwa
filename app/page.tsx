@@ -1,8 +1,6 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <main>
-      <div>Home page</div>
-    </main>
-  );
+  redirect("/weather");
 }
 
