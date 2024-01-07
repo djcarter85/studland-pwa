@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Nav />
-        <main className="max-w-xl mx-auto">{children}</main>
+        <main className="max-w-xl mx-auto mb-safe pb-16">
+          <div className="p-3">{children}</div>
+        </main>
       </body>
     </html>
   );
