@@ -1,7 +1,3 @@
-"use client";
-
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendar,
   faCircleInfo,
@@ -9,33 +5,7 @@ import {
   faMap,
   faWater,
 } from "@fortawesome/free-solid-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-
-function NavLink({
-  href,
-  title,
-  icon,
-}: {
-  href: string;
-  title: string;
-  icon: IconProp;
-}) {
-  const pathName = usePathname();
-  const isActive = pathName === href;
-
-  return (
-    <Link
-      key={title}
-      href={href}
-      className={clsx("relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-2 text-teal-950", isActive && "text-teal-600")}
-    >
-      <FontAwesomeIcon icon={icon} />
-      <div className="text-xs">{pathName}</div>
-    </Link>
-  );
-}
+import NavLink from "./nav-link";
 
 export default function Nav() {
   return (
