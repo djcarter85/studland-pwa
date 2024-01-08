@@ -32,7 +32,7 @@ function NavLink({
       className={clsx("relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-2 text-teal-950", isActive && "text-teal-600")}
     >
       <FontAwesomeIcon icon={icon} />
-      <div className="text-xs">{title}</div>
+      <div className="text-xs">{pathName}</div>
     </Link>
   );
 }

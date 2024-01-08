@@ -1,3 +1,8 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Map() {
-  return <div>Map</div>;
+  const pathname = usePathname();
+  return <div>Map {pathname}</div>;
 }
