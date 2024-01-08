@@ -31,10 +31,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(inter.className, "bg-teal-50")}>
         <Nav />
-        <main className="pb-16">
-          <div className="max-w-xl mx-auto mb-safe p-3 text-teal-950">
-            {children}
-          </div>
+        <main className="mx-auto max-w-xl p-3 text-teal-950 mb-safe-offset-16">
+          {children}
         </main>
       </body>
     </html>
