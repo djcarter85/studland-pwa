@@ -5,6 +5,7 @@ import Nav from "@/app/components/nav";
 import { config as fontawesomeConfig } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#14b8a6",
+  themeColor: "#fafafa",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -29,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "bg-teal-50")}>
+      <body className={clsx(inter.className, "bg-zinc-50")}>
         <Nav />
         <main className="mx-auto max-w-xl p-3 text-teal-950 mb-safe-offset-16">
           {children}

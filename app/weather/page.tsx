@@ -1,7 +1,7 @@
 export default function Weather() {
   return (
     <>
-      <h1 className="mb-6 text-2xl font-bold">Weather</h1>
+      <h1 className="mb-6 text-2xl font-bold text-teal-700">Weather</h1>
       <p className="mb-6">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum
         metus, tincidunt nec dui ut, volutpat sollicitudin dolor. Sed luctus
