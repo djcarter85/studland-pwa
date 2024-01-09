@@ -27,11 +27,11 @@ function TideRow({
         "bg-zinc-100": type === "Low",
       })}
     >
-      <td className="py-1 font-bold">
+      <td className="py-2 font-bold text-lg">
         {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
       </td>
-      <td className="py-1 text-3xl">{time}</td>
-      <td className="flex flex-col items-center py-1">
+      <td className="py-2 text-3xl">{time}</td>
+      <td className="flex flex-col items-center py-2">
         <span
           className={clsx(
             "inline-flex flex-row gap-2 rounded-full px-2 py-1 text-xs w-min",
