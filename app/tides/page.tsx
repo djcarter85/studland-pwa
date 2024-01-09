@@ -1,30 +1,72 @@
 "use client";
 
-import { faAnglesDown, faAnglesUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAnglesDown,
+  faAnglesUp,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clsx from "clsx";
 import useSWR from "swr";
+import { DateTime } from "luxon";
 
 function TideRow({
+  date,
   type,
-  timestamp,
+  time,
   height,
 }: {
+  date: string;
   type: string;
-  timestamp: string;
-  height: number;
+  time: string;
+  height: string;
 }) {
-  // TODO: properly parse and convert to browser local time zone
-  const time = timestamp.substring(11, 16);
-
   return (
-    <tr className="text-center border-b">
-      <td className="py-1">
-        <FontAwesomeIcon icon={type === "low" ? faAnglesDown : faAnglesUp} />
+    <tr
+      className={clsx("text-center", {
+        "bg-zinc-100": type === "Low",
+      })}
+    >
+      <td className="py-1 font-bold">
+        {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
       </td>
-      <td className="py-1 capitalize">{type}</td>
-      <td className="py-1">{time}</td>
-      <td className="py-1">{height.toFixed(1)} m</td>
+      <td className="py-1 text-3xl">{time}</td>
+      <td className="flex flex-col items-center py-1">
+        <span
+          className={clsx(
+            "inline-flex flex-row gap-2 rounded-full px-2 py-1 text-xs w-min",
+            {
+              "bg-violet-200 text-violet-800": type === "Low",
+              "bg-sky-200 text-sky-800": type === "High",
+            },
+          )}
+        >
+          <span>
+            <FontAwesomeIcon
+              icon={type === "Low" ? faAnglesDown : faAnglesUp}
+            />
+          </span>
+          <span className="font-bold uppercase">{type}</span>
+        </span>
+        <span className="font-bold text-zinc-500">{height}</span>
+      </td>
     </tr>
+  );
+}
+
+function DateBlock({ date, tides }: { date: string; tides: any }) {
+  return (
+    <>
+      {tides.map((t: any, index: number) => (
+        <TideRow
+          key={t.time}
+          date={index == 0 ? date : ""}
+          type={t.type}
+          time={t.time}
+          height={t.height}
+        />
+      ))}
+    </>
   );
 }
 
@@ -39,16 +81,14 @@ export default function Tides() {
 
   return (
     <div>
-      <h1 className="text-3xl text-center font-bold mb-4">Tides at Studland Bay</h1>
-      <table className="w-full border-t">
+      <h1 className="mb-4 mt-2 flex flex-row items-center gap-4 px-4 font-bold">
+        <FontAwesomeIcon className="text-xl" icon={faLocationDot} />
+        <span className="text-2xl">Studland Bay</span>
+      </h1>
+      <table className="w-full">
         <tbody>
-          {data.tides.map((t: any) => (
-            <TideRow
-              key={t.timestamp}
-              type={t.type}
-              timestamp={t.timestamp}
-              height={t.height}
-            />
+          {data.dates.map((t: any) => (
+            <DateBlock key={t.date} date={t.date} tides={t.tides} />
           ))}
         </tbody>
       </table>
