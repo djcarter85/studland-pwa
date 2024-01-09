@@ -15,7 +15,7 @@ export default function Nav() {
         <NavLink title="Tides" href="/tides" icon={faWater} />
         <NavLink title="Map" href="/map" icon={faMap} />
         <NavLink title="Calendar" href="/calendar" icon={faCalendar} />
-        <NavLink title="More" href="/more" icon={faCircleInfo} />
+        <NavLink title="Info" href="/info" icon={faCircleInfo} />
       </div>
     </nav>
   );

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import useSWR from "swr";
 import { DateTime } from "luxon";
+import Heading from "../components/heading";
 
 function TideRow({
   date,
@@ -31,7 +32,7 @@ function TideRow({
         {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
       </td>
       <td
-        className={clsx("py-2 text-3xl border-l-8", {
+        className={clsx("border-l-8 py-2 text-3xl", {
           "border-violet-300": type === "Low",
           "border-sky-300": type === "High",
         })}
@@ -88,10 +89,12 @@ export default function Tides() {
 
   return (
     <div>
-      <h1 className="mb-4 mt-2 flex flex-row items-center gap-4 px-4 font-bold">
-        <FontAwesomeIcon className="text-xl" icon={faLocationDot} />
-        <span className="text-2xl">Studland Bay</span>
-      </h1>
+      <Heading>
+        <div className="mx-2 mt-2 flex flex-row items-center gap-3">
+          <FontAwesomeIcon className="text-xl" icon={faLocationDot} />
+          <span className="text-2xl">Studland Bay</span>
+        </div>
+      </Heading>
       <table className="w-full">
         <tbody>
           {data.dates.map((t: any) => (
