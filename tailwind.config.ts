@@ -15,6 +15,7 @@ const config: Config = {
       teal: colors.teal,
       sky: colors.sky,
       violet: colors.violet,
+      orange: colors.orange,
       gray: {
         "50": "#f5f6f6",
         "100": "#e4e9e8",
@@ -27,6 +28,11 @@ const config: Config = {
         "800": "#404a4a",
         "900": "#393f40",
         "950": "#232829",
+      },
+    },
+    extend: {
+      screens: {
+        pwa: { raw: "(display-mode: standalone)" },
       },
     },
   },
