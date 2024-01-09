@@ -25,13 +25,26 @@ export default function NavLink({
       className={clsx(
         "relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-1 border-t-2",
         {
-          "border-teal-600 text-teal-600": isActive,
-          "border-transparent text-zinc-800": !isActive,
+          "border-teal-600": isActive,
+          "border-transparent": !isActive,
         },
       )}
     >
-      <FontAwesomeIcon className="text-lg" icon={icon} />
-      <div className="text-sm">{title}</div>
+      <FontAwesomeIcon
+        className={clsx("text-lg", {
+          "text-teal-600": isActive,
+          "text-zinc-700": !isActive,
+        })}
+        icon={icon}
+      />
+      <div
+        className={clsx("text-sm", {
+          "text-teal-600": isActive,
+          "text-zinc-900": !isActive,
+        })}
+      >
+        {title}
+      </div>
     </Link>
   );
 }

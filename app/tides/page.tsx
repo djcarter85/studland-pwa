@@ -27,14 +27,21 @@ function TideRow({
         "bg-zinc-100": type === "Low",
       })}
     >
-      <td className="py-2 font-bold text-lg">
+      <td className="py-2 text-lg font-bold">
         {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
       </td>
-      <td className="py-2 text-3xl">{time}</td>
+      <td
+        className={clsx("py-2 text-3xl border-l-8", {
+          "border-violet-300": type === "Low",
+          "border-sky-300": type === "High",
+        })}
+      >
+        {time}
+      </td>
       <td className="flex flex-col items-center py-2">
         <span
           className={clsx(
-            "inline-flex flex-row gap-2 rounded-full px-2 py-1 text-xs w-min",
+            "inline-flex w-min flex-row gap-2 rounded-full px-2 py-1 text-xs",
             {
               "bg-violet-200 text-violet-800": type === "Low",
               "bg-sky-200 text-sky-800": type === "High",

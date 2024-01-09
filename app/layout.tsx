@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(baseFont.className, "bg-zinc-50")}>
         <Nav />
-        <main className="mx-auto max-w-xl p-3 text-teal-950 mb-safe-offset-16">
+        <main className="mx-auto max-w-xl p-3 text-teal-900 mb-safe-offset-16">
           {children}
         </main>
       </body>
