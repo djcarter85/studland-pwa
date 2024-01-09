@@ -33,14 +33,14 @@ export default function NavLink({
       <FontAwesomeIcon
         className={clsx("text-lg", {
           "text-teal-600": isActive,
-          "text-zinc-700": !isActive,
+          "text-gray-700": !isActive,
         })}
         icon={icon}
       />
       <div
         className={clsx("text-sm", {
           "text-teal-600": isActive,
-          "text-zinc-900": !isActive,
+          "text-gray-900": !isActive,
         })}
       >
         {title}

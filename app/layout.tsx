@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fafafa",
+  themeColor: "#f5f6f6",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -29,9 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(baseFont.className, "bg-zinc-50")}>
+      <body className={clsx(baseFont.className, "bg-gray-50")}>
         <Nav />
-        <main className="mx-auto max-w-xl p-3 text-teal-900 mb-safe-offset-16">
+        <main className="mx-auto max-w-xl p-3 text-gray-900 mb-safe-offset-16">
           {children}
         </main>
       </body>
