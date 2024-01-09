@@ -23,15 +23,15 @@ export default function NavLink({
       key={title}
       href={href}
       className={clsx(
-        "relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-2 border-t-2",
+        "relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-1 border-t-2",
         {
           "border-teal-600 text-teal-600": isActive,
-          "border-transparent text-teal-950": !isActive,
+          "border-transparent text-zinc-800": !isActive,
         },
       )}
     >
-      <FontAwesomeIcon icon={icon} />
-      <div className="text-xs">{title}</div>
+      <FontAwesomeIcon className="text-lg" icon={icon} />
+      <div className="text-sm">{title}</div>
     </Link>
   );
 }
