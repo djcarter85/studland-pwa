@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  faAnglesDown,
-  faAnglesUp,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import useSWR from "swr";
 import { DateTime } from "luxon";
 import Heading from "../components/heading";
+import { ChevronDoubleDown, ChevronDoubleUp, GeoAltFill } from "react-bootstrap-icons";
 
 function TideRow({
   date,
@@ -42,7 +37,7 @@ function TideRow({
       <td className="flex flex-col items-center py-2">
         <span
           className={clsx(
-            "inline-flex w-min flex-row gap-2 rounded-full px-2 py-1 text-xs",
+            "inline-flex w-min flex-row items-center gap-2 rounded-full px-2 py-1",
             {
               "bg-violet-200 text-violet-800": type === "Low",
               "bg-sky-200 text-sky-800": type === "High",
@@ -50,11 +45,9 @@ function TideRow({
           )}
         >
           <span>
-            <FontAwesomeIcon
-              icon={type === "Low" ? faAnglesDown : faAnglesUp}
-            />
+            {type === "Low" ? <ChevronDoubleDown /> : <ChevronDoubleUp />}
           </span>
-          <span className="font-bold uppercase">{type}</span>
+          <span className="font-bold uppercase text-xs">{type}</span>
         </span>
         <span className="font-bold text-gray-500">{height}</span>
       </td>
@@ -91,7 +84,7 @@ export default function Tides() {
     <div>
       <Heading>
         <div className="mx-2 mt-2 flex flex-row items-center gap-3">
-          <FontAwesomeIcon className="text-xl" icon={faLocationDot} />
+          <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland Bay</span>
         </div>
       </Heading>

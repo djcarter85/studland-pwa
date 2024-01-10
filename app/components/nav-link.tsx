@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 export default function NavLink({
   href,
@@ -13,7 +12,7 @@ export default function NavLink({
 }: {
   href: string;
   title: string;
-  icon: IconProp;
+  icon: ReactNode;
 }) {
   const pathname = usePathname();
   const isActive = pathname === href;
@@ -30,13 +29,12 @@ export default function NavLink({
         },
       )}
     >
-      <FontAwesomeIcon
-        className={clsx("text-lg", {
-          "text-teal-600": isActive,
-          "text-gray-700": !isActive,
-        })}
-        icon={icon}
-      />
+      <div className={clsx("text-xl", {
+        "text-teal-600": isActive,
+        "text-gray-900": !isActive,
+      })}>
+        {icon}
+      </div>
       <div
         className={clsx("text-sm", {
           "text-teal-600": isActive,
