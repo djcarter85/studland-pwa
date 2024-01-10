@@ -1,4 +1,4 @@
-import { GeoAltFill, InfoCircle, Calendar, Map, Water, CloudSun } from "react-bootstrap-icons";
+import { GeoAltFill, InfoCircle, Calendar4, Map, Water, CloudSun } from "react-bootstrap-icons";
 import NavLink from "./nav-link";
 
 export default function Nav() {
@@ -8,7 +8,7 @@ export default function Nav() {
         <NavLink title="Weather" href="/weather" icon={<CloudSun />} />
         <NavLink title="Tides" href="/tides" icon={<Water />} />
         <NavLink title="Map" href="/map" icon={<Map />} />
-        <NavLink title="Calendar" href="/calendar" icon={<Calendar />} />
+        <NavLink title="Calendar" href="/calendar" icon={<Calendar4 />} />
         <NavLink title="Info" href="/info" icon={<InfoCircle />} />
       </div>
     </nav>
