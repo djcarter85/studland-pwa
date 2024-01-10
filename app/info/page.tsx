@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Heading from "../components/heading";
 
 function Subheading({ children }: { children: React.ReactNode }) {
@@ -20,13 +21,21 @@ function Hyperlink({ href, text }: { href: string; text: string }) {
   );
 }
 
+function Para({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <p className={clsx("mb-4", className)}>{children}</p>;
+}
+
 export default function More() {
   return (
     <div className="p-2">
       <Heading>More Information</Heading>
-
       <Subheading>Useful links</Subheading>
-
       <Ul>
         <Bullet>
           <Hyperlink href="https://www.biblegateway.com/" text="Online Bible" />
@@ -47,10 +56,8 @@ export default function More() {
           />
         </Bullet>
       </Ul>
-
       <Subheading>About this app</Subheading>
-
-      <p>
+      <Para>
         Made by Dan and Laura Carter. If you have any questions or suggestions,
         please email{" "}
         <Hyperlink
@@ -58,7 +65,11 @@ export default function More() {
           text="djcarter85@gmail.com"
         />
         .
-      </p>
+      </Para>
+      <Para className="text-gray-300">
+        Deployment ID:{" "}
+        {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 7)}
+      </Para>
     </div>
   );
 }
