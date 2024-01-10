@@ -34,7 +34,7 @@ export default function RootLayout({
       <body className={clsx(baseFont.className, "bg-gray-50")}>
         <Nav />
         <div className="pwa:hidden bg-orange-100">
-          <div className="mx-auto flex max-w-xl flex-row gap-6 p-4 items-center">
+          <div className="mx-auto flex max-w-xl flex-row gap-6 p-4 items-center border-b-2 border-orange-600">
             <div className="text-3xl text-orange-600">
               <FontAwesomeIcon icon={faCircleExclamation} />
             </div>
