@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Heading from "../components/heading";
+import Hyperlink from "../components/hyperlink";
 
 function Subheading({ children }: { children: React.ReactNode }) {
   return <h2 className="mb-3 text-lg font-bold">{children}</h2>;
@@ -11,14 +12,6 @@ function Ul({ children }: { children: React.ReactNode }) {
 
 function Bullet({ children }: { children: React.ReactNode }) {
   return <li>{children}</li>;
-}
-
-function Hyperlink({ href, text }: { href: string; text: string }) {
-  return (
-    <a className="text-teal-500 underline hover:no-underline" href={href}>
-      {text}
-    </a>
-  );
 }
 
 function Para({
