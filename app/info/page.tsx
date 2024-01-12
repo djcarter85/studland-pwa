@@ -31,32 +31,33 @@ export default function More() {
       <Subheading>Useful links</Subheading>
       <Ul>
         <Bullet>
-          <Hyperlink href="https://www.biblegateway.com/" text="Online Bible" />
+          <Hyperlink href="https://www.biblegateway.com/">
+            Online Bible
+          </Hyperlink>
         </Bullet>
         <Bullet>
-          <Hyperlink
-            href="https://studlandholidays.org.uk/"
-            text="Studland Holidays"
-          />
+          <Hyperlink href="https://studlandholidays.org.uk/">
+            Studland Holidays
+          </Hyperlink>
         </Bullet>
         <Bullet>
-          <Hyperlink href="https://www.urbansaints.org/" text="Urban Saints" />
+          <Hyperlink href="https://www.urbansaints.org/">
+            Urban Saints
+          </Hyperlink>
         </Bullet>
         <Bullet>
-          <Hyperlink
-            href="https://www.facebook.com/StudlandHolidays"
-            text="Studland Camp Site Friends (Facebook)"
-          />
+          <Hyperlink href="https://www.facebook.com/StudlandHolidays">
+            Studland Camp Site Friends (Facebook)
+          </Hyperlink>
         </Bullet>
       </Ul>
       <Subheading>About this app</Subheading>
       <Para>
         Made by Dan and Laura Carter. If you have any questions or suggestions,
         please email{" "}
-        <Hyperlink
-          href="mailto:djcarter85@gmail.com"
-          text="djcarter85@gmail.com"
-        />
+        <Hyperlink href="mailto:djcarter85@gmail.com">
+          djcarter85@gmail.com
+        </Hyperlink>
         .
       </Para>
       <Para className="text-gray-300">

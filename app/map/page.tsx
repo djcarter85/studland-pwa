@@ -33,12 +33,9 @@ function Location({ location }: { location: any }) {
     <tr>
       <td>{location.name}</td>
       <td>
-        <Hyperlink
-          href={getGoogleMapsUrl(location)}
-          text="Google Maps"
-        ></Hyperlink>
+        <Hyperlink href={getGoogleMapsUrl(location)}>Google Maps</Hyperlink>
         {" | "}
-        <Hyperlink href={getWazeUrl(location)} text="Waze"></Hyperlink>
+        <Hyperlink href={getWazeUrl(location)}>Waze</Hyperlink>
       </td>
     </tr>
   );

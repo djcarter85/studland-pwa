@@ -4,7 +4,13 @@ import clsx from "clsx";
 import useSWR from "swr";
 import { DateTime } from "luxon";
 import Heading from "../components/heading";
-import { ChevronDoubleDown, ChevronDoubleUp, GeoAltFill } from "react-bootstrap-icons";
+import {
+  BoxArrowUpRight,
+  ChevronDoubleDown,
+  ChevronDoubleUp,
+  GeoAltFill,
+} from "react-bootstrap-icons";
+import Hyperlink from "../components/hyperlink";
 
 function TideRow({
   date,
@@ -47,7 +53,7 @@ function TideRow({
           <span>
             {type === "Low" ? <ChevronDoubleDown /> : <ChevronDoubleUp />}
           </span>
-          <span className="font-bold uppercase text-xs">{type}</span>
+          <span className="text-xs font-bold uppercase">{type}</span>
         </span>
         <span className="font-bold text-gray-500">{height}</span>
       </td>
@@ -86,6 +92,9 @@ export default function Tides() {
         <div className="mx-2 mt-2 flex flex-row items-center gap-3">
           <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland Bay</span>
+          <Hyperlink href="https://www.dorset-tides.com/studland-bay-tide-times">
+            <BoxArrowUpRight />
+          </Hyperlink>
         </div>
       </Heading>
       <table className="w-full">
