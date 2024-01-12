@@ -1,7 +1,6 @@
 "use client";
 
 import useSWR from "swr";
-import Heading from "../components/heading";
 import Hyperlink from "../components/hyperlink";
 
 function getGoogleMapsUrl(location: any) {
@@ -60,8 +59,6 @@ export default function Map() {
 
   return (
     <>
-      <Heading>Map</Heading>
-
       <table className="w-full">
         <tbody>
           {sortedLocations.map((l: any) => (
