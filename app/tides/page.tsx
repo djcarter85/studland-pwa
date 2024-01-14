@@ -26,7 +26,7 @@ function TideRow({
   return (
     <tr
       className={clsx("text-center", {
-        "bg-gray-100": type === "Low",
+        "bg-gray-100 dark:bg-gray-700": type === "Low",
       })}
     >
       <td className="py-2 text-lg font-bold">
@@ -55,7 +55,7 @@ function TideRow({
           </span>
           <span className="text-xs font-bold uppercase">{type}</span>
         </span>
-        <span className="font-bold text-gray-500">{height}</span>
+        <span className="font-bold text-gray-500 dark:text-gray-300">{height}</span>
       </td>
     </tr>
   );

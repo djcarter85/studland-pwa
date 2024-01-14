@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f6f6",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f6f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#393f40" },
+  ],
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -21,8 +24,8 @@ export const viewport: Viewport = {
 
 function PwaWarning() {
   return (
-    <div className="bg-orange-100 pwa:hidden">
-      <div className="mx-auto flex max-w-xl flex-col gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900">
+    <div className="bg-orange-100 pwa:hidden dark:bg-gray-600">
+      <div className="mx-auto flex max-w-xl flex-col gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900 dark:font-normal dark:text-orange-200">
         <p>This website works best when installed as an app.</p>
         <p>
           <Apple className="mr-1 inline align-baseline" />
@@ -47,10 +50,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(baseFont.className, "bg-gray-50")}>
+      <body
+        className={clsx(
+          baseFont.className,
+          "bg-gray-50 transition-colors dark:bg-gray-900",
+        )}
+      >
         <Nav />
         <PwaWarning />
-        <main className="mx-auto max-w-xl p-2 text-gray-900 mb-safe-offset-16">
+        <main className="mx-auto max-w-xl p-2 text-gray-900 mb-safe-offset-16 dark:text-gray-100">
           {children}
         </main>
       </body>
