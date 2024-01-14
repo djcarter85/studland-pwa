@@ -24,25 +24,13 @@ export default function NavLink({
       className={clsx(
         "relative flex h-full basis-full cursor-pointer flex-col items-center justify-center gap-1 border-t-2",
         {
-          "border-teal-600": isActive,
-          "border-transparent": !isActive,
+          "border-teal-600 text-teal-600": isActive,
+          "border-transparent text-gray-900": !isActive,
         },
       )}
     >
-      <div className={clsx("text-xl", {
-        "text-teal-600": isActive,
-        "text-gray-900": !isActive,
-      })}>
-        {icon}
-      </div>
-      <div
-        className={clsx("text-sm", {
-          "text-teal-600": isActive,
-          "text-gray-900": !isActive,
-        })}
-      >
-        {title}
-      </div>
+      <div className="text-xl">{icon}</div>
+      <div className="text-sm">{title}</div>
     </Link>
   );
 }
