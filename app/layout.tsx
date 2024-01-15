@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/app/components/nav";
 import clsx from "clsx";
 import { Android2, Apple, ExclamationCircle } from "react-bootstrap-icons";
+import Html from "./components/html";
 
 const baseFont = DM_Sans({ subsets: ["latin"], weight: ["300", "700"] });
 
@@ -24,7 +25,7 @@ export const viewport: Viewport = {
 
 function PwaWarning() {
   return (
-    <div className="bg-orange-100 pwa:hidden dark:bg-gray-600">
+    <div className="bg-orange-100 dark:bg-gray-600 pwa:hidden">
       <div className="mx-auto flex max-w-xl flex-col gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900 dark:font-normal dark:text-orange-200">
         <p>This website works best when installed as an app.</p>
         <p>
@@ -49,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <Html>
       <body
         className={clsx(
           baseFont.className,
@@ -62,6 +63,6 @@ export default function RootLayout({
           {children}
         </main>
       </body>
-    </html>
+    </Html>
   );
 }
