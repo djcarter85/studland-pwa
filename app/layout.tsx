@@ -59,7 +59,7 @@ export default function RootLayout({
       >
         <Nav />
         <PwaWarning />
-        <main className="mx-auto max-w-xl p-2 text-gray-900 mb-safe-offset-16 dark:text-gray-100">
+        <main className="mx-auto max-w-xl text-gray-900 mb-safe-offset-20 dark:text-gray-100">
           {children}
         </main>
       </body>

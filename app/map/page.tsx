@@ -30,10 +30,10 @@ function getWazeUrl(location: any) {
 
 function Location({ location }: { location: any }) {
   return (
-    <tr>
-      <td>{location.name}</td>
-      <td>
-        <Hyperlink href={getGoogleMapsUrl(location)}>Google Maps</Hyperlink>
+    <tr className="odd:bg-gray-100 odd:dark:bg-gray-700">
+      <td className="p-2">{location.name}</td>
+      <td className="p-2">
+        <Hyperlink href={getGoogleMapsUrl(location)}>Google</Hyperlink>
         {" | "}
         <Hyperlink href={getWazeUrl(location)}>Waze</Hyperlink>
       </td>

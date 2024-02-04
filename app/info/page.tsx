@@ -8,11 +8,11 @@ import { useTernaryDarkMode } from "usehooks-ts";
 import { ReactNode } from "react";
 
 function Subheading({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-3 text-lg font-bold">{children}</h2>;
+  return <h2 className="mb-3 mx-2 text-lg font-bold">{children}</h2>;
 }
 
 function Ul({ children }: { children: React.ReactNode }) {
-  return <ul className="mb-3 ml-2 list-inside list-disc">{children}</ul>;
+  return <ul className="mb-3 ml-4 mr-2 list-inside list-disc">{children}</ul>;
 }
 
 function Bullet({ children }: { children: React.ReactNode }) {
@@ -26,7 +26,7 @@ function Para({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <p className={clsx("mb-4", className)}>{children}</p>;
+  return <p className={clsx("mb-4 mx-2", className)}>{children}</p>;
 }
 
 function ColourSchemeOption({
@@ -56,7 +56,7 @@ function ColourSchemeOption({
 
 function ColourSchemeChooser() {
   return (
-    <div className="mb-4 grid grid-cols-3 justify-center gap-2">
+    <div className="mb-4 mx-2 grid grid-cols-3 justify-center gap-2">
       <ColourSchemeOption icon={<Sun />} name="Light" mode="light" />
       <ColourSchemeOption icon={<Moon />} name="Dark" mode="dark" />
       <ColourSchemeOption icon={<Laptop />} name="System" mode="system" />
