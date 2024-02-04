@@ -24,18 +24,14 @@ function TideRow({
   height: string;
 }) {
   return (
-    <tr
-      className={clsx("text-center", {
-        "bg-gray-100 dark:bg-gray-700": type === "Low",
-      })}
-    >
+    <tr className="text-center odd:bg-gray-100 odd:dark:bg-gray-700">
       <td className="py-2 text-lg font-bold">
         {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
       </td>
       <td
         className={clsx("border-l-8 py-2 text-3xl", {
-          "border-violet-300": type === "Low",
-          "border-sky-300": type === "High",
+          "border-violet-300/80 dark:border-violet-300/60": type === "Low",
+          "border-sky-300/80 dark:border-sky-300/60": type === "High",
         })}
       >
         {time}
@@ -45,8 +41,10 @@ function TideRow({
           className={clsx(
             "inline-flex w-min flex-row items-center gap-2 rounded-full px-2 py-1",
             {
-              "bg-violet-200 text-violet-800": type === "Low",
-              "bg-sky-200 text-sky-800": type === "High",
+              "bg-violet-200 text-violet-800 dark:bg-violet-300/70 dark:text-violet-950":
+                type === "Low",
+              "bg-sky-200 text-sky-800 dark:bg-sky-300/70 dark:text-sky-950":
+                type === "High",
             },
           )}
         >
@@ -55,7 +53,9 @@ function TideRow({
           </span>
           <span className="text-xs font-bold uppercase">{type}</span>
         </span>
-        <span className="font-bold text-gray-500 dark:text-gray-300">{height}</span>
+        <span className="font-bold text-gray-500 dark:text-gray-300">
+          {height}
+        </span>
       </td>
     </tr>
   );
