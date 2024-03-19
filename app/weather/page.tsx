@@ -1,4 +1,4 @@
-export default function Weather() {
+function WeatherPage() {
   return (
     <>
       <h1 className="mb-6 text-2xl font-bold text-teal-700">Weather</h1>
@@ -62,3 +62,5 @@ export default function Weather() {
     </>
   );
 }
+
+export default WeatherPage;

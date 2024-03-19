@@ -1,5 +1,3 @@
-"use client";
-
 import clsx from "clsx";
 import Heading from "../components/heading";
 import Hyperlink from "../components/hyperlink";
@@ -44,7 +42,7 @@ function ColourSchemeOption({
     <button
       className={clsx(
         "flex flex-row items-center justify-center gap-2 rounded-lg border border-gray-300 px-2 py-2 text-center dark:border-gray-500",
-        { "ring-2 ring-teal-400 dark:bg-gray-700": mode === ternaryDarkMode },
+        { "ring-2 ring-teal-400 dark:bg-gray-700": mode === ternaryDarkMode }
       )}
       onClick={() => setTernaryDarkMode(mode)}
     >
@@ -101,10 +99,6 @@ export default function More() {
           djcarter85@gmail.com
         </Hyperlink>
         .
-      </Para>
-      <Para className="text-gray-300">
-        Deployment ID:{" "}
-        {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 7)}
       </Para>
     </div>
   );

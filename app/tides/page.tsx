@@ -1,5 +1,3 @@
-"use client";
-
 import clsx from "clsx";
 import useSWR from "swr";
 import { DateTime } from "luxon";
@@ -77,7 +75,7 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
   );
 }
 
-export default function Tides() {
+export default function TidesPage() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const key =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";

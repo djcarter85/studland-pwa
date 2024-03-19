@@ -1,5 +1,3 @@
-"use client";
-
 import useSWR from "swr";
 import Hyperlink from "../components/hyperlink";
 
@@ -51,7 +49,7 @@ export default function Map() {
   if (isLoading) return <div>loading...</div>;
 
   var sortedLocations = data.locations.sort((a: any, b: any) =>
-    a.name.localeCompare(b.name),
+    a.name.localeCompare(b.name)
   );
 
   return (

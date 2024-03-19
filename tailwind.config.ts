@@ -1,13 +1,10 @@
 import type { Config } from "tailwindcss";
 
+const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./index.html", "./app/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     colors: {
@@ -31,7 +28,11 @@ const config: Config = {
         "950": "#232829",
       },
     },
+
     extend: {
+      fontFamily: {
+        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+      },
       screens: {
         pwa: { raw: "(display-mode: standalone)" },
       },
@@ -40,3 +41,4 @@ const config: Config = {
   plugins: [require("tailwindcss-safe-area")],
 };
 export default config;
+
