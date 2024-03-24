@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.0.19",
+    "@tanstack/query-sync-storage-persister": "^5.28.6",
+    "@tanstack/react-query": "^5.28.6",
+    "@tanstack/react-query-persist-client": "^5.28.6",
     "clsx": "^2.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",

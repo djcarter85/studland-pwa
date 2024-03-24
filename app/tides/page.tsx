@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import useSWR from "swr";
 import { DateTime } from "luxon";
 import Heading from "../components/heading";
 import {
@@ -9,6 +8,7 @@ import {
   GeoAltFill,
 } from "react-bootstrap-icons";
 import Hyperlink from "../components/hyperlink";
+import { useQuery } from "@tanstack/react-query";
 
 function TideRow({
   date,
@@ -43,7 +43,7 @@ function TideRow({
                 type === "Low",
               "bg-sky-200 text-sky-800 dark:bg-sky-300/70 dark:text-sky-950":
                 type === "High",
-            },
+            }
           )}
         >
           <span>
@@ -76,13 +76,17 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
 }
 
 export default function TidesPage() {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const key =
+  const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";
-  const { data, error, isLoading } = useSWR(key, fetcher);
 
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  const { isPending, isError, data } = useQuery({
+    queryKey: ["tides"],
+    queryFn: () => fetch(url).then((res) => res.json()),
+    gcTime: Infinity,
+  });
+
+  if (isError) return <div>failed to load</div>;
+  if (isPending) return <div>loading...</div>;
 
   return (
     <div>
