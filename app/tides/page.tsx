@@ -75,23 +75,33 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
   );
 }
 
+function LastUpdatedSection({ dataUpdatedAt }: { dataUpdatedAt: number }) {
+  // Ensure the time isn't in the future by subtracting a millisecond.
+  const dateTime = DateTime.fromMillis(dataUpdatedAt).plus({
+    milliseconds: -1,
+  });
+
+  return (
+    <div className="my-3 px-3 text-sm">
+      Last updated {dateTime.toRelative({ style: "short" })}
+    </div>
+  );
+}
+
 export default function TidesPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";
 
-  const { isPending, isError, data } = useQuery({
+  const { data, dataUpdatedAt } = useQuery({
     queryKey: ["tides"],
     queryFn: () => fetch(url).then((res) => res.json()),
     gcTime: Infinity,
   });
 
-  if (isError) return <div>failed to load</div>;
-  if (isPending) return <div>loading...</div>;
-
   return (
     <div>
       <Heading>
-        <div className="mx-2 mt-2 flex flex-row items-center gap-3">
+        <div className="px-3 flex flex-row items-center gap-3">
           <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland Bay</span>
           <Hyperlink href="https://www.dorset-tides.com/studland-bay-tide-times">
@@ -99,13 +109,16 @@ export default function TidesPage() {
           </Hyperlink>
         </div>
       </Heading>
-      <table className="w-full">
-        <tbody>
-          {data.dates.map((t: any) => (
-            <DateBlock key={t.date} date={t.date} tides={t.tides} />
-          ))}
-        </tbody>
-      </table>
+      <LastUpdatedSection dataUpdatedAt={dataUpdatedAt} />
+      {data && (
+        <table className="w-full">
+          <tbody>
+            {data.dates.map((t: any) => (
+              <DateBlock key={t.date} date={t.date} tides={t.tides} />
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
