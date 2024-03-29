@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap-icons";
 import Hyperlink from "../components/hyperlink";
 import useData from "../../hooks/useData";
+import LastUpdatedSection from "../components/last-updated-section";
 
 function TideRow({
   date,
@@ -79,7 +80,7 @@ export default function TidesPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";
 
-  const {data, isLoading } = useData(url);
+  const { data, lastUpdatedUtc, isLoading } = useData(url, "tides");
 
   return (
     <div>
@@ -93,6 +94,7 @@ export default function TidesPage() {
         </div>
       </Heading>
       {isLoading && <div>Loading ...</div>}
+      <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
       {data && (
         <table className="w-full">
           <tbody>
