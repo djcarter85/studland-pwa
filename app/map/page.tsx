@@ -1,5 +1,5 @@
-import useSWR from "swr";
 import Hyperlink from "../components/hyperlink";
+import useData from "../../hooks/useData";
 
 function getGoogleMapsUrl(location: any) {
   let url =
@@ -40,25 +40,21 @@ function Location({ location }: { location: any }) {
 }
 
 export default function Map() {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const key =
+  const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/locations.json";
-  const { data, error, isLoading } = useSWR(key, fetcher);
+  const { data, isLoading } = useData(url);
 
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
-
-  var sortedLocations = data.locations.sort((a: any, b: any) =>
-    a.name.localeCompare(b.name)
-  );
+  const alphabetical = (a: any, b: any) => a.name.localeCompare(b.name);
 
   return (
     <>
+      {isLoading && <div>Loading ...</div>}
       <table className="w-full">
         <tbody>
-          {sortedLocations.map((l: any) => (
-            <Location key={l.name} location={l} />
-          ))}
+          {data &&
+            data.locations
+              .sort(alphabetical)
+              .map((l: any) => <Location key={l.name} location={l} />)}
         </tbody>
       </table>
     </>

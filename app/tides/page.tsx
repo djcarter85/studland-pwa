@@ -8,7 +8,7 @@ import {
   GeoAltFill,
 } from "react-bootstrap-icons";
 import Hyperlink from "../components/hyperlink";
-import { useQuery } from "@tanstack/react-query";
+import useData from "../../hooks/useData";
 
 function TideRow({
   date,
@@ -75,28 +75,11 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
   );
 }
 
-function LastUpdatedSection({ dataUpdatedAt }: { dataUpdatedAt: number }) {
-  // Ensure the time isn't in the future by subtracting a millisecond.
-  const dateTime = DateTime.fromMillis(dataUpdatedAt).plus({
-    milliseconds: -1,
-  });
-
-  return (
-    <div className="my-3 px-3 text-sm">
-      Last updated {dateTime.toRelative({ style: "short" })}
-    </div>
-  );
-}
-
 export default function TidesPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";
 
-  const { data, dataUpdatedAt } = useQuery({
-    queryKey: ["tides"],
-    queryFn: () => fetch(url).then((res) => res.json()),
-    gcTime: Infinity,
-  });
+  const {data, isLoading } = useData(url);
 
   return (
     <div>
@@ -109,7 +92,7 @@ export default function TidesPage() {
           </Hyperlink>
         </div>
       </Heading>
-      <LastUpdatedSection dataUpdatedAt={dataUpdatedAt} />
+      {isLoading && <div>Loading ...</div>}
       {data && (
         <table className="w-full">
           <tbody>

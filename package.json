@@ -11,9 +11,6 @@
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.0.19",
-    "@tanstack/query-sync-storage-persister": "^5.28.6",
-    "@tanstack/react-query": "^5.28.6",
-    "@tanstack/react-query-persist-client": "^5.28.6",
     "clsx": "^2.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -27,7 +24,6 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "sort-by": "^1.2.0",
-    "swr": "^2.2.5",
     "tailwindcss-safe-area": "^0.5.1",
     "usehooks-ts": "^3.0.1"
   },
