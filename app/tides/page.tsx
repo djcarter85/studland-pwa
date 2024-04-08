@@ -95,7 +95,7 @@ export default function TidesPage() {
       </Heading>
       {isLoading && <div>Loading ...</div>}
       <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
-      {data && (
+      {data && data.dates && (
         <table className="w-full">
           <tbody>
             {data.dates.map((t: any) => (
