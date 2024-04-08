@@ -37,7 +37,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
     <>
       <div
         className={clsx(
-          "flex flex-col items-center py-2 px-4 border-gray-200 dark:border-gray-700 border-b",
+          "flex flex-col items-center py-2 px-4 border-gray-200 dark:border-gray-500 border-b",
           {
             "bg-gray-100 dark:bg-gray-700": isWeekend(date),
           }
@@ -51,7 +51,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
       </div>
       <div
         className={clsx(
-          "flex flex-col border-gray-200 dark:border-gray-700 border-b",
+          "flex flex-col border-gray-200 dark:border-gray-500 border-b",
           {
             "bg-gray-100 dark:bg-gray-700": isWeekend(date),
           }
@@ -82,7 +82,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
 
 function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
   return (
-    <div className="w-full border-gray-200 dark:border-gray-700 border-t grid grid-cols-[min-content_1fr]">
+    <div className="w-full border-gray-200 dark:border-gray-500 border-t grid grid-cols-[min-content_1fr]">
       {dates.map((d) => (
         <DateRow key={d.toISO()} date={d} events={events} />
       ))}
