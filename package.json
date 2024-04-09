@@ -23,7 +23,6 @@
     "react-bootstrap-icons": "^1.11.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "sort-by": "^1.2.0",
     "tailwindcss-safe-area": "^0.5.1",
     "usehooks-ts": "^3.0.1"
   },
