@@ -1,5 +1,5 @@
 import Hyperlink from "../components/hyperlink";
-import useData from "../../hooks/useData";
+import useData from "../hooks/useData";
 import LastUpdatedSection from "../components/last-updated-section";
 
 function getGoogleMapsUrl(location: any) {

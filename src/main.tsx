@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Root from "./layout";
+import Root from "./root";
 import "./globals.css";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import MapPage from "./map/page";
-import WeatherPage from "./weather/page";
-import TidesPage from "./tides/page";
-import InfoPage from "./info/page";
-import CalendarPage from "./calendar/page";
+import MapPage from "./pages/map-page";
+import WeatherPage from "./pages/weather-page";
+import TidesPage from "./pages/tides-page";
+import InfoPage from "./pages/info-page";
+import CalendarPage from "./pages/calendar-page";
 
 import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/700.css";

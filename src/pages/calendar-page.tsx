@@ -1,5 +1,5 @@
 import { DateTime, Duration } from "luxon";
-import useData from "../../hooks/useData";
+import useData from "../hooks/useData";
 import clsx from "clsx";
 
 type Event = {
