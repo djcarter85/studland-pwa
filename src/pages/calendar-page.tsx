@@ -90,7 +90,7 @@ function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
   );
 }
 
-export default function Calendar() {
+export default function CalendarPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/calendar.json";
 

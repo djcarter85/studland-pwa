@@ -40,7 +40,7 @@ function Location({ location }: { location: any }) {
   );
 }
 
-export default function Map() {
+export default function MapPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/locations.json";
   const { data, lastUpdatedUtc, isLoading } = useData(url, "locations");

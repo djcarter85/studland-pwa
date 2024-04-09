@@ -62,7 +62,7 @@ function ColourSchemeChooser() {
   );
 }
 
-export default function More() {
+export default function InfoPage() {
   return (
     <div className="p-2">
       <Heading>More Information</Heading>
