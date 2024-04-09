@@ -1,6 +1,5 @@
 import Hyperlink from "../components/hyperlink";
 import useData from "../hooks/useData";
-import LastUpdatedSection from "../components/last-updated-section";
 
 function getGoogleMapsUrl(location: any) {
   let url =
@@ -43,14 +42,12 @@ function Location({ location }: { location: any }) {
 export default function MapPage() {
   const url =
     "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/locations.json";
-  const { data, lastUpdatedUtc, isLoading } = useData(url, "locations");
+  const { data } = useData(url, "locations");
 
   const alphabetical = (a: any, b: any) => a.name.localeCompare(b.name);
 
   return (
     <>
-      {isLoading && <div>Loading ...</div>}
-      <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
       <table className="w-full">
         <tbody>
           {data &&
