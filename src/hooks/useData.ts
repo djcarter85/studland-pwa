@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 
 // TODO: report fetching errors
 // TODO: reload on refocus
-export default function useData(url: string, cacheKey: string) {
+export default function useData(key: string) {
   const [data, setData] = useState<any>(null);
   const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const internalCacheKey = "cache:" + cacheKey;
+  const url = `https://raw.githubusercontent.com/djcarter85/studland-data/main/data/${key}.json`
+  const internalCacheKey = "cache:" + key;
 
   useEffect(() => {
     const fetchAndCache = async () => {

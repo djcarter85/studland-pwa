@@ -77,10 +77,7 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
 }
 
 export default function TidesPage() {
-  const url =
-    "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/tides.json";
-
-  const { data, lastUpdatedUtc, isLoading } = useData(url, "tides");
+  const { data, lastUpdatedUtc, isLoading } = useData("tides");
 
   return (
     <div>

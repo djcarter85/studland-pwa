@@ -40,9 +40,7 @@ function Location({ location }: { location: any }) {
 }
 
 export default function MapPage() {
-  const url =
-    "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/locations.json";
-  const { data } = useData(url, "locations");
+  const { data } = useData("locations");
 
   const alphabetical = (a: any, b: any) => a.name.localeCompare(b.name);
 

@@ -54,14 +54,8 @@ function DateSection({
 export default function WeatherPage() {
   // TODO: combine into one store of data
   // TODO: add last updated section
-  const { data: rawWeather } = useData(
-    "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/weather.json",
-    "weather"
-  );
-  const { data: rawSun } = useData(
-    "https://raw.githubusercontent.com/djcarter85/studland-data/main/data/sun.json",
-    "sun"
-  );
+  const { data: rawWeather } = useData("weather");
+  const { data: rawSun } = useData("sun");
 
   if (rawWeather && rawSun) {
     const weatherData = weatherSchema.parse(rawWeather);
