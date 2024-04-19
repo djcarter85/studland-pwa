@@ -24,7 +24,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "tailwindcss-safe-area": "^0.5.1",
-    "usehooks-ts": "^3.0.1"
+    "usehooks-ts": "^3.0.1",
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
