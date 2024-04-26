@@ -4,6 +4,7 @@ import { z } from "zod";
 import BigDate from "../components/big-date";
 import Heading from "../components/heading";
 import { GeoAltFill } from "react-bootstrap-icons";
+import clsx from "clsx";
 
 const weatherSchema = z.object({
   data: z.array(
@@ -54,9 +55,21 @@ function DateSection({
   );
 }
 
-function DateSection2({ date }: { date: string }) {
+function DateSection2({
+  date,
+  isSelected,
+}: {
+  date: string;
+  isSelected: boolean;
+}) {
   return (
-    <div className="py-2">
+    <div
+      className={clsx("py-2 basis-full border-t-2", {
+        "bg-gray-200 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+          isSelected,
+        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
+      })}
+    >
       <BigDate date={DateTime.fromISO(date)} />
     </div>
   );
@@ -72,6 +85,8 @@ export default function WeatherPage() {
     const weatherData = weatherSchema.parse(rawWeather);
     const sunData = sunSchema.parse(rawSun);
 
+    const selectedDate = weatherData.data[0].date;
+
     return (
       <>
         <Heading>
@@ -82,7 +97,11 @@ export default function WeatherPage() {
         </Heading>
         <div className="flex flex-row justify-around">
           {weatherData.data.map((d) => (
-            <DateSection2 key={d.date} date={d.date} />
+            <DateSection2
+              key={d.date}
+              date={d.date}
+              isSelected={d.date === selectedDate}
+            />
           ))}
         </div>
         {weatherData.data.map((d) => (
