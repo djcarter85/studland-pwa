@@ -98,6 +98,9 @@ export default function InfoPage() {
         </Hyperlink>
         .
       </Para>
+      <Para>
+        {import.meta.env.VITE_COMMIT_SHA}
+      </Para>
     </div>
   );
 }
