@@ -1,7 +1,7 @@
 import {
   InfoCircle,
   Calendar4,
-  Map,
+  GeoAlt,
   Water,
   CloudSun,
 } from "react-bootstrap-icons";
@@ -13,7 +13,7 @@ export default function Nav() {
       <div className="mx-auto flex h-16 max-w-xl flex-row items-center justify-around">
         <NavLink title="Weather" href="/weather" icon={<CloudSun />} />
         <NavLink title="Tides" href="/tides" icon={<Water />} />
-        <NavLink title="Map" href="/map" icon={<Map />} />
+        <NavLink title="Locations" href="/locations" icon={<GeoAlt />} />
         <NavLink title="Calendar" href="/calendar" icon={<Calendar4 />} />
         <NavLink title="Info" href="/info" icon={<InfoCircle />} />
       </div>

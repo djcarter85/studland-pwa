@@ -39,7 +39,7 @@ function Location({ location }: { location: any }) {
   );
 }
 
-export default function MapPage() {
+export default function LocationsPage() {
   const { data } = useData("locations");
 
   const alphabetical = (a: any, b: any) => a.name.localeCompare(b.name);

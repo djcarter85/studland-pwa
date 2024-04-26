@@ -7,7 +7,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import MapPage from "./pages/map-page";
+import LocationsPage from "./pages/locations-page";
 import WeatherPage from "./pages/weather-page";
 import TidesPage from "./pages/tides-page";
 import InfoPage from "./pages/info-page";
@@ -34,8 +34,8 @@ const router = createBrowserRouter([
         element: <TidesPage />,
       },
       {
-        path: "/map",
-        element: <MapPage />,
+        path: "/locations",
+        element: <LocationsPage />,
       },
       {
         path: "/calendar",
