@@ -68,9 +68,9 @@ function DateSection2({
   return (
     <button
       className={clsx("py-2 basis-full border-t-2", {
-        "bg-gray-200 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+        "bg-gray-100 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
           isSelected,
-        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
+        "bg-gray-200 dark:bg-gray-800 border-transparent": !isSelected,
       })}
       onClick={() => setSelectedData(data)}
     >
@@ -107,13 +107,15 @@ function PageBody({
           />
         ))}
       </div>
-      <div className="flex flex-row overflow-x-auto">
-        {selectedData.hours.map((h) => (
-          <div key={h.time} className="flex flex-col items-center p-2">
-            <div>{h.time}</div>
-            <div>{h.temperature}°C</div>
-          </div>
-        ))}
+      <div className="bg-gray-100 dark:bg-gray-700">
+        <div className="flex flex-row overflow-x-auto py-3">
+          {selectedData.hours.map((h) => (
+            <div key={h.time} className="flex flex-col items-center px-3 border-r border-gray-300">
+              <div className="text-lg">{h.time}</div>
+              <div className="text-xl font-bold">{h.temperature}°C</div>
+            </div>
+          ))}
+        </div>
       </div>
       {weatherData.data.map((d) => (
         <DateSection date={d.date} hours={d.hours} sunData={sunData} />
