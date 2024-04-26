@@ -35,9 +35,9 @@ function DateTab({
   return (
     <button
       className={clsx("py-2 basis-full border-t-2", {
-        "bg-gray-100 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+        "bg-gray-50 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
           isSelected,
-        "bg-gray-200 dark:bg-gray-800 border-transparent": !isSelected,
+        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
       })}
       onClick={() => setSelectedData(data)}
     >
@@ -72,7 +72,7 @@ function PageBody({
           />
         ))}
       </div>
-      <div className="bg-gray-100 dark:bg-gray-700">
+      <div className="dark:bg-gray-700">
         <div className="px-3 pt-3">{selectedData.summary.description}</div>
         <div className="flex flex-row overflow-x-auto py-3">
           {
@@ -85,7 +85,7 @@ function PageBody({
                 <div className="text-lg">{h.time}</div>
                 <div className="text-xl font-bold">{h.temperature}°C</div>
                 <div
-                  className={clsx({ "text-sky-600": h.chanceOfRain !== "0" })}
+                  className={clsx({ "text-sky-600 dark:text-sky-300": h.chanceOfRain !== "0" })}
                 >
                   {h.chanceOfRain}%
                 </div>
