@@ -2,6 +2,8 @@ import { DateTime } from "luxon";
 import useData from "../hooks/useData";
 import { z } from "zod";
 import BigDate from "../components/big-date";
+import Heading from "../components/heading";
+import { GeoAltFill } from "react-bootstrap-icons";
 
 const weatherSchema = z.object({
   data: z.array(
@@ -72,6 +74,12 @@ export default function WeatherPage() {
 
     return (
       <>
+        <Heading>
+          <div className="px-3 flex flex-row items-center gap-3">
+            <GeoAltFill className="text-xl" />
+            <span className="text-2xl">Studland</span>
+          </div>
+        </Heading>
         <div className="flex flex-row justify-around">
           {weatherData.data.map((d) => (
             <DateSection2 key={d.date} date={d.date} />
