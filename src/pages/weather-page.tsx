@@ -23,16 +23,6 @@ const weatherSchema = z.object({
   data: z.array(dateSchema),
 });
 
-const sunSchema = z.object({
-  dates: z.array(
-    z.object({
-      date: z.string(),
-      sunrise: z.string(),
-      sunset: z.string(),
-    })
-  ),
-});
-
 function DateTab({
   data,
   isSelected,
@@ -58,10 +48,8 @@ function DateTab({
 
 function PageBody({
   weatherData,
-  sunData,
 }: {
   weatherData: z.infer<typeof weatherSchema>;
-  sunData: z.infer<typeof sunSchema>;
 }) {
   const [selectedData, setSelectedData] = useState(weatherData.data[0]);
   const selectedDate = selectedData.date;
@@ -118,9 +106,8 @@ export default function WeatherPage() {
 
   if (rawWeather && rawSun) {
     const weatherData = weatherSchema.parse(rawWeather);
-    const sunData = sunSchema.parse(rawSun);
 
-    return <PageBody weatherData={weatherData} sunData={sunData} />;
+    return <PageBody weatherData={weatherData} />;
   }
 
   return <></>;
