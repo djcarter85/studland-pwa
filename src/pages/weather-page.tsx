@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import useData from "../hooks/useData";
 import { z } from "zod";
+import BigDate from "../components/big-date";
 
 const weatherSchema = z.object({
   data: z.array(
@@ -51,6 +52,14 @@ function DateSection({
   );
 }
 
+function DateSection2({ date }: { date: string }) {
+  return (
+    <div className="py-2">
+      <BigDate date={DateTime.fromISO(date)} />
+    </div>
+  );
+}
+
 export default function WeatherPage() {
   // TODO: combine into one store of data
   // TODO: add last updated section
@@ -63,6 +72,11 @@ export default function WeatherPage() {
 
     return (
       <>
+        <div className="flex flex-row justify-around">
+          {weatherData.data.map((d) => (
+            <DateSection2 key={d.date} date={d.date} />
+          ))}
+        </div>
         {weatherData.data.map((d) => (
           <DateSection date={d.date} hours={d.hours} sunData={sunData} />
         ))}
