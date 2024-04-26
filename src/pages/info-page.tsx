@@ -1,12 +1,11 @@
 import clsx from "clsx";
-import Heading from "../components/heading";
 import Hyperlink from "../components/hyperlink";
 import { Laptop, Moon, Sun } from "react-bootstrap-icons";
 import { useTernaryDarkMode } from "usehooks-ts";
 import { ReactNode } from "react";
 
 function Subheading({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-3 mx-2 text-lg font-bold">{children}</h2>;
+  return <h2 className="my-3 mx-2 text-lg font-bold">{children}</h2>;
 }
 
 function Ul({ children }: { children: React.ReactNode }) {
@@ -65,7 +64,6 @@ function ColourSchemeChooser() {
 export default function InfoPage() {
   return (
     <div className="p-2">
-      <Heading>More Information</Heading>
       <Subheading>Useful links</Subheading>
       <Ul>
         <Bullet>
