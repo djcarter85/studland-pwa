@@ -75,6 +75,48 @@ function DateSection2({
   );
 }
 
+function PageBody({
+  weatherData,
+  sunData,
+}: {
+  weatherData: z.infer<typeof weatherSchema>;
+  sunData: z.infer<typeof sunSchema>;
+}) {
+  const selectedData = weatherData.data[0];
+  const selectedDate = selectedData.date;
+
+  return (
+    <>
+      <Heading>
+        <div className="px-3 flex flex-row items-center gap-3">
+          <GeoAltFill className="text-xl" />
+          <span className="text-2xl">Studland</span>
+        </div>
+      </Heading>
+      <div className="flex flex-row justify-around">
+        {weatherData.data.map((d) => (
+          <DateSection2
+            key={d.date}
+            date={d.date}
+            isSelected={d.date === selectedDate}
+          />
+        ))}
+      </div>
+      <div className="flex flex-row overflow-x-auto">
+        {selectedData.hours.map((h) => (
+          <div key={h.time} className="flex flex-col items-center p-2">
+            <div>{h.time}</div>
+            <div>{h.temperature}°C</div>
+          </div>
+        ))}
+      </div>
+      {weatherData.data.map((d) => (
+        <DateSection date={d.date} hours={d.hours} sunData={sunData} />
+      ))}
+    </>
+  );
+}
+
 export default function WeatherPage() {
   // TODO: combine into one store of data
   // TODO: add last updated section
@@ -85,39 +127,7 @@ export default function WeatherPage() {
     const weatherData = weatherSchema.parse(rawWeather);
     const sunData = sunSchema.parse(rawSun);
 
-    const selectedData = weatherData.data[0];
-    const selectedDate = selectedData.date;
-
-    return (
-      <>
-        <Heading>
-          <div className="px-3 flex flex-row items-center gap-3">
-            <GeoAltFill className="text-xl" />
-            <span className="text-2xl">Studland</span>
-          </div>
-        </Heading>
-        <div className="flex flex-row justify-around">
-          {weatherData.data.map((d) => (
-            <DateSection2
-              key={d.date}
-              date={d.date}
-              isSelected={d.date === selectedDate}
-            />
-          ))}
-        </div>
-        <div className="flex flex-row overflow-x-auto">
-          {selectedData.hours.map((h) => (
-            <div key={h.time} className="flex flex-col items-center p-2">
-              <div>{h.time}</div>
-              <div>{h.temperature}°C</div>
-            </div>
-          ))}
-        </div>
-        {weatherData.data.map((d) => (
-          <DateSection date={d.date} hours={d.hours} sunData={sunData} />
-        ))}
-      </>
-    );
+    return <PageBody weatherData={weatherData} sunData={sunData} />;
   }
 
   return <></>;
