@@ -9,6 +9,7 @@ import { useState } from "react";
 
 const dateSchema = z.object({
   date: z.string(),
+  summary: z.object({ description: z.string() }),
   hours: z.array(z.object({ time: z.string(), temperature: z.string() })),
 });
 
@@ -108,9 +109,13 @@ function PageBody({
         ))}
       </div>
       <div className="bg-gray-100 dark:bg-gray-700">
+        <div className="px-3 pt-3">{selectedData.summary.description}</div>
         <div className="flex flex-row overflow-x-auto py-3">
           {selectedData.hours.map((h) => (
-            <div key={h.time} className="flex flex-col items-center px-3 border-r border-gray-300">
+            <div
+              key={h.time}
+              className="flex flex-col items-center px-3 border-r border-gray-300"
+            >
               <div className="text-lg">{h.time}</div>
               <div className="text-xl font-bold">{h.temperature}°C</div>
             </div>
