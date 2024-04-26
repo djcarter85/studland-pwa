@@ -1,6 +1,7 @@
 import { DateTime, Duration } from "luxon";
 import useData from "../hooks/useData";
 import clsx from "clsx";
+import BigDate from "../components/big-date";
 
 type Event = {
   name: string;
@@ -37,17 +38,13 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
     <>
       <div
         className={clsx(
-          "flex flex-col items-center py-2 px-4 border-gray-200 dark:border-gray-500 border-b",
+          "py-2 px-4 border-gray-200 dark:border-gray-500 border-b",
           {
             "bg-gray-100 dark:bg-gray-700": isWeekend(date),
           }
         )}
       >
-        <div className="leading-none text-lg">{date.toFormat("ccc")}</div>
-        <div className="leading-none text-3xl font-bold my-0.5  ">
-          {date.toFormat("dd")}
-        </div>
-        <div className="leading-none text-lg">{date.toFormat("LLLL")}</div>
+        <BigDate date={date} />
       </div>
       <div
         className={clsx(
