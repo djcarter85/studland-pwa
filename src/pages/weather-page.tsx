@@ -5,14 +5,15 @@ import BigDate from "../components/big-date";
 import Heading from "../components/heading";
 import { GeoAltFill } from "react-bootstrap-icons";
 import clsx from "clsx";
+import { useState } from "react";
+
+const dateSchema = z.object({
+  date: z.string(),
+  hours: z.array(z.object({ time: z.string(), temperature: z.string() })),
+});
 
 const weatherSchema = z.object({
-  data: z.array(
-    z.object({
-      date: z.string(),
-      hours: z.array(z.object({ time: z.string(), temperature: z.string() })),
-    })
-  ),
+  data: z.array(dateSchema),
 });
 
 const sunSchema = z.object({
@@ -56,22 +57,25 @@ function DateSection({
 }
 
 function DateSection2({
-  date,
+  data,
   isSelected,
+  setSelectedData,
 }: {
-  date: string;
+  data: z.infer<typeof dateSchema>;
   isSelected: boolean;
+  setSelectedData: (data: z.infer<typeof dateSchema>) => void;
 }) {
   return (
-    <div
+    <button
       className={clsx("py-2 basis-full border-t-2", {
         "bg-gray-200 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
           isSelected,
         "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
       })}
+      onClick={() => setSelectedData(data)}
     >
-      <BigDate date={DateTime.fromISO(date)} />
-    </div>
+      <BigDate date={DateTime.fromISO(data.date)} />
+    </button>
   );
 }
 
@@ -82,7 +86,7 @@ function PageBody({
   weatherData: z.infer<typeof weatherSchema>;
   sunData: z.infer<typeof sunSchema>;
 }) {
-  const selectedData = weatherData.data[0];
+  const [selectedData, setSelectedData] = useState(weatherData.data[0]);
   const selectedDate = selectedData.date;
 
   return (
@@ -97,8 +101,9 @@ function PageBody({
         {weatherData.data.map((d) => (
           <DateSection2
             key={d.date}
-            date={d.date}
+            data={d}
             isSelected={d.date === selectedDate}
+            setSelectedData={setSelectedData}
           />
         ))}
       </div>
