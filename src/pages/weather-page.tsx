@@ -27,7 +27,7 @@ const sunSchema = z.object({
   ),
 });
 
-function DateSection2({
+function DateTab({
   data,
   isSelected,
   setSelectedData,
@@ -70,7 +70,7 @@ function PageBody({
       </Heading>
       <div className="flex flex-row justify-around">
         {weatherData.data.map((d) => (
-          <DateSection2
+          <DateTab
             key={d.date}
             data={d}
             isSelected={d.date === selectedDate}
