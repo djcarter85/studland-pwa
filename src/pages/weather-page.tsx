@@ -3,7 +3,7 @@ import useData from "../hooks/useData";
 import { z } from "zod";
 import BigDate from "../components/big-date";
 import Heading from "../components/heading";
-import { GeoAltFill } from "react-bootstrap-icons";
+import { CloudRain, GeoAltFill } from "react-bootstrap-icons";
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -85,9 +85,12 @@ function PageBody({
                 <div className="text-lg">{h.time}</div>
                 <div className="text-xl font-bold">{h.temperature}°C</div>
                 <div
-                  className={clsx({ "text-sky-600 dark:text-sky-300": h.chanceOfRain !== "0" })}
+                  className={clsx("flex flex-row gap-1 items-center", {
+                    "text-sky-600 dark:text-sky-300": h.chanceOfRain !== "0",
+                  })}
                 >
-                  {h.chanceOfRain}%
+                  <CloudRain className="text-xm" />
+                  <div>{h.chanceOfRain}%</div>
                 </div>
               </div>
             ))
