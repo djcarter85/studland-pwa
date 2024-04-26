@@ -85,7 +85,8 @@ export default function WeatherPage() {
     const weatherData = weatherSchema.parse(rawWeather);
     const sunData = sunSchema.parse(rawSun);
 
-    const selectedDate = weatherData.data[0].date;
+    const selectedData = weatherData.data[0];
+    const selectedDate = selectedData.date;
 
     return (
       <>
@@ -102,6 +103,14 @@ export default function WeatherPage() {
               date={d.date}
               isSelected={d.date === selectedDate}
             />
+          ))}
+        </div>
+        <div className="flex flex-row overflow-x-auto">
+          {selectedData.hours.map((h) => (
+            <div key={h.time} className="flex flex-col items-center p-2">
+              <div>{h.time}</div>
+              <div>{h.temperature}°C</div>
+            </div>
           ))}
         </div>
         {weatherData.data.map((d) => (
