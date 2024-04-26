@@ -20,6 +20,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  VITE_COMMIT_SHA: ${{ github.sha }}
+
 jobs:
   # Single deploy job since we're just deploying
   deploy:
