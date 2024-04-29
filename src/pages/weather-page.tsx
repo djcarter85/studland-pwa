@@ -3,9 +3,10 @@ import useData from "../hooks/useData";
 import { z } from "zod";
 import BigDate from "../components/big-date";
 import Heading from "../components/heading";
-import { CloudRain, GeoAltFill } from "react-bootstrap-icons";
+import { BoxArrowUpRight, CloudRain, GeoAltFill } from "react-bootstrap-icons";
 import clsx from "clsx";
 import { useState } from "react";
+import Hyperlink from "../components/hyperlink";
 
 const dateSchema = z.object({
   date: z.string(),
@@ -60,6 +61,9 @@ function PageBody({
         <div className="px-3 flex flex-row items-center gap-3">
           <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland</span>
+          <Hyperlink href="https://www.bbc.co.uk/weather/2636597">
+            <BoxArrowUpRight />
+          </Hyperlink>
         </div>
       </Heading>
       <div className="flex flex-row justify-around">
