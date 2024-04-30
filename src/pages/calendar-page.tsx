@@ -2,12 +2,22 @@ import { DateTime, Duration } from "luxon";
 import useData from "../hooks/useData";
 import clsx from "clsx";
 import BigDate from "../components/big-date";
+import { z } from "zod";
 
-type Event = {
-  name: string;
-  startDate: DateTime;
-  endDate: DateTime;
-};
+const dateSchema = z
+  .string()
+  .transform((x) => DateTime.fromISO(x))
+  .refine((d) => d.isValid, "Invalid DateTime.");
+
+const eventSchema = z.object({
+  name: z.string(),
+  startDate: dateSchema,
+  endDate: dateSchema,
+});
+
+type Event = z.infer<typeof eventSchema>;
+
+const calendarSchema = z.object({ events: z.array(eventSchema) });
 
 function isWeekend(date: DateTime) {
   return date.weekday === 6 || date.weekday === 7;
@@ -96,22 +106,15 @@ export default function CalendarPage() {
     DateTime.fromISO("2024-08-31")
   );
 
-  if (!data || !data.events) {
+  if (!data) {
     return <div>loading</div>;
   }
 
-  const events = data.events.map((e: any) => {
-    const x: Event = {
-      name: e.name,
-      startDate: DateTime.fromISO(e.startDate),
-      endDate: DateTime.fromISO(e.endDate),
-    };
-    return x;
-  });
+  const calendar = calendarSchema.parse(data);
 
   return (
     <div className="my-3">
-      {data && data.events && <Table dates={dates} events={events} />}
+      <Table dates={dates} events={calendar.events} />
     </div>
   );
 }
