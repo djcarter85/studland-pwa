@@ -93,6 +93,8 @@ function WeatherIcon({
       return <CloudDrizzle />;
     case 15: // Heavy rain
       return <CloudRainHeavy />;
+    case 39: // Light rain
+      return <CloudDrizzle />;
   }
 
   return fallback;
