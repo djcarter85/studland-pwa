@@ -30,8 +30,8 @@ const dateSchema = z.object({
   hours: z.array(
     z.object({
       time: z.string(),
-      temperature: z.string(),
-      chanceOfRain: z.string(),
+      temperature: z.number(),
+      chanceOfRain: z.number(),
       weatherType: z.number(),
       weatherTypeDescription: z.string(),
     })
@@ -179,7 +179,7 @@ function PageBody({
                 </div>
                 <div
                   className={clsx("flex flex-row gap-1 items-center", {
-                    "text-sky-600 dark:text-sky-300": h.chanceOfRain !== "0",
+                    "text-sky-600 dark:text-sky-300": h.chanceOfRain !== 0,
                   })}
                 >
                   <CloudRain className="text-xm" />
