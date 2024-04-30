@@ -3,11 +3,7 @@ import useData from "../hooks/useData";
 import clsx from "clsx";
 import BigDate from "../components/big-date";
 import { z } from "zod";
-
-const dateSchema = z
-  .string()
-  .transform((x) => DateTime.fromISO(x))
-  .refine((d) => d.isValid, "Invalid DateTime.");
+import { dateSchema } from "../schemas/date-schema";
 
 const eventSchema = z.object({
   name: z.string(),
