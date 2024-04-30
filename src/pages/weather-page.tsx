@@ -16,7 +16,7 @@ import {
   Sun,
 } from "react-bootstrap-icons";
 import clsx from "clsx";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import Hyperlink from "../components/hyperlink";
 
 const dateSchema = z.object({
@@ -62,10 +62,10 @@ function DateTab({
 
 function WeatherIcon({
   weatherType,
-  weatherTypeDescription,
+  fallback,
 }: {
   weatherType: number;
-  weatherTypeDescription: string;
+  fallback: ReactNode;
 }) {
   switch (weatherType) {
     case 0: // Clear sky
@@ -87,7 +87,7 @@ function WeatherIcon({
       return <CloudRainHeavy />;
   }
 
-  return <span className="text-sm">{weatherTypeDescription}</span>;
+  return fallback;
 }
 
 function PageBody({
@@ -133,7 +133,7 @@ function PageBody({
                 <div className="text-center text-3xl py-2">
                   <WeatherIcon
                     weatherType={h.weatherType}
-                    weatherTypeDescription={h.weatherTypeDescription}
+                    fallback={<span className="text-sm">{h.weatherTypeDescription}</span>}
                   />
                 </div>
                 <div className="text-xl font-bold">{h.temperature}°C</div>
