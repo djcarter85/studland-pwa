@@ -21,7 +21,7 @@ import Hyperlink from "../components/hyperlink";
 
 const dateSchema = z.object({
   date: z.string(),
-  summary: z.object({ description: z.string() }),
+  summary: z.object({ description: z.string(), weatherType: z.number() }),
   hours: z.array(
     z.object({
       time: z.string(),
@@ -120,7 +120,15 @@ function PageBody({
         ))}
       </div>
       <div className="dark:bg-gray-700">
-        <div className="px-3 pt-3">{selectedData.summary.description}</div>
+        <div className="px-3 pt-3 flex flex-row gap-4 items-center">
+          <div className="text-5xl">
+            <WeatherIcon
+              weatherType={selectedData.summary.weatherType}
+              fallback={<></>}
+            />
+          </div>
+          <div>{selectedData.summary.description}</div>
+        </div>
         <div className="flex flex-row overflow-x-auto py-3">
           {
             // TODO: figure out a way of resetting the scroll when the date changes
