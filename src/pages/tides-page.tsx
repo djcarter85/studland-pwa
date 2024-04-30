@@ -10,6 +10,23 @@ import {
 import Hyperlink from "../components/hyperlink";
 import useData from "../hooks/useData";
 import LastUpdatedSection from "../components/last-updated-section";
+import { z } from "zod";
+import { dateSchema } from "../schemas/date-schema";
+
+const tideSchema = z.object({
+  type: z.string(),
+  time: z.string(),
+  height: z.string(),
+});
+
+type Tide = z.infer<typeof tideSchema>;
+
+const tideDateSchema = z.object({
+  date: dateSchema,
+  tides: z.array(tideSchema),
+});
+
+const tidesSchema = z.object({ dates: z.array(tideDateSchema) });
 
 function TideRow({
   date,
@@ -17,7 +34,7 @@ function TideRow({
   time,
   height,
 }: {
-  date: string;
+  date: DateTime | undefined;
   type: string;
   time: string;
   height: string;
@@ -25,7 +42,7 @@ function TideRow({
   return (
     <tr className="text-center odd:bg-gray-100 odd:dark:bg-gray-700">
       <td className="py-2 text-lg font-bold">
-        {date ? DateTime.fromISO(date).toFormat("ccc d LLL") : ""}
+        {date ? date.toFormat("ccc d LLL") : ""}
       </td>
       <td
         className={clsx("border-l-8 py-2 text-3xl", {
@@ -60,13 +77,13 @@ function TideRow({
   );
 }
 
-function DateBlock({ date, tides }: { date: string; tides: any }) {
+function DateBlock({ date, tides }: { date: DateTime; tides: Tide[] }) {
   return (
     <>
-      {tides.map((t: any, index: number) => (
+      {tides.map((t, index) => (
         <TideRow
           key={t.time}
-          date={index == 0 ? date : ""}
+          date={index == 0 ? date : undefined}
           type={t.type}
           time={t.time}
           height={t.height}
@@ -78,6 +95,12 @@ function DateBlock({ date, tides }: { date: string; tides: any }) {
 
 export default function TidesPage() {
   const { data, lastUpdatedUtc, isLoading } = useData("tides");
+
+  if (!data) {
+    return <div>Loading ...</div>;
+  }
+
+  const tides = tidesSchema.parse(data);
 
   return (
     <div>
@@ -92,15 +115,13 @@ export default function TidesPage() {
       </Heading>
       {isLoading && <div>Loading ...</div>}
       <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
-      {data && data.dates && (
-        <table className="w-full">
-          <tbody>
-            {data.dates.map((t: any) => (
-              <DateBlock key={t.date} date={t.date} tides={t.tides} />
-            ))}
-          </tbody>
-        </table>
-      )}
+      <table className="w-full">
+        <tbody>
+          {tides.dates.map((t) => (
+            <DateBlock key={t.date.toISO()} date={t.date} tides={t.tides} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
