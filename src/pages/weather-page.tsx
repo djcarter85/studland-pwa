@@ -90,6 +90,10 @@ function WeatherIcon({
   return fallback;
 }
 
+function Temperature({ temperature }: { temperature: string }) {
+  return <>{temperature}°C</>;
+}
+
 function PageBody({
   weatherData,
 }: {
@@ -141,10 +145,16 @@ function PageBody({
                 <div className="text-center text-3xl py-2">
                   <WeatherIcon
                     weatherType={h.weatherType}
-                    fallback={<span className="text-sm">{h.weatherTypeDescription}</span>}
+                    fallback={
+                      <span className="text-sm">
+                        {h.weatherTypeDescription}
+                      </span>
+                    }
                   />
                 </div>
-                <div className="text-xl font-bold">{h.temperature}°C</div>
+                <div className="text-xl font-bold">
+                  <Temperature temperature={h.temperature} />
+                </div>
                 <div
                   className={clsx("flex flex-row gap-1 items-center", {
                     "text-sky-600 dark:text-sky-300": h.chanceOfRain !== "0",
