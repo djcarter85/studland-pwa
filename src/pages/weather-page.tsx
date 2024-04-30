@@ -83,6 +83,9 @@ function WeatherIcon({
       return <CloudSun />;
     case 7: // Light cloud
       return <Cloud />;
+    case 8: // Thick cloud
+      return <Cloud />;
+    case 9: // Light Rain Showers
     case 10: // Light Rain Showers
       return <CloudRain />; // Bootstrap icons doesn't have an icon for cloud + rain + sun
     case 11: // Drizzle
@@ -137,7 +140,7 @@ function PageBody({
             />
           </div>
           <div className="flex flex-col items-center">
-          <div className="font-bold text-xl">
+            <div className="font-bold text-xl">
               <Temperature
                 temperature={selectedData.summary.maximumTemperature}
               />
