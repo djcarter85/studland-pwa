@@ -3,7 +3,18 @@ import useData from "../hooks/useData";
 import { z } from "zod";
 import BigDate from "../components/big-date";
 import Heading from "../components/heading";
-import { BoxArrowUpRight, CloudRain, GeoAltFill } from "react-bootstrap-icons";
+import {
+  BoxArrowUpRight,
+  Cloud,
+  CloudDrizzle,
+  CloudMoon,
+  CloudRain,
+  CloudRainHeavy,
+  CloudSun,
+  GeoAltFill,
+  Moon,
+  Sun,
+} from "react-bootstrap-icons";
 import clsx from "clsx";
 import { useState } from "react";
 import Hyperlink from "../components/hyperlink";
@@ -16,6 +27,8 @@ const dateSchema = z.object({
       time: z.string(),
       temperature: z.string(),
       chanceOfRain: z.string(),
+      weatherType: z.number(),
+      weatherTypeDescription: z.string(),
     })
   ),
 });
@@ -45,6 +58,36 @@ function DateTab({
       <BigDate date={DateTime.fromISO(data.date)} />
     </button>
   );
+}
+
+function WeatherIcon({
+  weatherType,
+  weatherTypeDescription,
+}: {
+  weatherType: number;
+  weatherTypeDescription: string;
+}) {
+  switch (weatherType) {
+    case 0: // Clear sky
+      return <Moon />;
+    case 1: // Sunny
+      return <Sun />;
+    case 2: // Partly Cloudy
+      return <CloudMoon />;
+    case 3: // Sunny intervals
+      return <CloudSun />;
+    case 7: // Light cloud
+      return <Cloud />;
+    case 10: // Light Rain Showers
+      return <CloudRain />; // Bootstrap icons doesn't have an icon for cloud + rain + sun
+    case 11: // Drizzle
+    case 12: // Light rain
+      return <CloudDrizzle />;
+    case 15: // Heavy rain
+      return <CloudRainHeavy />;
+  }
+
+  return <span className="text-sm">{weatherTypeDescription}</span>;
 }
 
 function PageBody({
@@ -87,6 +130,12 @@ function PageBody({
                 className="flex flex-col items-center px-3 border-r border-gray-300"
               >
                 <div className="text-lg">{h.time}</div>
+                <div className="text-center text-3xl py-2">
+                  <WeatherIcon
+                    weatherType={h.weatherType}
+                    weatherTypeDescription={h.weatherTypeDescription}
+                  />
+                </div>
                 <div className="text-xl font-bold">{h.temperature}°C</div>
                 <div
                   className={clsx("flex flex-row gap-1 items-center", {
