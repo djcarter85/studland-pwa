@@ -21,7 +21,12 @@ import Hyperlink from "../components/hyperlink";
 
 const dateSchema = z.object({
   date: z.string(),
-  summary: z.object({ description: z.string(), weatherType: z.number() }),
+  summary: z.object({
+    description: z.string(),
+    weatherType: z.number(),
+    maximumTemperature: z.number(),
+    minimumTemperature: z.number(),
+  }),
   hours: z.array(
     z.object({
       time: z.string(),
@@ -90,7 +95,7 @@ function WeatherIcon({
   return fallback;
 }
 
-function Temperature({ temperature }: { temperature: string }) {
+function Temperature({ temperature }: { temperature: string | number }) {
   return <>{temperature}°C</>;
 }
 
@@ -130,6 +135,18 @@ function PageBody({
               weatherType={selectedData.summary.weatherType}
               fallback={<></>}
             />
+          </div>
+          <div className="flex flex-col items-center">
+          <div className="font-bold text-xl">
+              <Temperature
+                temperature={selectedData.summary.maximumTemperature}
+              />
+            </div>
+            <div>
+              <Temperature
+                temperature={selectedData.summary.minimumTemperature}
+              />
+            </div>
           </div>
           <div>{selectedData.summary.description}</div>
         </div>
