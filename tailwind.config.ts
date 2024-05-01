@@ -14,6 +14,7 @@ const config: Config = {
       sky: colors.sky,
       violet: colors.violet,
       orange: colors.orange,
+      amber: colors.amber,
       gray: {
         "50": "#f5f6f6",
         "100": "#e4e9e8",

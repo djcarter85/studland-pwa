@@ -14,6 +14,8 @@ import {
   GeoAltFill,
   Moon,
   Sun,
+  Sunrise,
+  Sunset,
 } from "react-bootstrap-icons";
 import clsx from "clsx";
 import { ReactNode, useState } from "react";
@@ -26,6 +28,8 @@ const dateSchema = z.object({
     weatherType: z.number(),
     maximumTemperature: z.number(),
     minimumTemperature: z.number(),
+    sunrise: z.string(),
+    sunset: z.string()
   }),
   hours: z.array(
     z.object({
@@ -188,6 +192,13 @@ function PageBody({
               </div>
             ))
           }
+        </div>
+        <div className="grid grid-cols-[min-content_min-content_1fr_min-content_min-content] items-center gap-3 p-3">
+          <div className="text-xl"><Sunrise /></div>
+          <div className="text-lg">{selectedData.summary.sunrise}</div>
+          <div className="h-2 rounded-sm bg-gradient-to-r from-sky-300 via-amber-300 to-sky-300 dark:from-sky-600 dark:via-amber-400 dark:to-sky-600"></div>
+          <div className="text-lg">{selectedData.summary.sunset}</div>
+          <div className="text-xl"><Sunset /></div>
         </div>
       </div>
     </>
