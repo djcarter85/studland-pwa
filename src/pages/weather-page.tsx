@@ -206,13 +206,11 @@ function PageBody({
 }
 
 export default function WeatherPage() {
-  // TODO: combine into one store of data
   // TODO: add last updated section
-  const { data: rawWeather } = useData("weather");
-  const { data: rawSun } = useData("sun");
+  const { data } = useData("weather");
 
-  if (rawWeather && rawSun) {
-    const weatherData = weatherSchema.parse(rawWeather);
+  if (data) {
+    const weatherData = weatherSchema.parse(data);
 
     return <PageBody weatherData={weatherData} />;
   }
