@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import clsx from "clsx";
-import { Android2, Apple } from "react-bootstrap-icons";
+import { Android2, Apple, BoxArrowUp, PlusSquare } from "react-bootstrap-icons";
 import { useTernaryDarkMode } from "usehooks-ts";
 import Nav from "./components/nav";
 
@@ -11,10 +11,11 @@ function PwaWarning() {
         <p>This website works best when installed as an app.</p>
         <p>
           <Apple className="mr-1 inline align-baseline" />
-          <span>
-            iPhone: click on the &quot;Share&quot; button, then click &quot;Add
-            to Home Screen&quot;.
-          </span>
+          <span>iOS: tap</span>
+          <BoxArrowUp className="mx-1 inline align-baseline" />
+          <span>Share, then </span>
+          <PlusSquare className="mx-1 inline align-baseline" />
+          <span>Add to Home Screen.</span>
         </p>
         <p>
           <Android2 className="mr-1 inline align-baseline" />
