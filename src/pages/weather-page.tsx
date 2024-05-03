@@ -20,6 +20,7 @@ import {
 import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import Hyperlink from "../components/hyperlink";
+import LastUpdatedSection from "../components/last-updated-section";
 
 const dateSchema = z.object({
   date: z.string(),
@@ -29,7 +30,7 @@ const dateSchema = z.object({
     maximumTemperature: z.number(),
     minimumTemperature: z.number(),
     sunrise: z.string(),
-    sunset: z.string()
+    sunset: z.string(),
   }),
   hours: z.array(
     z.object({
@@ -110,8 +111,10 @@ function Temperature({ temperature }: { temperature: string | number }) {
 
 function PageBody({
   weatherData,
+  lastUpdatedUtc,
 }: {
   weatherData: z.infer<typeof weatherSchema>;
+  lastUpdatedUtc: string;
 }) {
   const [selectedData, setSelectedData] = useState(weatherData.data[0]);
   const selectedDate = selectedData.date;
@@ -127,6 +130,7 @@ function PageBody({
           </Hyperlink>
         </div>
       </Heading>
+      <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
       <div className="flex flex-row justify-around">
         {weatherData.data.map((d) => (
           <DateTab
@@ -194,11 +198,15 @@ function PageBody({
           }
         </div>
         <div className="grid grid-cols-[min-content_min-content_1fr_min-content_min-content] items-center gap-3 p-3">
-          <div className="text-xl"><Sunrise /></div>
+          <div className="text-xl">
+            <Sunrise />
+          </div>
           <div className="text-lg">{selectedData.summary.sunrise}</div>
           <div className="h-2 rounded-sm bg-gradient-to-r from-sky-300 via-amber-300 to-sky-300 dark:from-sky-600 dark:via-amber-400 dark:to-sky-600"></div>
           <div className="text-lg">{selectedData.summary.sunset}</div>
-          <div className="text-xl"><Sunset /></div>
+          <div className="text-xl">
+            <Sunset />
+          </div>
         </div>
       </div>
     </>
@@ -206,13 +214,12 @@ function PageBody({
 }
 
 export default function WeatherPage() {
-  // TODO: add last updated section
-  const { data } = useData("weather");
+  const { data, lastUpdatedUtc } = useData("weather");
 
   if (data) {
     const weatherData = weatherSchema.parse(data);
 
-    return <PageBody weatherData={weatherData} />;
+    return <PageBody weatherData={weatherData} lastUpdatedUtc={lastUpdatedUtc} />;
   }
 
   return <></>;
