@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { DateTime } from "luxon";
 import Heading from "../components/heading";
 import {
   BoxArrowUpRight,
@@ -12,6 +11,8 @@ import useData from "../hooks/useData";
 import LastUpdatedSection from "../components/last-updated-section";
 import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
+import BigDate from "../components/big-date";
+import { useState } from "react";
 
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
@@ -28,14 +29,11 @@ const tideDateSchema = z.object({
 
 const tidesSchema = z.object({ dates: z.array(tideDateSchema) });
 
-function TideRow({ date, tide }: { date: DateTime | undefined; tide: Tide }) {
+function TideRow({ tide }: { tide: Tide }) {
   return (
-    <tr className="text-center odd:bg-gray-100 odd:dark:bg-gray-700">
-      <td className="py-2 text-lg font-bold">
-        {date ? date.toFormat("ccc d LLL") : ""}
-      </td>
+    <tr className="text-center even:bg-gray-100 even:dark:bg-transparent odd:dark:bg-gray-700 odd:transparent">
       <td
-        className={clsx("border-l-8 py-2 text-3xl", {
+        className={clsx("border-r-8 py-2 text-3xl", {
           "border-violet-300/80 dark:border-violet-300/60": tide.type === "Low",
           "border-sky-300/80 dark:border-sky-300/60": tide.type === "High",
         })}
@@ -67,24 +65,37 @@ function TideRow({ date, tide }: { date: DateTime | undefined; tide: Tide }) {
   );
 }
 
-function DateBlock({ date, tides }: { date: DateTime; tides: Tide[] }) {
+function DateTab({
+  data,
+  isSelected,
+  setSelectedData,
+}: {
+  data: z.infer<typeof tideDateSchema>;
+  isSelected: boolean;
+  setSelectedData: (data: z.infer<typeof tideDateSchema>) => void;
+}) {
   return (
-    <>
-      {tides.map((t, index) => (
-        <TideRow key={t.time} date={index == 0 ? date : undefined} tide={t} />
-      ))}
-    </>
+    <button
+      className={clsx("py-2 basis-full border-t-2", {
+        "bg-gray-50 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+          isSelected,
+        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
+      })}
+      onClick={() => setSelectedData(data)}
+    >
+      <BigDate date={data.date} />
+    </button>
   );
 }
 
-export default function TidesPage() {
-  const { data, lastUpdatedUtc, isLoading } = useData("tides");
-
-  if (!data) {
-    return <div>Loading ...</div>;
-  }
-
-  const tides = tidesSchema.parse(data);
+function PageBody({
+  tides,
+  lastUpdatedUtc,
+}: {
+  tides: z.infer<typeof tidesSchema>;
+  lastUpdatedUtc: string;
+}) {
+  const [selectedData, setSelectedData] = useState(tides.dates[0]);
 
   return (
     <div>
@@ -97,15 +108,36 @@ export default function TidesPage() {
           </Hyperlink>
         </div>
       </Heading>
-      {isLoading && <div>Loading ...</div>}
       <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
+      <div className="flex flex-row justify-around">
+        {tides.dates.map((d) => (
+          <DateTab
+            key={d.date.toISO()}
+            data={d}
+            isSelected={d.date.toISO() === selectedData.date.toISO()}
+            setSelectedData={setSelectedData}
+          />
+        ))}
+      </div>
       <table className="w-full">
         <tbody>
-          {tides.dates.map((t) => (
-            <DateBlock key={t.date.toISO()} date={t.date} tides={t.tides} />
+          {selectedData.tides.map((t) => (
+            <TideRow key={t.time} tide={t} />
           ))}
         </tbody>
       </table>
     </div>
   );
+}
+
+export default function TidesPage() {
+  const { data, lastUpdatedUtc } = useData("tides");
+
+  if (!data) {
+    return <div>Loading ...</div>;
+  }
+
+  const tides = tidesSchema.parse(data);
+
+  return <PageBody tides={tides} lastUpdatedUtc={lastUpdatedUtc} />;
 }
