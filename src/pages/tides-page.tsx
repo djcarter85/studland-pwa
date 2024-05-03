@@ -32,15 +32,8 @@ const tidesSchema = z.object({ dates: z.array(tideDateSchema) });
 function TideRow({ tide }: { tide: Tide }) {
   return (
     <tr className="text-center even:bg-gray-100 even:dark:bg-transparent odd:dark:bg-gray-700 odd:transparent">
-      <td
-        className={clsx("border-r-8 py-2 text-3xl", {
-          "border-violet-300/80 dark:border-violet-300/60": tide.type === "Low",
-          "border-sky-300/80 dark:border-sky-300/60": tide.type === "High",
-        })}
-      >
-        {tide.time}
-      </td>
-      <td className="flex flex-col items-center py-2">
+      <td className="py-2 text-3xl">{tide.time}</td>
+      <td className="py-2">
         <span
           className={clsx(
             "inline-flex w-min flex-row items-center gap-2 rounded-full px-2 py-1",
@@ -57,9 +50,9 @@ function TideRow({ tide }: { tide: Tide }) {
           </span>
           <span className="text-xs font-bold uppercase">{tide.type}</span>
         </span>
-        <span className="font-bold text-gray-500 dark:text-gray-300">
-          {tide.height}
-        </span>
+      </td>
+      <td className="py-2 font-bold text-gray-400 dark:text-gray-200 text-xl">
+        {tide.height}
       </td>
     </tr>
   );
