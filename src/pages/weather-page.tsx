@@ -4,6 +4,7 @@ import { z } from "zod";
 import BigDate from "../components/big-date";
 import Heading from "../components/heading";
 import {
+  ArrowDown,
   BoxArrowUpRight,
   Cloud,
   CloudDrizzle,
@@ -24,6 +25,7 @@ import {
   Sun,
   Sunrise,
   Sunset,
+  Wind,
 } from "react-bootstrap-icons";
 import clsx from "clsx";
 import { ReactNode, useState } from "react";
@@ -45,6 +47,25 @@ const dateSchema = z.object({
       time: z.string(),
       temperature: z.number(),
       chanceOfRain: z.number(),
+      windSpeedMph: z.number(),
+      windDirection: z.enum([
+        "N",
+        "NNE",
+        "NE",
+        "ENE",
+        "E",
+        "ESE",
+        "SE",
+        "SSE",
+        "S",
+        "SSW",
+        "SW",
+        "WSW",
+        "W",
+        "WNW",
+        "NW",
+        "NNW",
+      ]),
       weatherType: z.number(),
       weatherTypeDescription: z.string(),
     })
@@ -260,6 +281,32 @@ function PageBody({
                 >
                   <CloudRain className="text-xm" />
                   <div>{h.chanceOfRain}%</div>
+                </div>
+                <div className="flex flex-row gap-1 items-center">
+                  <Wind />
+                  <div>{h.windSpeedMph}</div>
+                  {/* <div className="text-xs">mph</div> */}
+                  {/* <div className="text-sm">{h.windDirection}</div> */}
+                  <ArrowDown
+                    className={clsx({
+                      "rotate-N": h.windDirection === "N",
+                      "rotate-NNE": h.windDirection === "NNE",
+                      "rotate-NE": h.windDirection === "NE",
+                      "rotate-ENE": h.windDirection === "ENE",
+                      "rotate-E": h.windDirection === "E",
+                      "rotate-ESE": h.windDirection === "ESE",
+                      "rotate-SE": h.windDirection === "SE",
+                      "rotate-SSE": h.windDirection === "SSE",
+                      "rotate-S": h.windDirection === "S",
+                      "rotate-SSW": h.windDirection === "SSW",
+                      "rotate-SW": h.windDirection === "SW",
+                      "rotate-WSW": h.windDirection === "WSW",
+                      "rotate-W": h.windDirection === "W",
+                      "rotate-WNW": h.windDirection === "WNW",
+                      "rotate-NW": h.windDirection === "NW",
+                      "rotate-NNW": h.windDirection === "NNW",
+                    })}
+                  />
                 </div>
               </div>
             ))

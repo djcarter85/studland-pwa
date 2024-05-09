@@ -29,7 +29,24 @@ const config: Config = {
         "950": "#232829",
       },
     },
-
+    rotate: {
+      N: "0turn",
+      NNE: "0.0625turn",
+      NE: "0.125turn",
+      ENE: "0.1875turn",
+      E: "0.25turn",
+      ESE: "0.3125turn",
+      SE: "0.375turn",
+      SSE: "0.4375turn",
+      S: "0.5turn",
+      SSW: "0.5625turn",
+      SW: "0.625turn",
+      WSW: "0.6875turn",
+      W: "0.75turn",
+      WNW: "0.8125turn",
+      NW: "0.875turn",
+      NNW: "0.9375turn",
+    },
     extend: {
       fontFamily: {
         sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
@@ -42,4 +59,3 @@ const config: Config = {
   plugins: [require("tailwindcss-safe-area")],
 };
 export default config;
-
