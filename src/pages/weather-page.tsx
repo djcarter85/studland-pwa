@@ -172,16 +172,7 @@ function Temperature({ temperature }: { temperature: string | number }) {
   return <>{temperature}°C</>;
 }
 
-function PageBody({
-  weatherData,
-  lastUpdatedUtc,
-}: {
-  weatherData: z.infer<typeof weatherSchema>;
-  lastUpdatedUtc: string;
-}) {
-  const [selectedData, setSelectedData] = useState(weatherData.data[0]);
-  const selectedDate = selectedData.date;
-
+function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
   return (
     <>
       <Heading>
@@ -194,6 +185,20 @@ function PageBody({
         </div>
       </Heading>
       <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
+    </>
+  );
+}
+
+function PageBody({
+  weatherData,
+}: {
+  weatherData: z.infer<typeof weatherSchema>;
+}) {
+  const [selectedData, setSelectedData] = useState(weatherData.data[0]);
+  const selectedDate = selectedData.date;
+
+  return (
+    <>
       <div className="flex flex-row justify-around">
         {weatherData.data.map((d) => (
           <DateTab
@@ -283,7 +288,10 @@ export default function WeatherPage() {
     const weatherData = weatherSchema.parse(data);
 
     return (
-      <PageBody weatherData={weatherData} lastUpdatedUtc={lastUpdatedUtc} />
+      <>
+        <PageHeader lastUpdatedUtc={lastUpdatedUtc} />
+        <PageBody weatherData={weatherData} />
+      </>
     );
   }
 

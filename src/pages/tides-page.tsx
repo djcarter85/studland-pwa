@@ -81,17 +81,9 @@ function DateTab({
   );
 }
 
-function PageBody({
-  tides,
-  lastUpdatedUtc,
-}: {
-  tides: z.infer<typeof tidesSchema>;
-  lastUpdatedUtc: string;
-}) {
-  const [selectedData, setSelectedData] = useState(tides.dates[0]);
-
+function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
   return (
-    <div>
+    <>
       <Heading>
         <div className="px-3 flex flex-row items-center gap-3">
           <GeoAltFill className="text-xl" />
@@ -102,6 +94,15 @@ function PageBody({
         </div>
       </Heading>
       <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
+    </>
+  );
+}
+
+function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
+  const [selectedData, setSelectedData] = useState(tides.dates[0]);
+
+  return (
+    <>
       <div className="flex flex-row justify-around">
         {tides.dates.map((d) => (
           <DateTab
@@ -119,7 +120,7 @@ function PageBody({
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
 
@@ -132,5 +133,10 @@ export default function TidesPage() {
 
   const tides = tidesSchema.parse(data);
 
-  return <PageBody tides={tides} lastUpdatedUtc={lastUpdatedUtc} />;
+  return (
+    <div>
+      <PageHeader lastUpdatedUtc={lastUpdatedUtc} />
+      <PageBody tides={tides} />
+    </div>
+  );
 }
