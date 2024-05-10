@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 // All icons in this file are taken from Bootstrap Icons, with paths converted
-// from relative to absolute.
+// from relative to absolute. Source icons match the name, except where
+// otherwise noted.
 function Moon() {
   return (
     <svg
@@ -94,7 +95,24 @@ function CloudFog() {
   );
 }
 
-function Cloud() {
+function CloudLight() {
+  // Source icon: `cloud`
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      className="bi bi-cloud"
+      viewBox="0 0 16 16"
+    >
+      <path d="M 4.406 3.342 A 5.53 5.53 0 0 1 8 2 C 10.69 2 12.923 4 13.166 6.579 C 14.758 6.804 16 8.137 16 9.773 C 16 11.569 14.502 13 12.687 13 H 3.781 C 1.708 13 0 11.366 0 9.318 C 0 7.555 1.266 6.095 2.942 5.725 C 3.085 4.862 3.64 4.002 4.406 3.342 M 5.059 4.099 C 4.302 4.752 3.906 5.539 3.906 6.155 V 6.603 L 3.461 6.652 C 2.064 6.805 1 7.952 1 9.318 C 1 10.785 2.23 12 3.781 12 H 12.687 C 13.98 12 15 10.988 15 9.773 C 15 8.557 13.98 7.545 12.687 7.545 H 12.187 V 7.045 C 12.188 4.825 10.328 3 8 3 A 4.53 4.53 0 0 0 5.059 4.1 Z" />
+    </svg>
+  );
+}
+
+function CloudThick() {
+  // Source icon: `cloud`
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -266,8 +284,9 @@ export function WeatherIcon({
     case 6: // Fog
       return <CloudFog />;
     case 7: // Light cloud
+      return <CloudLight />;
     case 8: // Thick cloud
-      return <Cloud />;
+      return <CloudThick />;
     case 9: // Light Rain Showers (night)
     case 10: // Light Rain Showers (day)
       return <CloudRain />; // Bootstrap icons doesn't have an icon for cloud + rain + sun/moon
@@ -310,8 +329,9 @@ export function WeatherIcon({
     case 35: // Fog
       return <CloudFog />;
     case 36: // Light cloud
+      return <CloudLight />;
     case 37: // Thick cloud
-      return <Cloud />;
+      return <CloudThick />;
     case 38: // Drizzle
       return <CloudDrizzle />;
     case 40: // Heavy rain
