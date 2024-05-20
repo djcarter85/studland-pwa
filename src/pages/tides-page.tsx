@@ -98,28 +98,56 @@ function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
   );
 }
 
+const DateTabs = ({
+  tides,
+  selectedData,
+  setSelectedData,
+}: {
+  tides: z.infer<typeof tidesSchema>;
+  selectedData: z.infer<typeof tideDateSchema>;
+  setSelectedData: (x: z.infer<typeof tideDateSchema>) => void;
+}) => {
+  return (
+    <div className="flex flex-row justify-around">
+      {tides.dates.map((d) => (
+        <DateTab
+          key={d.date.toISO()}
+          data={d}
+          isSelected={d.date.toISO() === selectedData.date.toISO()}
+          setSelectedData={setSelectedData}
+        />
+      ))}
+    </div>
+  );
+};
+
+const TidesTable = ({
+  selectedData,
+}: {
+  selectedData: z.infer<typeof tideDateSchema>;
+}) => {
+  return (
+    <table className="w-full">
+      <tbody>
+        {selectedData.tides.map((t) => (
+          <TideRow key={t.time} tide={t} />
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
 function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
   const [selectedData, setSelectedData] = useState(tides.dates[0]);
 
   return (
     <>
-      <div className="flex flex-row justify-around">
-        {tides.dates.map((d) => (
-          <DateTab
-            key={d.date.toISO()}
-            data={d}
-            isSelected={d.date.toISO() === selectedData.date.toISO()}
-            setSelectedData={setSelectedData}
-          />
-        ))}
-      </div>
-      <table className="w-full">
-        <tbody>
-          {selectedData.tides.map((t) => (
-            <TideRow key={t.time} tide={t} />
-          ))}
-        </tbody>
-      </table>
+      <DateTabs
+        tides={tides}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
+      <TidesTable selectedData={selectedData} />
     </>
   );
 }
