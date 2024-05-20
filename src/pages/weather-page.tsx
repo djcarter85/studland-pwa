@@ -37,7 +37,7 @@ const dateSchema = z.object({
       windDirection: z.string(),
       weatherType: z.number(),
       weatherTypeDescription: z.string(),
-    })
+    }),
   ),
 });
 
@@ -56,10 +56,10 @@ function DateTab({
 }) {
   return (
     <button
-      className={clsx("py-2 basis-full border-t-2", {
-        "bg-gray-50 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+      className={clsx("basis-full border-t-2 py-2", {
+        "border-teal-600 bg-gray-50 dark:border-teal-400 dark:bg-gray-700":
           isSelected,
-        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
+        "border-transparent bg-gray-100 dark:bg-gray-800": !isSelected,
       })}
       onClick={() => setSelectedData(data)}
     >
@@ -76,7 +76,7 @@ function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
   return (
     <>
       <Heading>
-        <div className="px-3 flex flex-row items-center gap-3">
+        <div className="flex flex-row items-center gap-3 px-3">
           <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland</span>
           <Hyperlink href="https://www.bbc.co.uk/weather/2636597">
@@ -110,7 +110,7 @@ function PageBody({
         ))}
       </div>
       <div className="dark:bg-gray-700">
-        <div className="px-3 pt-3 flex flex-row gap-4 items-center">
+        <div className="flex flex-row items-center gap-4 px-3 pt-3">
           <div className="text-5xl">
             <WeatherIcon
               weatherType={selectedData.summary.weatherType}
@@ -118,7 +118,7 @@ function PageBody({
             />
           </div>
           <div className="flex flex-col items-center">
-            <div className="font-bold text-xl">
+            <div className="text-xl font-bold">
               <Temperature
                 temperature={selectedData.summary.maximumTemperature}
               />
@@ -137,10 +137,10 @@ function PageBody({
             selectedData.hours.map((h) => (
               <div
                 key={h.time}
-                className="flex flex-col items-center px-3 border-r border-gray-300"
+                className="flex flex-col items-center border-r border-gray-300 px-3"
               >
                 <div className="text-lg">{h.time}</div>
-                <div className="text-center text-3xl py-2">
+                <div className="py-2 text-center text-3xl">
                   <WeatherIcon
                     weatherType={h.weatherType}
                     fallback={
@@ -154,14 +154,14 @@ function PageBody({
                   <Temperature temperature={h.temperature} />
                 </div>
                 <div
-                  className={clsx("flex flex-row gap-1 items-center", {
+                  className={clsx("flex flex-row items-center gap-1", {
                     "text-sky-600 dark:text-sky-300": h.chanceOfRain !== 0,
                   })}
                 >
                   <CloudRain className="text-xm" />
                   <div>{h.chanceOfRain}%</div>
                 </div>
-                <div className="flex flex-row gap-1 items-center">
+                <div className="flex flex-row items-center gap-1">
                   <Wind />
                   <div>{h.windSpeedMph}</div>
                   <ArrowDown

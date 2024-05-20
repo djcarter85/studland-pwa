@@ -5,7 +5,7 @@ import { useTernaryDarkMode } from "usehooks-ts";
 import { ReactNode } from "react";
 
 function Subheading({ children }: { children: React.ReactNode }) {
-  return <h2 className="my-3 mx-2 text-lg font-bold">{children}</h2>;
+  return <h2 className="mx-2 my-3 text-lg font-bold">{children}</h2>;
 }
 
 function Ul({ children }: { children: React.ReactNode }) {
@@ -23,7 +23,7 @@ function Para({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <p className={clsx("mb-4 mx-2", className)}>{children}</p>;
+  return <p className={clsx("mx-2 mb-4", className)}>{children}</p>;
 }
 
 function ColourSchemeOption({
@@ -41,7 +41,7 @@ function ColourSchemeOption({
     <button
       className={clsx(
         "flex flex-row items-center justify-center gap-2 rounded-lg border border-gray-300 px-2 py-2 text-center dark:border-gray-500",
-        { "ring-2 ring-teal-400 dark:bg-gray-700": mode === ternaryDarkMode }
+        { "ring-2 ring-teal-400 dark:bg-gray-700": mode === ternaryDarkMode },
       )}
       onClick={() => setTernaryDarkMode(mode)}
     >
@@ -53,7 +53,7 @@ function ColourSchemeOption({
 
 function ColourSchemeChooser() {
   return (
-    <div className="mb-4 mx-2 grid grid-cols-3 justify-center gap-2">
+    <div className="mx-2 mb-4 grid grid-cols-3 justify-center gap-2">
       <ColourSchemeOption icon={<Sun />} name="Light" mode="light" />
       <ColourSchemeOption icon={<Moon />} name="Dark" mode="dark" />
       <ColourSchemeOption icon={<Laptop />} name="System" mode="system" />

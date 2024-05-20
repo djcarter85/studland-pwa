@@ -29,9 +29,8 @@ export default defineConfig({
         ],
         start_url: "/",
         display: "standalone",
-        orientation: "portrait"
+        orientation: "portrait",
       },
     }),
   ],
 });
-

@@ -31,7 +31,7 @@ export default function Root() {
   return (
     <>
       <div className={clsx({ dark: isDarkMode })}>
-        <div className="bg-gray-50 transition-colors dark:bg-gray-900 min-h-screen overflow-auto">
+        <div className="min-h-screen overflow-auto bg-gray-50 transition-colors dark:bg-gray-900">
           <Nav />
           <PwaWarning />
           <main className="mx-auto max-w-xl text-gray-900 pb-safe-offset-20 dark:text-gray-100">

@@ -33,7 +33,7 @@ const tidesSchema = z.object({ dates: z.array(tideDateSchema) });
 
 function TideRow({ tide }: { tide: Tide }) {
   return (
-    <tr className="text-center even:bg-gray-100 even:dark:bg-transparent odd:dark:bg-gray-700 odd:transparent">
+    <tr className="odd:transparent text-center even:bg-gray-100 odd:dark:bg-gray-700 even:dark:bg-transparent">
       <td className="py-2 text-3xl">{tide.time}</td>
       <td className="py-2">
         <span
@@ -44,7 +44,7 @@ function TideRow({ tide }: { tide: Tide }) {
                 tide.type === "Low",
               "bg-sky-200 text-sky-800 dark:bg-sky-300/70 dark:text-sky-950":
                 tide.type === "High",
-            }
+            },
           )}
         >
           <span>
@@ -53,7 +53,7 @@ function TideRow({ tide }: { tide: Tide }) {
           <span className="text-xs font-bold uppercase">{tide.type}</span>
         </span>
       </td>
-      <td className="py-2 font-bold text-gray-400 dark:text-gray-200 text-xl">
+      <td className="py-2 text-xl font-bold text-gray-400 dark:text-gray-200">
         {tide.heightInMetres}m
       </td>
     </tr>
@@ -71,10 +71,10 @@ function DateTab({
 }) {
   return (
     <button
-      className={clsx("py-2 basis-full border-t-2", {
-        "bg-gray-50 dark:bg-gray-700 border-teal-600 dark:border-teal-400":
+      className={clsx("basis-full border-t-2 py-2", {
+        "border-teal-600 bg-gray-50 dark:border-teal-400 dark:bg-gray-700":
           isSelected,
-        "bg-gray-100 dark:bg-gray-800 border-transparent": !isSelected,
+        "border-transparent bg-gray-100 dark:bg-gray-800": !isSelected,
       })}
       onClick={() => setSelectedData(data)}
     >
@@ -87,7 +87,7 @@ function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
   return (
     <>
       <Heading>
-        <div className="px-3 flex flex-row items-center gap-3">
+        <div className="flex flex-row items-center gap-3 px-3">
           <GeoAltFill className="text-xl" />
           <span className="text-2xl">Studland Bay</span>
           <Hyperlink href="https://www.dorset-tides.com/studland-bay-tide-times">
@@ -162,13 +162,13 @@ const CurrentTide = ({ tides }: { tides: z.infer<typeof tidesSchema> }) => {
     .diff(now, ["hours", "minutes", "seconds"])
     .toObject();
 
-  const tideTypeClassName = clsx("uppercase font-bold", {
+  const tideTypeClassName = clsx("font-bold uppercase", {
     "text-violet-600 dark:text-violet-300": nextTide.type === "Low",
     "text-sky-600 dark:text-sky-300": nextTide.type === "High",
   });
 
   return (
-    <div className="p-3 text-lg border-t">
+    <div className="border-t p-3 text-lg">
       <div>
         The tide is currently{" "}
         <span className={tideTypeClassName}>

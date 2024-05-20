@@ -6,7 +6,7 @@ import { z } from "zod";
 // TODO: reload on refocus
 export default function useData<T extends z.ZodTypeAny>(
   key: string,
-  schema: T
+  schema: T,
 ) {
   const [data, setData] = useState<z.infer<typeof schema>>(null);
   const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
@@ -52,7 +52,7 @@ export default function useData<T extends z.ZodTypeAny>(
 
           localStorage.setItem(
             internalCacheKey,
-            JSON.stringify({ lastUpdatedUtc: nowUtc, data: parseResult.data })
+            JSON.stringify({ lastUpdatedUtc: nowUtc, data: parseResult.data }),
           );
         }
       } finally {

@@ -44,26 +44,26 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
     <>
       <div
         className={clsx(
-          "py-2 px-4 border-gray-200 dark:border-gray-500 border-b",
+          "border-b border-gray-200 px-4 py-2 dark:border-gray-500",
           {
             "bg-gray-100 dark:bg-gray-700": isWeekend(date),
-          }
+          },
         )}
       >
         <BigDate date={date} />
       </div>
       <div
         className={clsx(
-          "flex flex-col border-gray-200 dark:border-gray-500 border-b",
+          "flex flex-col border-b border-gray-200 dark:border-gray-500",
           {
             "bg-gray-100 dark:bg-gray-700": isWeekend(date),
-          }
+          },
         )}
       >
         {events2.map((e) => (
           <div
             className={clsx(
-              "text-xl h-full border-l-8 px-4 flex items-center",
+              "flex h-full items-center border-l-8 px-4 text-xl",
               {
                 "border-teal-300/80 dark:border-teal-300/60":
                   e.name === "Dorset Venture" || e.name === "Family Camp 1",
@@ -71,7 +71,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
                   e.name === "Studland Venture" || e.name === "Family Camp 2",
                 "border-sky-300/80 dark:border-sky-300/60":
                   e.name === "Purbeck Venture" || e.name === "Family Camp 3",
-              }
+              },
             )}
             key={e.name}
           >
@@ -85,7 +85,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
 
 function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
   return (
-    <div className="w-full border-gray-200 dark:border-gray-500 border-t grid grid-cols-[min-content_1fr]">
+    <div className="grid w-full grid-cols-[min-content_1fr] border-t border-gray-200 dark:border-gray-500">
       {dates.map((d) => (
         <DateRow key={d.toISO()} date={d} events={events} />
       ))}
@@ -99,7 +99,7 @@ export default function CalendarPage() {
   // todo make period configurable
   const dates = getPeriod(
     DateTime.fromISO("2024-07-20"),
-    DateTime.fromISO("2024-08-31")
+    DateTime.fromISO("2024-08-31"),
   );
 
   if (!data) {
