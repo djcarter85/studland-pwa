@@ -164,8 +164,6 @@ function PageBody({
                 <div className="flex flex-row gap-1 items-center">
                   <Wind />
                   <div>{h.windSpeedMph}</div>
-                  {/* <div className="text-xs">mph</div> */}
-                  {/* <div className="text-sm">{h.windDirection}</div> */}
                   <ArrowDown
                     className={clsx({
                       "rotate-N": h.windDirection === "N",
