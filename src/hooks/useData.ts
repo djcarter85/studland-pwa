@@ -1,55 +1,67 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import { z } from "zod";
 
 // TODO: report fetching errors
 // TODO: reload on refocus
-export default function useData(key: string) {
-  const [data, setData] = useState<any>(null);
+export default function useData<T extends z.ZodTypeAny>(
+  key: string,
+  schema: T
+) {
+  const [data, setData] = useState<z.infer<typeof schema>>(null);
   const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const url = `https://raw.githubusercontent.com/djcarter85/studland-data/main/data/${key}.json`
+  const url = `https://raw.githubusercontent.com/djcarter85/studland-data/main/data/${key}.json`;
   const internalCacheKey = "cache:" + key;
+
+  const cacheSchema = z.object({
+    lastUpdatedUtc: z.string(),
+    data: schema,
+  });
 
   useEffect(() => {
     const fetchAndCache = async () => {
       const cachedValue = localStorage.getItem(internalCacheKey);
 
       if (cachedValue) {
-        try {
-          const json = JSON.parse(cachedValue);
-          setLastUpdatedUtc(json.lastUpdatedUtc);
-          setData(json.data);
-        } catch {
-          // If the JSON parsing doesn't work, that's fine because we're about to fetch.
+        const parseResult = cacheSchema.safeParse(cachedValue);
+
+        if (parseResult.success) {
+          setLastUpdatedUtc(parseResult.data.lastUpdatedUtc);
+          setData(parseResult.data.data);
+        } else {
+          // If the data from the cache cannot be parsed, this is not a problem
+          // because we're about to fetch. We can just leave it "loading" for
+          // now.
         }
       }
 
-      let fetchedValue: string;
       try {
         setIsLoading(true);
 
         const response = await fetch(url);
         const json = await response.json();
-        fetchedValue = json;
+        const parseResult = schema.safeParse(json);
+
+        if (parseResult.success) {
+          const nowUtc = DateTime.now().toISO();
+
+          setLastUpdatedUtc(nowUtc);
+          setData(parseResult.data);
+
+          localStorage.setItem(
+            internalCacheKey,
+            JSON.stringify({ lastUpdatedUtc: nowUtc, data: parseResult.data })
+          );
+        }
       } finally {
         setIsLoading(false);
       }
-
-      if (fetchedValue) {
-        const nowUtc = DateTime.now().toISO();
-
-        setLastUpdatedUtc(nowUtc);
-        setData(fetchedValue);
-
-        localStorage.setItem(
-          internalCacheKey,
-          JSON.stringify({ lastUpdatedUtc: nowUtc, data: fetchedValue })
-        );
-      }
     };
+
     fetchAndCache();
-  }, [url]);
+  }, [url, schema]);
 
   return { data, lastUpdatedUtc, isLoading };
 }

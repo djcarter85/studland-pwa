@@ -94,7 +94,7 @@ function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
 }
 
 export default function CalendarPage() {
-  const { data } = useData("calendar");
+  const { data } = useData("calendar", calendarSchema);
 
   // todo make period configurable
   const dates = getPeriod(
@@ -106,11 +106,9 @@ export default function CalendarPage() {
     return <div>loading</div>;
   }
 
-  const calendar = calendarSchema.parse(data);
-
   return (
     <div className="my-3">
-      <Table dates={dates} events={calendar.events} />
+      <Table dates={dates} events={data.events} />
     </div>
   );
 }

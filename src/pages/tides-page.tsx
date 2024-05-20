@@ -125,18 +125,16 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
 }
 
 export default function TidesPage() {
-  const { data, lastUpdatedUtc } = useData("tides");
+  const { data, lastUpdatedUtc } = useData("tides", tidesSchema);
 
   if (!data) {
     return <div>Loading ...</div>;
   }
 
-  const tides = tidesSchema.parse(data);
-
   return (
     <div>
       <PageHeader lastUpdatedUtc={lastUpdatedUtc} />
-      <PageBody tides={tides} />
+      <PageBody tides={data} />
     </div>
   );
 }

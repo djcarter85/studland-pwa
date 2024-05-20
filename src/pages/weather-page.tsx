@@ -206,15 +206,13 @@ function PageBody({
 }
 
 export default function WeatherPage() {
-  const { data, lastUpdatedUtc } = useData("weather");
+  const { data, lastUpdatedUtc } = useData("weather", weatherSchema);
 
   if (data) {
-    const weatherData = weatherSchema.parse(data);
-
     return (
       <>
         <PageHeader lastUpdatedUtc={lastUpdatedUtc} />
-        <PageBody weatherData={weatherData} />
+        <PageBody weatherData={data} />
       </>
     );
   }

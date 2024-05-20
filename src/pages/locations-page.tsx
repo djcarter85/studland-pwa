@@ -53,13 +53,11 @@ function Location({ location }: { location: Location }) {
 }
 
 export default function LocationsPage() {
-  const { data } = useData("locations");
+  const { data } = useData("locations", locationsSchema);
 
   if (!data) {
     return <div>Loading ...</div>;
   }
-
-  const locations = locationsSchema.parse(data);
 
   const alphabetical = (a: Location, b: Location) =>
     a.name.localeCompare(b.name);
@@ -68,7 +66,7 @@ export default function LocationsPage() {
     <>
       <table className="w-full">
         <tbody>
-          {locations.locations.sort(alphabetical).map((l) => (
+          {data.locations.sort(alphabetical).map((l) => (
             <Location key={l.name} location={l} />
           ))}
         </tbody>
