@@ -17,7 +17,7 @@ import { useState } from "react";
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
   time: z.string(),
-  height: z.string(),
+  heightInMetres: z.number(),
 });
 
 type Tide = z.infer<typeof tideSchema>;
@@ -52,7 +52,7 @@ function TideRow({ tide }: { tide: Tide }) {
         </span>
       </td>
       <td className="py-2 font-bold text-gray-400 dark:text-gray-200 text-xl">
-        {tide.height}
+        {tide.heightInMetres}m
       </td>
     </tr>
   );
