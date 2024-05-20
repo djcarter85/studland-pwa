@@ -13,11 +13,13 @@ import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
 import BigDate from "../components/big-date";
 import { useState } from "react";
+import { DateTime } from "luxon";
 
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
   time: z.string(),
   heightInMetres: z.number(),
+  instant: z.string().transform((x) => DateTime.fromISO(x)),
 });
 
 type Tide = z.infer<typeof tideSchema>;
@@ -137,11 +139,60 @@ const TidesTable = ({
   );
 };
 
+const getTideDirection = (nextTideType: "Low" | "High") => {
+  switch (nextTideType) {
+    case "Low":
+      return "Falling";
+    case "High":
+      return "Rising";
+  }
+};
+
+const CurrentTide = ({ tides }: { tides: z.infer<typeof tidesSchema> }) => {
+  const now = DateTime.now();
+  const nextTide = tides.dates
+    .flatMap((x) => x.tides)
+    .find((x) => now < x.instant);
+
+  if (!nextTide) {
+    return <></>;
+  }
+
+  const diff = nextTide.instant
+    .diff(now, ["hours", "minutes", "seconds"])
+    .toObject();
+
+  const tideTypeClassName = clsx("uppercase font-bold", {
+    "text-violet-600 dark:text-violet-300": nextTide.type === "Low",
+    "text-sky-600 dark:text-sky-300": nextTide.type === "High",
+  });
+
+  return (
+    <div className="p-3 text-lg border-t">
+      <div>
+        The tide is currently{" "}
+        <span className={tideTypeClassName}>
+          {getTideDirection(nextTide.type)}
+        </span>
+        .
+      </div>
+      <div>
+        <span className={tideTypeClassName}>{nextTide.type}</span> tide is in{" "}
+        <span className="font-bold">
+          {diff.hours}hr {diff.minutes}min
+        </span>
+        , at <span className="font-bold">{nextTide.time}</span>.
+      </div>
+    </div>
+  );
+};
+
 function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
   const [selectedData, setSelectedData] = useState(tides.dates[0]);
 
   return (
     <>
+      <CurrentTide tides={tides} />
       <DateTabs
         tides={tides}
         selectedData={selectedData}
