@@ -17,6 +17,7 @@ import { useState } from "react";
 import Hyperlink from "../components/hyperlink";
 import LastUpdatedSection from "../components/last-updated-section";
 import { WeatherIcon } from "../components/weather-icon";
+import { LoadingState } from "../types/loading-state";
 
 const dateSchema = z.object({
   date: z.string(),
@@ -73,10 +74,10 @@ function Temperature({ temperature }: { temperature: string | number }) {
 }
 
 function PageHeader({
-  isLoading,
+  loadingState,
   lastUpdatedUtc,
 }: {
-  isLoading: boolean;
+  loadingState: LoadingState;
   lastUpdatedUtc: string;
 }) {
   return (
@@ -91,7 +92,7 @@ function PageHeader({
         </div>
       </Heading>
       <LastUpdatedSection
-        isLoading={isLoading}
+        loadingState={loadingState}
         lastUpdatedUtc={lastUpdatedUtc}
       />
     </>
@@ -215,12 +216,18 @@ function PageBody({
 }
 
 export default function WeatherPage() {
-  const { data, isLoading, lastUpdatedUtc } = useData("weather", weatherSchema);
+  const { data, loadingState, lastUpdatedUtc } = useData(
+    "weather",
+    weatherSchema,
+  );
 
   if (data) {
     return (
       <>
-        <PageHeader isLoading={isLoading} lastUpdatedUtc={lastUpdatedUtc} />
+        <PageHeader
+          loadingState={loadingState}
+          lastUpdatedUtc={lastUpdatedUtc}
+        />
         <PageBody weatherData={data} />
       </>
     );

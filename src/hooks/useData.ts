@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { LoadingState } from "../types/loading-state";
 
 // TODO: report fetching errors
 // TODO: reload on refocus
@@ -10,7 +11,7 @@ export default function useData<T extends z.ZodTypeAny>(
 ) {
   const [data, setData] = useState<z.infer<typeof schema>>(null);
   const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingState, setLoadingState] = useState<LoadingState>("loading");
 
   const url = `${import.meta.env.VITE_DATA_URL}/djcarter85/studland-data/main/data/${key}.json`;
   const internalCacheKey = "cache:" + key;
@@ -40,7 +41,7 @@ export default function useData<T extends z.ZodTypeAny>(
       }
 
       try {
-        setIsLoading(true);
+        setLoadingState("loading");
 
         const response = await fetch(url);
         const json = await response.json();
@@ -58,12 +59,12 @@ export default function useData<T extends z.ZodTypeAny>(
           );
         }
       } finally {
-        setIsLoading(false);
+        setLoadingState("loaded");
       }
     };
 
     fetchAndCache();
   }, [url, schema]);
 
-  return { data, lastUpdatedUtc, isLoading };
+  return { data, lastUpdatedUtc, loadingState };
 }

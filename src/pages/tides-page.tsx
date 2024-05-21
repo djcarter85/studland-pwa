@@ -14,6 +14,7 @@ import { dateSchema } from "../schemas/date-schema";
 import BigDate from "../components/big-date";
 import { useState } from "react";
 import { DateTime } from "luxon";
+import { LoadingState } from "../types/loading-state";
 
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
@@ -84,10 +85,10 @@ function DateTab({
 }
 
 function PageHeader({
-  isLoading,
+  loadingState,
   lastUpdatedUtc,
 }: {
-  isLoading: boolean;
+  loadingState: LoadingState;
   lastUpdatedUtc: string;
 }) {
   return (
@@ -102,7 +103,7 @@ function PageHeader({
         </div>
       </Heading>
       <LastUpdatedSection
-        isLoading={isLoading}
+        loadingState={loadingState}
         lastUpdatedUtc={lastUpdatedUtc}
       />
     </>
@@ -213,7 +214,7 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
 }
 
 export default function TidesPage() {
-  const { data, isLoading, lastUpdatedUtc } = useData("tides", tidesSchema);
+  const { data, loadingState, lastUpdatedUtc } = useData("tides", tidesSchema);
 
   if (!data) {
     return <div>Loading ...</div>;
@@ -221,7 +222,7 @@ export default function TidesPage() {
 
   return (
     <div>
-      <PageHeader isLoading={isLoading} lastUpdatedUtc={lastUpdatedUtc} />
+      <PageHeader loadingState={loadingState} lastUpdatedUtc={lastUpdatedUtc} />
       <PageBody tides={data} />
     </div>
   );
