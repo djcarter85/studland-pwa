@@ -25,7 +25,7 @@ export default function useData<T extends z.ZodTypeAny>(
       const cachedValue = localStorage.getItem(internalCacheKey);
 
       if (cachedValue) {
-        const parseResult = cacheSchema.safeParse(cachedValue);
+        const parseResult = cacheSchema.safeParse(JSON.parse(cachedValue));
 
         if (parseResult.success) {
           setLastUpdatedUtc(parseResult.data.lastUpdatedUtc);
