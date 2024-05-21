@@ -1,30 +1,23 @@
-import { DateTime } from "luxon";
 import { ArrowRepeat, CheckCircle, XCircle } from "react-bootstrap-icons";
 import { LoadingState } from "../types/loading-state";
 
-const LoadingStateText = ({
-  loadingState,
-  lastUpdatedUtc,
-}: {
-  loadingState: LoadingState;
-  lastUpdatedUtc: DateTime | null;
-}) => {
-  if (lastUpdatedUtc) {
+const LoadingStateText = ({ loadingState }: { loadingState: LoadingState }) => {
+  if (loadingState.lastUpdatedUtc) {
     // Ensure the time isn't in the future by subtracting a millisecond.
-    const dateTime = lastUpdatedUtc.plus({
+    const dateTime = loadingState.lastUpdatedUtc.plus({
       milliseconds: -1,
     });
 
     const dateTimeDescription = dateTime.toRelative({ style: "long" });
 
-    if (loadingState == "error") {
+    if (loadingState.state == "error") {
       return <>Error (showing data from {dateTimeDescription})</>;
     } else {
       return <>Last updated {dateTimeDescription}</>;
     }
   }
 
-  if (loadingState == "error") {
+  if (loadingState.state == "error") {
     return <>Error</>;
   } else {
     return <>Loading ...</>;
@@ -32,7 +25,7 @@ const LoadingStateText = ({
 };
 
 const LoadingIndicator = ({ loadingState }: { loadingState: LoadingState }) => {
-  switch (loadingState) {
+  switch (loadingState.state) {
     case "loading":
       return <ArrowRepeat className="animate-spin" />;
     case "loaded":
@@ -44,10 +37,8 @@ const LoadingIndicator = ({ loadingState }: { loadingState: LoadingState }) => {
 
 export default function LastUpdatedSection({
   loadingState,
-  lastUpdatedUtc,
 }: {
   loadingState: LoadingState;
-  lastUpdatedUtc: DateTime | null;
 }) {
   return (
     <div className="my-3 flex flex-row items-center gap-3 px-3">
@@ -55,10 +46,7 @@ export default function LastUpdatedSection({
         <LoadingIndicator loadingState={loadingState} />
       </div>
       <div className="text-sm">
-        <LoadingStateText
-          loadingState={loadingState}
-          lastUpdatedUtc={lastUpdatedUtc}
-        />
+        <LoadingStateText loadingState={loadingState} />
       </div>
     </div>
   );

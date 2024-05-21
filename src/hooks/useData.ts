@@ -10,8 +10,10 @@ export default function useData<T extends z.ZodTypeAny>(
   schema: T,
 ) {
   const [data, setData] = useState<z.infer<typeof schema> | null>(null);
-  const [lastUpdatedUtc, setLastUpdatedUtc] = useState<DateTime | null>(null);
-  const [loadingState, setLoadingState] = useState<LoadingState>("loading");
+  const [loadingState, setLoadingState] = useState<LoadingState>({
+    state: "loading",
+    lastUpdatedUtc: null,
+  });
 
   const url = `${import.meta.env.VITE_DATA_URL}/djcarter85/studland-data/main/data/${key}.json`;
   const internalCacheKey = "cache:" + key;
@@ -30,7 +32,10 @@ export default function useData<T extends z.ZodTypeAny>(
           const parseResult = cacheSchema.safeParse(JSON.parse(cachedValue));
 
           if (parseResult.success) {
-            setLastUpdatedUtc(parseResult.data.lastUpdatedUtc);
+            setLoadingState({
+              state: "loading",
+              lastUpdatedUtc: parseResult.data.lastUpdatedUtc,
+            });
             setData(parseResult.data.data);
           }
         } catch {
@@ -40,7 +45,9 @@ export default function useData<T extends z.ZodTypeAny>(
         }
       }
 
-      setLoadingState("loading");
+      setLoadingState((x) => {
+        return { state: "loading", lastUpdatedUtc: x.lastUpdatedUtc };
+      });
 
       const response = await fetch(url);
 
@@ -51,10 +58,9 @@ export default function useData<T extends z.ZodTypeAny>(
         if (parseResult.success) {
           const nowUtc = DateTime.now();
 
-          setLastUpdatedUtc(nowUtc);
           setData(parseResult.data);
 
-          setLoadingState("loaded");
+          setLoadingState({ state: "loaded", lastUpdatedUtc: nowUtc });
 
           localStorage.setItem(
             internalCacheKey,
@@ -65,12 +71,14 @@ export default function useData<T extends z.ZodTypeAny>(
           );
         }
       } else {
-        setLoadingState("error");
+        setLoadingState((x) => {
+          return { state: "error", lastUpdatedUtc: x.lastUpdatedUtc };
+        });
       }
     };
 
     fetchAndCache();
   }, [url, schema]);
 
-  return { data, lastUpdatedUtc, loadingState };
+  return { data, loadingState };
 }

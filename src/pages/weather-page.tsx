@@ -73,13 +73,7 @@ function Temperature({ temperature }: { temperature: string | number }) {
   return <>{temperature}°C</>;
 }
 
-function PageHeader({
-  loadingState,
-  lastUpdatedUtc,
-}: {
-  loadingState: LoadingState;
-  lastUpdatedUtc: DateTime | null;
-}) {
+function PageHeader({ loadingState }: { loadingState: LoadingState }) {
   return (
     <>
       <Heading>
@@ -91,10 +85,7 @@ function PageHeader({
           </Hyperlink>
         </div>
       </Heading>
-      <LastUpdatedSection
-        loadingState={loadingState}
-        lastUpdatedUtc={lastUpdatedUtc}
-      />
+      <LastUpdatedSection loadingState={loadingState} />
     </>
   );
 }
@@ -220,14 +211,11 @@ function PageBody({
 }
 
 export default function WeatherPage() {
-  const { data, loadingState, lastUpdatedUtc } = useData(
-    "weather",
-    weatherSchema,
-  );
+  const { data, loadingState } = useData("weather", weatherSchema);
 
   return (
     <>
-      <PageHeader loadingState={loadingState} lastUpdatedUtc={lastUpdatedUtc} />
+      <PageHeader loadingState={loadingState} />
       <PageBody weatherData={data} />
     </>
   );
