@@ -1,6 +1,7 @@
 import { z } from "zod";
 import Hyperlink from "../components/hyperlink";
 import useData from "../hooks/useData";
+import LastUpdatedSection from "../components/last-updated-section";
 
 const locationSchema = z.object({
   name: z.string(),
@@ -53,10 +54,13 @@ function Location({ location }: { location: Location }) {
 }
 
 export default function LocationsPage() {
-  const { data } = useData("locations", locationsSchema);
+  const { data, loadingState } = useData("locations", locationsSchema);
 
-  if (!data) {
-    return <div>Loading ...</div>;
+  if (
+    !data &&
+    (loadingState.state === "loading" || loadingState.state === "error")
+  ) {
+    return <LastUpdatedSection loadingState={loadingState} />;
   }
 
   const alphabetical = (a: Location, b: Location) =>
@@ -66,7 +70,7 @@ export default function LocationsPage() {
     <>
       <table className="w-full">
         <tbody>
-          {data.locations.sort(alphabetical).map((l) => (
+          {data!.locations.sort(alphabetical).map((l) => (
             <Location key={l.name} location={l} />
           ))}
         </tbody>

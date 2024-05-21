@@ -4,6 +4,7 @@ import clsx from "clsx";
 import BigDate from "../components/big-date";
 import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
+import LastUpdatedSection from "../components/last-updated-section";
 
 const eventSchema = z.object({
   name: z.string(),
@@ -94,7 +95,7 @@ function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
 }
 
 export default function CalendarPage() {
-  const { data } = useData("calendar", calendarSchema);
+  const { data, loadingState } = useData("calendar", calendarSchema);
 
   // todo make period configurable
   const dates = getPeriod(
@@ -102,13 +103,16 @@ export default function CalendarPage() {
     DateTime.fromISO("2024-08-31"),
   );
 
-  if (!data) {
-    return <div>loading</div>;
+  if (
+    !data &&
+    (loadingState.state === "loading" || loadingState.state === "error")
+  ) {
+    return <LastUpdatedSection loadingState={loadingState} />;
   }
 
   return (
     <div className="my-3">
-      <Table dates={dates} events={data.events} />
+      <Table dates={dates} events={data!.events} />
     </div>
   );
 }
