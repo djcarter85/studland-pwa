@@ -12,7 +12,7 @@ export default function useData<T extends z.ZodTypeAny>(
   const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const url = `https://raw.githubusercontent.com/djcarter85/studland-data/main/data/${key}.json`;
+  const url = `${import.meta.env.VITE_DATA_URL}/djcarter85/studland-data/main/data/${key}.json`;
   const internalCacheKey = "cache:" + key;
 
   const cacheSchema = z.object({
