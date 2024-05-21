@@ -1,14 +1,26 @@
 import { DateTime } from "luxon";
-import { ArrowRepeat, CheckCircle } from "react-bootstrap-icons";
+import { ArrowRepeat, CheckCircle, XCircle } from "react-bootstrap-icons";
 import { LoadingState } from "../types/loading-state";
 
-const LoadingStateText = ({ lastUpdatedUtc }: { lastUpdatedUtc: string }) => {
+const LoadingStateText = ({
+  loadingState,
+  lastUpdatedUtc,
+}: {
+  loadingState: LoadingState;
+  lastUpdatedUtc: string;
+}) => {
   // Ensure the time isn't in the future by subtracting a millisecond.
   const dateTime = DateTime.fromISO(lastUpdatedUtc).plus({
     milliseconds: -1,
   });
 
-  return <>Last updated {dateTime.toRelative({ style: "long" })}</>;
+  const dateTimeDescription = dateTime.toRelative({ style: "long" });
+
+  if (loadingState == "error") {
+    return <>Error (showing data from {dateTimeDescription})</>;
+  } else {
+    return <>Last updated {dateTimeDescription}</>;
+  }
 };
 
 const LoadingIndicator = ({ loadingState }: { loadingState: LoadingState }) => {
@@ -17,6 +29,8 @@ const LoadingIndicator = ({ loadingState }: { loadingState: LoadingState }) => {
       return <ArrowRepeat className="animate-spin" />;
     case "loaded":
       return <CheckCircle className="text-teal-500 dark:text-teal-400" />;
+    case "error":
+      return <XCircle className="text-rose-600 dark:text-rose-400" />;
   }
 };
 
@@ -33,7 +47,10 @@ export default function LastUpdatedSection({
         <LoadingIndicator loadingState={loadingState} />
       </div>
       <div className="text-sm">
-        <LoadingStateText lastUpdatedUtc={lastUpdatedUtc} />
+        <LoadingStateText
+          loadingState={loadingState}
+          lastUpdatedUtc={lastUpdatedUtc}
+        />
       </div>
     </div>
   );

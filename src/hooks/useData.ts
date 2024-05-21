@@ -40,10 +40,11 @@ export default function useData<T extends z.ZodTypeAny>(
         }
       }
 
-      try {
-        setLoadingState("loading");
+      setLoadingState("loading");
 
-        const response = await fetch(url);
+      const response = await fetch(url);
+
+      if (response.status === 200) {
         const json = await response.json();
         const parseResult = schema.safeParse(json);
 
@@ -53,13 +54,18 @@ export default function useData<T extends z.ZodTypeAny>(
           setLastUpdatedUtc(nowUtc);
           setData(parseResult.data);
 
+          setLoadingState("loaded");
+
           localStorage.setItem(
             internalCacheKey,
-            JSON.stringify({ lastUpdatedUtc: nowUtc, data: parseResult.data }),
+            JSON.stringify({
+              lastUpdatedUtc: nowUtc,
+              data: parseResult.data,
+            }),
           );
         }
-      } finally {
-        setLoadingState("loaded");
+      } else {
+        setLoadingState("error");
       }
     };
 

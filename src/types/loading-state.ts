@@ -1,1 +1,1 @@
-export type LoadingState = "loading" | "loaded";
+export type LoadingState = "loading" | "loaded" | "error";
