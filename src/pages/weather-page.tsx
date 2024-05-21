@@ -78,7 +78,7 @@ function PageHeader({
   lastUpdatedUtc,
 }: {
   loadingState: LoadingState;
-  lastUpdatedUtc: string;
+  lastUpdatedUtc: DateTime | null;
 }) {
   return (
     <>
@@ -102,8 +102,12 @@ function PageHeader({
 function PageBody({
   weatherData,
 }: {
-  weatherData: z.infer<typeof weatherSchema>;
+  weatherData: z.infer<typeof weatherSchema> | null;
 }) {
+  if (!weatherData) {
+    return <></>;
+  }
+
   const [selectedData, setSelectedData] = useState(weatherData.data[0]);
   const selectedDate = selectedData.date;
 
@@ -221,17 +225,10 @@ export default function WeatherPage() {
     weatherSchema,
   );
 
-  if (data) {
-    return (
-      <>
-        <PageHeader
-          loadingState={loadingState}
-          lastUpdatedUtc={lastUpdatedUtc}
-        />
-        <PageBody weatherData={data} />
-      </>
-    );
-  }
-
-  return <></>;
+  return (
+    <>
+      <PageHeader loadingState={loadingState} lastUpdatedUtc={lastUpdatedUtc} />
+      <PageBody weatherData={data} />
+    </>
+  );
 }

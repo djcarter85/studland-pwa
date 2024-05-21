@@ -7,19 +7,27 @@ const LoadingStateText = ({
   lastUpdatedUtc,
 }: {
   loadingState: LoadingState;
-  lastUpdatedUtc: string;
+  lastUpdatedUtc: DateTime | null;
 }) => {
-  // Ensure the time isn't in the future by subtracting a millisecond.
-  const dateTime = DateTime.fromISO(lastUpdatedUtc).plus({
-    milliseconds: -1,
-  });
+  if (lastUpdatedUtc) {
+    // Ensure the time isn't in the future by subtracting a millisecond.
+    const dateTime = lastUpdatedUtc.plus({
+      milliseconds: -1,
+    });
 
-  const dateTimeDescription = dateTime.toRelative({ style: "long" });
+    const dateTimeDescription = dateTime.toRelative({ style: "long" });
+
+    if (loadingState == "error") {
+      return <>Error (showing data from {dateTimeDescription})</>;
+    } else {
+      return <>Last updated {dateTimeDescription}</>;
+    }
+  }
 
   if (loadingState == "error") {
-    return <>Error (showing data from {dateTimeDescription})</>;
+    return <>Error</>;
   } else {
-    return <>Last updated {dateTimeDescription}</>;
+    return <>Loading ...</>;
   }
 };
 
@@ -39,7 +47,7 @@ export default function LastUpdatedSection({
   lastUpdatedUtc,
 }: {
   loadingState: LoadingState;
-  lastUpdatedUtc: string;
+  lastUpdatedUtc: DateTime | null;
 }) {
   return (
     <div className="my-3 flex flex-row items-center gap-3 px-3">

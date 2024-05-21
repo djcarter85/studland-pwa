@@ -9,15 +9,15 @@ export default function useData<T extends z.ZodTypeAny>(
   key: string,
   schema: T,
 ) {
-  const [data, setData] = useState<z.infer<typeof schema>>(null);
-  const [lastUpdatedUtc, setLastUpdatedUtc] = useState<string>("");
+  const [data, setData] = useState<z.infer<typeof schema> | null>(null);
+  const [lastUpdatedUtc, setLastUpdatedUtc] = useState<DateTime | null>(null);
   const [loadingState, setLoadingState] = useState<LoadingState>("loading");
 
   const url = `${import.meta.env.VITE_DATA_URL}/djcarter85/studland-data/main/data/${key}.json`;
   const internalCacheKey = "cache:" + key;
 
   const cacheSchema = z.object({
-    lastUpdatedUtc: z.string(),
+    lastUpdatedUtc: z.string().transform((x) => DateTime.fromISO(x)),
     data: schema,
   });
 
@@ -49,7 +49,7 @@ export default function useData<T extends z.ZodTypeAny>(
         const parseResult = schema.safeParse(json);
 
         if (parseResult.success) {
-          const nowUtc = DateTime.now().toISO();
+          const nowUtc = DateTime.now();
 
           setLastUpdatedUtc(nowUtc);
           setData(parseResult.data);

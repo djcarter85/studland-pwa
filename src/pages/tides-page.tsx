@@ -89,7 +89,7 @@ function PageHeader({
   lastUpdatedUtc,
 }: {
   loadingState: LoadingState;
-  lastUpdatedUtc: string;
+  lastUpdatedUtc: DateTime | null;
 }) {
   return (
     <>
@@ -197,7 +197,10 @@ const CurrentTide = ({ tides }: { tides: z.infer<typeof tidesSchema> }) => {
   );
 };
 
-function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
+function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> | null }) {
+  if (!tides) {
+    return <></>;
+  }
   const [selectedData, setSelectedData] = useState(tides.dates[0]);
 
   return (
@@ -215,10 +218,6 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
 
 export default function TidesPage() {
   const { data, loadingState, lastUpdatedUtc } = useData("tides", tidesSchema);
-
-  if (!data) {
-    return <div>Loading ...</div>;
-  }
 
   return (
     <div>
