@@ -83,7 +83,13 @@ function DateTab({
   );
 }
 
-function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
+function PageHeader({
+  isLoading,
+  lastUpdatedUtc,
+}: {
+  isLoading: boolean;
+  lastUpdatedUtc: string;
+}) {
   return (
     <>
       <Heading>
@@ -95,7 +101,10 @@ function PageHeader({ lastUpdatedUtc }: { lastUpdatedUtc: string }) {
           </Hyperlink>
         </div>
       </Heading>
-      <LastUpdatedSection lastUpdatedUtc={lastUpdatedUtc} />
+      <LastUpdatedSection
+        isLoading={isLoading}
+        lastUpdatedUtc={lastUpdatedUtc}
+      />
     </>
   );
 }
@@ -204,7 +213,7 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> }) {
 }
 
 export default function TidesPage() {
-  const { data, lastUpdatedUtc } = useData("tides", tidesSchema);
+  const { data, isLoading, lastUpdatedUtc } = useData("tides", tidesSchema);
 
   if (!data) {
     return <div>Loading ...</div>;
@@ -212,7 +221,7 @@ export default function TidesPage() {
 
   return (
     <div>
-      <PageHeader lastUpdatedUtc={lastUpdatedUtc} />
+      <PageHeader isLoading={isLoading} lastUpdatedUtc={lastUpdatedUtc} />
       <PageBody tides={data} />
     </div>
   );
