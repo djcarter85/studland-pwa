@@ -25,12 +25,14 @@ export default function useData<T extends z.ZodTypeAny>(
       const cachedValue = localStorage.getItem(internalCacheKey);
 
       if (cachedValue) {
-        const parseResult = cacheSchema.safeParse(JSON.parse(cachedValue));
+        try {
+          const parseResult = cacheSchema.safeParse(JSON.parse(cachedValue));
 
-        if (parseResult.success) {
-          setLastUpdatedUtc(parseResult.data.lastUpdatedUtc);
-          setData(parseResult.data.data);
-        } else {
+          if (parseResult.success) {
+            setLastUpdatedUtc(parseResult.data.lastUpdatedUtc);
+            setData(parseResult.data.data);
+          }
+        } catch {
           // If the data from the cache cannot be parsed, this is not a problem
           // because we're about to fetch. We can just leave it "loading" for
           // now.
