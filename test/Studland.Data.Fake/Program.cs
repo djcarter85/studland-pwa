@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile(@"C:\a\studland\config.json", optional: true, reloadOnChange: true);
 builder.Services.AddHttpClient();
 builder.Services.AddCors();
 
@@ -9,26 +10,39 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-async Task<TimeSpan> GetDelayAsync()
+TimeSpan GetDelay(IConfiguration configuration)
 {
-    try
-    {
-        var fileText = await File.ReadAllTextAsync(@"C:\a\studland\delay.txt");
-        var delay = TimeSpan.FromMilliseconds(int.Parse(fileText));
-        return delay;
-    }
-    catch
+    var configValue = configuration["delayMilliseconds"];
+
+    if (configValue == null)
     {
         return TimeSpan.Zero;
     }
+    else
+    {
+        return TimeSpan.FromMilliseconds(int.Parse(configValue));
+    }
 }
 
-async Task<string> GetAsync(HttpClient httpClient, string? path)
+string? GetError(IConfiguration configuration) => configuration["errorMessage"];
+
+async Task<IResult> GetAsync(HttpClient httpClient, IConfiguration configuration, string? path)
 {
     var fetchTask = httpClient.GetAsync($"https://raw.githubusercontent.com/{path}");
-    await Task.Delay(await GetDelayAsync());
-    var responseMessage = await fetchTask;
-    return await responseMessage.Content.ReadAsStringAsync();
+    await Task.Delay(GetDelay(configuration));
+
+    var error = GetError(configuration);
+
+    if (!string.IsNullOrEmpty(error))
+    {
+        return Results.BadRequest(error);
+    }
+    else
+    {
+        var responseMessage = await fetchTask;
+        var stream = await responseMessage.Content.ReadAsStreamAsync();
+        return Results.Stream(stream, contentType: "application/json");
+    }
 }
 
 app.UseCors(x =>
@@ -38,6 +52,8 @@ app.UseCors(x =>
     x.AllowAnyOrigin();
 });
 
-app.MapGet("/{*path}", async (string? path, [FromServices] HttpClient httpClient) => await GetAsync(httpClient, path));
+app.MapGet("/{*path}",
+    async (string? path, [FromServices] HttpClient httpClient, [FromServices] IConfiguration configuration) =>
+        await GetAsync(httpClient, configuration, path));
 
 app.Run();
