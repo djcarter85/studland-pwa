@@ -25,3 +25,9 @@ dist-ssr
 
 # Other
 dev-dist
+
+# .NET build artefacts
+bin
+obj
+.vs
+*.user
