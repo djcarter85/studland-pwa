@@ -36,6 +36,23 @@ function getPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
   return dates;
 }
 
+const DateEvent = ({ evt }: { evt: Event }) => {
+  return (
+    <div
+      className={clsx("flex h-full items-center border-l-8 px-4 text-xl", {
+        "border-teal-300/80 dark:border-teal-300/60":
+          evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
+        "border-violet-300/80 dark:border-violet-300/60":
+          evt.name === "Studland Venture" || evt.name === "Family Camp 2",
+        "border-sky-300/80 dark:border-sky-300/60":
+          evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
+      })}
+    >
+      <div>{evt.name}</div>
+    </div>
+  );
+};
+
 function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
   const events2 = events.filter((e) => {
     return e.startDate <= date && e.endDate >= date;
@@ -62,22 +79,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
         )}
       >
         {events2.map((e) => (
-          <div
-            className={clsx(
-              "flex h-full items-center border-l-8 px-4 text-xl",
-              {
-                "border-teal-300/80 dark:border-teal-300/60":
-                  e.name === "Dorset Venture" || e.name === "Family Camp 1",
-                "border-violet-300/80 dark:border-violet-300/60":
-                  e.name === "Studland Venture" || e.name === "Family Camp 2",
-                "border-sky-300/80 dark:border-sky-300/60":
-                  e.name === "Purbeck Venture" || e.name === "Family Camp 3",
-              },
-            )}
-            key={e.name}
-          >
-            <div>{e.name}</div>
-          </div>
+          <DateEvent key={e.name} evt={e} />
         ))}
       </div>
     </>
