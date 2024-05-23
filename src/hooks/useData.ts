@@ -49,28 +49,34 @@ export default function useData<T extends z.ZodTypeAny>(
         return { state: "loading", lastUpdatedUtc: x.lastUpdatedUtc };
       });
 
-      const response = await fetch(url);
+      try {
+        const response = await fetch(url);
 
-      if (response.status === 200) {
-        const json = await response.json();
-        const parseResult = schema.safeParse(json);
+        if (response.status === 200) {
+          const json = await response.json();
+          const parseResult = schema.safeParse(json);
 
-        if (parseResult.success) {
-          const nowUtc = DateTime.now();
+          if (parseResult.success) {
+            const nowUtc = DateTime.now();
 
-          setData(parseResult.data);
+            setData(parseResult.data);
 
-          setLoadingState({ state: "loaded", lastUpdatedUtc: nowUtc });
+            setLoadingState({ state: "loaded", lastUpdatedUtc: nowUtc });
 
-          localStorage.setItem(
-            internalCacheKey,
-            JSON.stringify({
-              lastUpdatedUtc: nowUtc,
-              data: parseResult.data,
-            }),
-          );
+            localStorage.setItem(
+              internalCacheKey,
+              JSON.stringify({
+                lastUpdatedUtc: nowUtc,
+                data: parseResult.data,
+              }),
+            );
+          }
+        } else {
+          setLoadingState((x) => {
+            return { state: "error", lastUpdatedUtc: x.lastUpdatedUtc };
+          });
         }
-      } else {
+      } catch {
         setLoadingState((x) => {
           return { state: "error", lastUpdatedUtc: x.lastUpdatedUtc };
         });
