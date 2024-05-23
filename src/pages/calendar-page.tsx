@@ -46,12 +46,14 @@ const DateEvent = ({ evt, date }: { evt: Event; date: DateTime }) => {
   return (
     <div
       className={clsx("flex h-full items-center border-l-8 px-4 text-xl", {
-        "border-teal-300/80 dark:border-teal-300/60":
+        "border-sky-400 bg-sky-200 dark:border-sky-600 dark:bg-sky-700/60":
           evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
-        "border-violet-300/80 dark:border-violet-300/60":
+        "border-violet-400 bg-violet-200 dark:border-violet-500/80 dark:bg-violet-700/60":
           evt.name === "Studland Venture" || evt.name === "Family Camp 2",
-        "border-sky-300/80 dark:border-sky-300/60":
+        "border-teal-400 bg-teal-200 dark:border-teal-600 dark:bg-teal-700/60":
           evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
+        "border-gray-400 bg-gray-200 dark:border-gray-500 dark:bg-gray-700/60":
+          evt.name === "Site set up" || evt.name === "Site pack down",
       })}
     >
       <div>
@@ -72,7 +74,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
         className={clsx(
           "border-b border-gray-200 px-4 py-2 dark:border-gray-500",
           {
-            "bg-gray-100 dark:bg-gray-700": isWeekend(date),
+            "bg-amber-200/40 dark:bg-amber-600/30": isWeekend(date),
           },
         )}
       >
@@ -80,10 +82,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
       </div>
       <div
         className={clsx(
-          "flex flex-col border-b border-gray-200 dark:border-gray-500",
-          {
-            "bg-gray-100 dark:bg-gray-700": isWeekend(date),
-          },
+          "flex flex-col border-b border-gray-300 dark:border-gray-500",
         )}
       >
         {events2.map((e) => (
