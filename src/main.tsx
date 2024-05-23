@@ -2,11 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Root from "./root";
 import "./globals.css";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
 import LocationsPage from "./pages/locations-page";
 import WeatherPage from "./pages/weather-page";
 import TidesPage from "./pages/tides-page";
@@ -16,7 +12,7 @@ import CalendarPage from "./pages/calendar-page";
 import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/700.css";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Root />,
