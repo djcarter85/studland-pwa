@@ -121,7 +121,7 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="my-3">
+    <div>
       <Table dates={dates} events={data!.events} />
     </div>
   );
