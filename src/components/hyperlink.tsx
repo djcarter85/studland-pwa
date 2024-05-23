@@ -9,7 +9,7 @@ export default function Hyperlink({
 }) {
   return (
     <a
-      className="text-teal-500 underline hover:no-underline dark:text-teal-400"
+      className="text-teal-600 underline hover:no-underline dark:text-teal-400"
       href={href}
     >
       {children}
