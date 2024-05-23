@@ -36,7 +36,13 @@ function getPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
   return dates;
 }
 
-const DateEvent = ({ evt }: { evt: Event }) => {
+const dayDiff = (start: DateTime, end: DateTime) =>
+  end.diff(start, ["days", "hours"]).toObject().days ?? 0;
+
+const DateEvent = ({ evt, date }: { evt: Event; date: DateTime }) => {
+  const dayNumber = dayDiff(evt.startDate, date) + 1;
+  const eventLength = dayDiff(evt.startDate, evt.endDate) + 1;
+
   return (
     <div
       className={clsx("flex h-full items-center border-l-8 px-4 text-xl", {
@@ -48,7 +54,9 @@ const DateEvent = ({ evt }: { evt: Event }) => {
           evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
       })}
     >
-      <div>{evt.name}</div>
+      <div>
+        {evt.name} ({dayNumber}/{eventLength})
+      </div>
     </div>
   );
 };
@@ -79,7 +87,7 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
         )}
       >
         {events2.map((e) => (
-          <DateEvent key={e.name} evt={e} />
+          <DateEvent key={e.name} evt={e} date={date} />
         ))}
       </div>
     </>
