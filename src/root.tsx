@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Android2, Apple, BoxArrowUp, PlusSquare } from "react-bootstrap-icons";
 import { useTernaryDarkMode } from "usehooks-ts";
 import Nav from "./components/nav";
+import { useEffect } from "react";
 
 function PwaWarning() {
   return (
@@ -28,17 +29,18 @@ function PwaWarning() {
 
 export default function Root() {
   const { isDarkMode } = useTernaryDarkMode();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("class", clsx({ dark: isDarkMode }));
+  }, [isDarkMode]);
+
   return (
     <>
-      <div className={clsx({ dark: isDarkMode })}>
-        <div className="min-h-screen overflow-auto bg-gray-50 transition-colors dark:bg-gray-900">
-          <Nav />
-          <PwaWarning />
-          <main className="mx-auto max-w-xl text-gray-900 pb-safe-offset-20 dark:text-gray-100">
-            <Outlet />
-          </main>
-        </div>
-      </div>
+      <Nav />
+      <PwaWarning />
+      <main className="mx-auto max-w-xl text-gray-900 pt-safe pb-safe-offset-20 dark:text-gray-100">
+        <Outlet />
+      </main>
     </>
   );
 }
