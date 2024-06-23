@@ -9,7 +9,7 @@ import NavLink from "./nav-link";
 
 export default function Nav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 w-full border-t border-gray-200 bg-gray-50/80 shadow-[0px_0px_6px_2px_#edf2f7] backdrop-blur-sm pb-safe dark:border-gray-700 dark:bg-gray-800/80 dark:shadow-none">
+    <nav className="fixed bottom-0 left-0 right-0 w-full border-t border-gray-200 bg-gray-50/80 backdrop-blur-sm pb-safe dark:border-gray-700 dark:bg-gray-800/80">
       <div className="mx-auto flex h-16 max-w-xl flex-row items-center justify-around">
         <NavLink title="Weather" href="/weather" icon={<CloudSun />} />
         <NavLink title="Tides" href="/tides" icon={<Water />} />
