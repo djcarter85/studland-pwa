@@ -91,6 +91,10 @@ export default function InfoPage() {
       <ColourSchemeChooser />
       <Subheading>About this app</Subheading>
       <Para>
+        Wind speeds are in miles per hour, and temperatures are in degrees
+        Celsius. All times are in GMT/BST.
+      </Para>
+      <Para>
         Made by Dan and Laura Carter. If you have any questions or suggestions,
         please email{" "}
         <Hyperlink href="mailto:djcarter85@gmail.com">
