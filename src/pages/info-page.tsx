@@ -95,8 +95,8 @@ export default function InfoPage() {
         Celsius. All times are in GMT/BST.
       </Para>
       <Para>
-        Made by Dan and Laura Carter. If you have any questions or suggestions,
-        please email{" "}
+        This app was made by Dan and Laura Carter. If you have any questions or
+        suggestions, please email{" "}
         <Hyperlink href="mailto:djcarter85@gmail.com">
           djcarter85@gmail.com
         </Hyperlink>
