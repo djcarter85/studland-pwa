@@ -94,7 +94,7 @@ const RainMap = () => {
   return (
     <iframe
       src="https://www.rainviewer.com/map.html?loc=50.611,-1.9179,8.721758007570246&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=0&c=3&o=83&lm=1&layer=radar&mlayer=0&sm=1&sn=1&hu=false"
-      className="h-[50vh] w-full border-0 mt-2"
+      className="mt-2 h-[50vh] w-full border-0"
       allowFullScreen
     ></iframe>
   );
