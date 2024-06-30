@@ -47,13 +47,13 @@ const weatherSchema = z.object({
 });
 
 function DateTab({
-  data,
+  date,
   isSelected,
-  setSelectedData,
+  setUserSelectedDate,
 }: {
-  data: z.infer<typeof dateSchema>;
+  date: string;
   isSelected: boolean;
-  setSelectedData: (data: z.infer<typeof dateSchema>) => void;
+  setUserSelectedDate: (date: string) => void;
 }) {
   return (
     <button
@@ -62,9 +62,9 @@ function DateTab({
           isSelected,
         "border-transparent bg-gray-100 dark:bg-gray-800": !isSelected,
       })}
-      onClick={() => setSelectedData(data)}
+      onClick={() => setUserSelectedDate(date)}
     >
-      <BigDate date={DateTime.fromISO(data.date)} />
+      <BigDate date={DateTime.fromISO(date)} />
     </button>
   );
 }
@@ -109,8 +109,10 @@ function PageBody({
     return <></>;
   }
 
-  const [selectedData, setSelectedData] = useState(weatherData.data[0]);
-  const selectedDate = selectedData.date;
+  const [userSelectedDate, setUserSelectedDate] = useState<string | null>(null);
+  const selectedData =
+    weatherData.data.find((d) => d.date == userSelectedDate) ??
+    weatherData.data[0];
 
   return (
     <>
@@ -118,9 +120,9 @@ function PageBody({
         {weatherData.data.map((d) => (
           <DateTab
             key={d.date}
-            data={d}
-            isSelected={d.date === selectedDate}
-            setSelectedData={setSelectedData}
+            date={d.date}
+            isSelected={d.date === selectedData.date}
+            setUserSelectedDate={setUserSelectedDate}
           />
         ))}
       </div>
