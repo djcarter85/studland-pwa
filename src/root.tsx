@@ -3,15 +3,33 @@ import clsx from "clsx";
 import { useTernaryDarkMode } from "usehooks-ts";
 import Nav from "./components/nav";
 import { useEffect } from "react";
+import { XLg } from "react-bootstrap-icons";
+import { Duration } from "luxon";
+import { useDismiss } from "./hooks/useDismiss";
 
 function PwaWarning() {
+  const { isVisible, dismiss } = useDismiss(
+    "pwa-warning",
+    Duration.fromObject({ weeks: 1 }),
+  );
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <div className="bg-orange-100 dark:bg-gray-600 pwa:hidden">
-      <div className="mx-auto flex max-w-xl flex-col gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900 dark:font-normal dark:text-orange-200">
+      <div className="mx-auto flex max-w-xl flex-row items-center gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900 dark:font-normal dark:text-orange-200">
         <p>
           This website works best when installed as an app. You can do this by
           choosing "Add to home screen" from your browser's menu.
         </p>
+        <button
+          className="rounded-lg bg-orange-300 p-2 text-xl hover:bg-orange-400"
+          onClick={(_) => dismiss()}
+        >
+          <XLg />
+        </button>
       </div>
     </div>
   );
