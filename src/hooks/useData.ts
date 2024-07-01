@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { LoadingState } from "../types/loading-state";
+import axios from "axios";
 
 // TODO: report fetching errors
 // TODO: reload on refocus
@@ -50,10 +51,17 @@ export default function useData<T extends z.ZodTypeAny>(
       });
 
       try {
-        const response = await fetch(url);
+        // try json
+        // check errors
+        // timeout
+        const response = await axios({
+          method: "GET",
+          url: url,
+          responseType: "json"
+        });
 
         if (response.status === 200) {
-          const json = await response.json();
+          const json = await response.data();
           const parseResult = schema.safeParse(json);
 
           if (parseResult.success) {

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.0.19",
+    "axios": "^1.7.2",
     "clsx": "^2.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
