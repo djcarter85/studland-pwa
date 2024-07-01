@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Root } from "./root";
+import { Layout } from "./layout";
 import "./globals.css";
 import {
   createBrowserRouter,
@@ -19,7 +19,7 @@ import "@fontsource/dm-sans/700.css";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Layout />,
     children: [
       {
         path: "/",

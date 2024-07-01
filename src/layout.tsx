@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { PwaWarning } from "./components/pwa-warning";
 import { StatusBar } from "./components/status-bar";
 
-const Root = () => {
+const Layout = () => {
   const { isDarkMode } = useTernaryDarkMode();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const Root = () => {
   );
 };
 
-export { Root };
+export { Layout };
