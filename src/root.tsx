@@ -7,7 +7,7 @@ import { XLg } from "react-bootstrap-icons";
 import { Duration } from "luxon";
 import { useDismiss } from "./hooks/useDismiss";
 
-function PwaWarning() {
+const PwaWarning = () => {
   const { isVisible, dismiss } = useDismiss(
     "pwa-warning",
     Duration.fromObject({ weeks: 1 }),
@@ -33,7 +33,7 @@ function PwaWarning() {
       </div>
     </div>
   );
-}
+};
 
 const StatusBar = () => {
   return (
