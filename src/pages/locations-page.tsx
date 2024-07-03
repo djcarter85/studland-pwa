@@ -9,6 +9,7 @@ const locationSchema = z.object({
   lng: z.string(),
   googlePlaceId: z.string(),
   wazeVenueId: z.string(),
+  canDriveTo: z.boolean(),
 });
 
 type Location = z.infer<typeof locationSchema>;
@@ -44,10 +45,14 @@ function Location({ location }: { location: Location }) {
   return (
     <tr className="odd:bg-gray-100 odd:dark:bg-gray-700">
       <td className="p-2">{location.name}</td>
-      <td className="p-2">
+      <td className="p-2 text-center">
         <Hyperlink href={getGoogleMapsUrl(location)}>Google</Hyperlink>
-        {" | "}
-        <Hyperlink href={getWazeUrl(location)}>Waze</Hyperlink>
+        {location.canDriveTo && (
+          <>
+            {" | "}
+            <Hyperlink href={getWazeUrl(location)}>Waze</Hyperlink>
+          </>
+        )}
       </td>
     </tr>
   );
