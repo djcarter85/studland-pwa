@@ -2,14 +2,13 @@ import { z } from "zod";
 import Hyperlink from "../components/hyperlink";
 import useData from "../hooks/useData";
 import LastUpdatedSection from "../components/last-updated-section";
+import { GeoAlt } from "react-bootstrap-icons";
 
 const locationSchema = z.object({
   name: z.string(),
   lat: z.string(),
   lng: z.string(),
   googlePlaceId: z.string(),
-  wazeVenueId: z.string(),
-  canDriveTo: z.boolean(),
 });
 
 type Location = z.infer<typeof locationSchema>;
@@ -30,29 +29,12 @@ function getGoogleMapsUrl(location: Location) {
   return url;
 }
 
-function getWazeUrl(location: Location) {
-  let url = "https://www.waze.com/ul?";
-  if (location.wazeVenueId) {
-    url += "preview_venue_id=" + location.wazeVenueId;
-  } else {
-    url += "ll=" + location.lat + "%2C" + location.lng;
-  }
-
-  return url;
-}
-
 function Location({ location }: { location: Location }) {
   return (
     <tr className="odd:bg-gray-100 odd:dark:bg-gray-700">
       <td className="p-2">{location.name}</td>
       <td className="p-2 text-center">
         <Hyperlink href={getGoogleMapsUrl(location)}>Google</Hyperlink>
-        {location.canDriveTo && (
-          <>
-            {" | "}
-            <Hyperlink href={getWazeUrl(location)}>Waze</Hyperlink>
-          </>
-        )}
       </td>
     </tr>
   );
