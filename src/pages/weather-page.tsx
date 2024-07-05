@@ -1,7 +1,5 @@
-import { DateTime } from "luxon";
 import useData from "../hooks/useData";
 import { z } from "zod";
-import BigDate from "../components/big-date";
 import Heading from "../components/heading";
 import {
   ArrowDown,
@@ -18,6 +16,7 @@ import Hyperlink from "../components/hyperlink";
 import LastUpdatedSection from "../components/last-updated-section";
 import { WeatherIcon } from "../components/weather-icon";
 import { LoadingState } from "../types/loading-state";
+import { DateTabs } from "../components/date-tabs";
 
 const dateSchema = z.object({
   date: z.string(),
@@ -45,29 +44,6 @@ const dateSchema = z.object({
 const weatherSchema = z.object({
   data: z.array(dateSchema),
 });
-
-const DateTab = ({
-  date,
-  isSelected,
-  setUserSelectedDate,
-}: {
-  date: string;
-  isSelected: boolean;
-  setUserSelectedDate: (date: string) => void;
-}) => {
-  return (
-    <button
-      className={clsx("basis-full border-t-2 py-2", {
-        "border-teal-600 bg-gray-50 dark:border-teal-400 dark:bg-gray-700":
-          isSelected,
-        "border-transparent bg-gray-100 dark:bg-gray-800": !isSelected,
-      })}
-      onClick={() => setUserSelectedDate(date)}
-    >
-      <BigDate date={DateTime.fromISO(date)} />
-    </button>
-  );
-};
 
 const Temperature = ({ temperature }: { temperature: string | number }) => {
   return <>{temperature}°C</>;
@@ -97,29 +73,6 @@ const RainMap = () => {
       className="mt-2 h-[50vh] w-full border-0"
       allowFullScreen
     ></iframe>
-  );
-};
-
-const DateTabs = ({
-  dates,
-  selectedDate,
-  setUserSelectedDate,
-}: {
-  dates: string[];
-  selectedDate: string;
-  setUserSelectedDate: (date: string) => void;
-}) => {
-  return (
-    <div className="flex flex-row justify-around">
-      {dates.map((d) => (
-        <DateTab
-          key={d}
-          date={d}
-          isSelected={d === selectedDate}
-          setUserSelectedDate={setUserSelectedDate}
-        />
-      ))}
-    </div>
   );
 };
 
