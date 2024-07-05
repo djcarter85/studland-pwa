@@ -11,10 +11,10 @@ import useData from "../hooks/useData";
 import LastUpdatedSection from "../components/last-updated-section";
 import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
-import BigDate from "../components/big-date";
 import { useState } from "react";
 import { DateTime } from "luxon";
 import { LoadingState } from "../types/loading-state";
+import { DateTabs } from "../components/date-tabs";
 
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
@@ -61,29 +61,6 @@ function TideRow({ tide }: { tide: Tide }) {
   );
 }
 
-function DateTab({
-  data,
-  isSelected,
-  setSelectedData,
-}: {
-  data: z.infer<typeof tideDateSchema>;
-  isSelected: boolean;
-  setSelectedData: (data: z.infer<typeof tideDateSchema>) => void;
-}) {
-  return (
-    <button
-      className={clsx("basis-full border-t-2 py-2", {
-        "border-teal-600 bg-gray-50 dark:border-teal-400 dark:bg-gray-700":
-          isSelected,
-        "border-transparent bg-gray-100 dark:bg-gray-800": !isSelected,
-      })}
-      onClick={() => setSelectedData(data)}
-    >
-      <BigDate date={data.date} />
-    </button>
-  );
-}
-
 function PageHeader({ loadingState }: { loadingState: LoadingState }) {
   return (
     <>
@@ -100,29 +77,6 @@ function PageHeader({ loadingState }: { loadingState: LoadingState }) {
     </>
   );
 }
-
-const DateTabs = ({
-  tides,
-  selectedData,
-  setSelectedData,
-}: {
-  tides: z.infer<typeof tidesSchema>;
-  selectedData: z.infer<typeof tideDateSchema>;
-  setSelectedData: (x: z.infer<typeof tideDateSchema>) => void;
-}) => {
-  return (
-    <div className="flex flex-row justify-around">
-      {tides.dates.map((d) => (
-        <DateTab
-          key={d.date.toISO()}
-          data={d}
-          isSelected={d.date.toISO() === selectedData.date.toISO()}
-          setSelectedData={setSelectedData}
-        />
-      ))}
-    </div>
-  );
-};
 
 const TidesTable = ({
   selectedData,
@@ -192,15 +146,19 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> | null }) {
   if (!tides) {
     return <></>;
   }
-  const [selectedData, setSelectedData] = useState(tides.dates[0]);
+
+  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(null);
+  const selectedData =
+    tides.dates.find((d) => d.date == userSelectedDate) ??
+    tides.dates[0];
 
   return (
     <>
       <CurrentTide tides={tides} />
       <DateTabs
-        tides={tides}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
+        dates={tides.dates.map((d) => d.date)}
+        selectedDate={selectedData.date}
+        setUserSelectedDate={setUserSelectedDate}
       />
       <TidesTable selectedData={selectedData} />
     </>
