@@ -17,9 +17,10 @@ import LastUpdatedSection from "../components/last-updated-section";
 import { WeatherIcon } from "../components/weather-icon";
 import { LoadingState } from "../types/loading-state";
 import { DateTabs } from "../components/date-tabs";
+import { DateTime } from "luxon";
 
 const dateSchema = z.object({
-  date: z.string(),
+  date: z.string().transform((x) => DateTime.fromISO(x)),
   summary: z.object({
     description: z.string(),
     weatherType: z.number(),
@@ -85,7 +86,7 @@ const PageBody = ({
     return <></>;
   }
 
-  const [userSelectedDate, setUserSelectedDate] = useState<string | null>(null);
+  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(null);
   const selectedData =
     weatherData.data.find((d) => d.date == userSelectedDate) ??
     weatherData.data[0];

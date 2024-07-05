@@ -7,9 +7,9 @@ const DateTab = ({
   isSelected,
   setUserSelectedDate,
 }: {
-  date: string;
+  date: DateTime;
   isSelected: boolean;
-  setUserSelectedDate: (date: string) => void;
+  setUserSelectedDate: (date: DateTime) => void;
 }) => {
   return (
     <button
@@ -20,7 +20,7 @@ const DateTab = ({
       })}
       onClick={() => setUserSelectedDate(date)}
     >
-      <BigDate date={DateTime.fromISO(date)} />
+      <BigDate date={date} />
     </button>
   );
 };
@@ -30,15 +30,15 @@ const DateTabs = ({
   selectedDate,
   setUserSelectedDate,
 }: {
-  dates: string[];
-  selectedDate: string;
-  setUserSelectedDate: (date: string) => void;
+  dates: DateTime[];
+  selectedDate: DateTime;
+  setUserSelectedDate: (date: DateTime) => void;
 }) => {
   return (
     <div className="flex flex-row justify-around">
       {dates.map((d) => (
         <DateTab
-          key={d}
+          key={d.toISO()}
           date={d}
           isSelected={d === selectedDate}
           setUserSelectedDate={setUserSelectedDate}
