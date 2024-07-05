@@ -100,6 +100,29 @@ const RainMap = () => {
   );
 };
 
+const DateTabs = ({
+  dates,
+  selectedDate,
+  setUserSelectedDate,
+}: {
+  dates: string[];
+  selectedDate: string;
+  setUserSelectedDate: (date: string) => void;
+}) => {
+  return (
+    <div className="flex flex-row justify-around">
+      {dates.map((d) => (
+        <DateTab
+          key={d}
+          date={d}
+          isSelected={d === selectedDate}
+          setUserSelectedDate={setUserSelectedDate}
+        />
+      ))}
+    </div>
+  );
+};
+
 const PageBody = ({
   weatherData,
 }: {
@@ -116,16 +139,11 @@ const PageBody = ({
 
   return (
     <>
-      <div className="flex flex-row justify-around">
-        {weatherData.data.map((d) => (
-          <DateTab
-            key={d.date}
-            date={d.date}
-            isSelected={d.date === selectedData.date}
-            setUserSelectedDate={setUserSelectedDate}
-          />
-        ))}
-      </div>
+      <DateTabs
+        dates={weatherData.data.map((d) => d.date)}
+        selectedDate={selectedData.date}
+        setUserSelectedDate={setUserSelectedDate}
+      />
       <div className="dark:bg-gray-700">
         <div className="flex flex-row items-center gap-4 px-3 pt-3">
           <div className="text-5xl">
