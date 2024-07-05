@@ -46,7 +46,7 @@ const weatherSchema = z.object({
   data: z.array(dateSchema),
 });
 
-function DateTab({
+const DateTab = ({
   date,
   isSelected,
   setUserSelectedDate,
@@ -54,7 +54,7 @@ function DateTab({
   date: string;
   isSelected: boolean;
   setUserSelectedDate: (date: string) => void;
-}) {
+}) => {
   return (
     <button
       className={clsx("basis-full border-t-2 py-2", {
@@ -67,13 +67,13 @@ function DateTab({
       <BigDate date={DateTime.fromISO(date)} />
     </button>
   );
-}
+};
 
-function Temperature({ temperature }: { temperature: string | number }) {
+const Temperature = ({ temperature }: { temperature: string | number }) => {
   return <>{temperature}°C</>;
-}
+};
 
-function PageHeader({ loadingState }: { loadingState: LoadingState }) {
+const PageHeader = ({ loadingState }: { loadingState: LoadingState }) => {
   return (
     <>
       <Heading>
@@ -88,7 +88,7 @@ function PageHeader({ loadingState }: { loadingState: LoadingState }) {
       <LastUpdatedSection loadingState={loadingState} />
     </>
   );
-}
+};
 
 const RainMap = () => {
   return (
@@ -100,11 +100,11 @@ const RainMap = () => {
   );
 };
 
-function PageBody({
+const PageBody = ({
   weatherData,
 }: {
   weatherData: z.infer<typeof weatherSchema> | null;
-}) {
+}) => {
   if (!weatherData) {
     return <></>;
   }
@@ -221,7 +221,7 @@ function PageBody({
       <RainMap />
     </>
   );
-}
+};
 
 export default function WeatherPage() {
   const { data, loadingState } = useData("weather", weatherSchema);
