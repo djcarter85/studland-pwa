@@ -70,7 +70,7 @@ const PageHeader = ({ loadingState }: { loadingState: LoadingState }) => {
 const RainMap = () => {
   return (
     <iframe
-      src="https://www.rainviewer.com/map.html?loc=50.611,-1.9179,8.721758007570246&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=0&c=3&o=83&lm=1&layer=radar&mlayer=0&sm=1&sn=1&hu=false"
+      src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=mph&zoom=8&overlay=rain&product=ecmwf&level=surface&lat=50.6408&lon=-1.943736&detailLat=50.6408&detailLon=-1.943736&marker=true&message=true"
       className="mt-2 h-[50vh] w-full border-0"
       allowFullScreen
     ></iframe>
@@ -86,7 +86,9 @@ const PageBody = ({
     return <></>;
   }
 
-  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(null);
+  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(
+    null,
+  );
   const selectedData =
     weatherData.data.find((d) => d.date == userSelectedDate) ??
     weatherData.data[0];
