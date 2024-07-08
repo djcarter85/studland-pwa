@@ -70,7 +70,7 @@ const PageHeader = ({ loadingState }: { loadingState: LoadingState }) => {
 const RainMap = () => {
   return (
     <iframe
-      src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=mph&zoom=8&overlay=rain&product=ecmwf&level=surface&lat=50.6408&lon=-1.943736&detailLat=50.6408&detailLon=-1.943736&marker=true&message=true"
+      src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=mph&zoom=8&overlay=radar&product=ecmwf&level=surface&lat=50.6408&lon=-1.943736&detailLat=50.6408&detailLon=-1.943736&marker=true&message=true"
       className="mt-2 h-[50vh] w-full border-0"
       allowFullScreen
     ></iframe>
