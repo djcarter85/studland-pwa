@@ -15,6 +15,7 @@ import { useState } from "react";
 import { DateTime } from "luxon";
 import { LoadingState } from "../types/loading-state";
 import { DateTabs } from "../components/date-tabs";
+import { getTodayText, last } from "../utils";
 
 const tideSchema = z.object({
   type: z.enum(["Low", "High"]),
@@ -147,10 +148,15 @@ function PageBody({ tides }: { tides: z.infer<typeof tidesSchema> | null }) {
     return <></>;
   }
 
-  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(null);
+  const todayText = getTodayText();
+
+  const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(
+    null,
+  );
   const selectedData =
-    tides.dates.find((d) => d.date == userSelectedDate) ??
-    tides.dates[0];
+    tides.dates.find((d) => d.date === userSelectedDate) ??
+    tides.dates.find((d) => d.date.toISODate() === todayText) ??
+    last(tides.dates);
 
   return (
     <>

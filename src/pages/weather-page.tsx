@@ -18,6 +18,7 @@ import { WeatherIcon } from "../components/weather-icon";
 import { LoadingState } from "../types/loading-state";
 import { DateTabs } from "../components/date-tabs";
 import { DateTime } from "luxon";
+import { getTodayText, last } from "../utils";
 
 const dateSchema = z.object({
   date: z.string().transform((x) => DateTime.fromISO(x)),
@@ -86,12 +87,17 @@ const PageBody = ({
     return <></>;
   }
 
+  const todayText = getTodayText();
+
   const [userSelectedDate, setUserSelectedDate] = useState<DateTime | null>(
     null,
   );
   const selectedData =
-    weatherData.data.find((d) => d.date == userSelectedDate) ??
-    weatherData.data[0];
+    weatherData.data.find((d) => d.date === userSelectedDate) ??
+    // Not sure why a comparison of the dates doesn't work, but a text-based
+    // comparison does.
+    weatherData.data.find((d) => d.date.toISODate() === todayText) ??
+    last(weatherData.data);
 
   return (
     <>
