@@ -5,6 +5,7 @@ import BigDate from "../components/big-date";
 import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
 import LastUpdatedSection from "../components/last-updated-section";
+import { getTodayText } from "../utils";
 
 const eventSchema = z.object({
   name: z.string(),
@@ -63,7 +64,15 @@ const DateEvent = ({ evt, date }: { evt: Event; date: DateTime }) => {
   );
 };
 
-function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
+function DateRow({
+  date,
+  isToday,
+  events,
+}: {
+  date: DateTime;
+  isToday: boolean;
+  events: Event[];
+}) {
   const events2 = events.filter((e) => {
     return e.startDate <= date && e.endDate >= date;
   });
@@ -83,6 +92,9 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
       <div
         className={clsx(
           "flex flex-col border-b border-gray-300 dark:border-gray-500",
+          {
+            "border-r-[16px] border-r-rose-400 dark:border-r-rose-700/60": isToday,
+          },
         )}
       >
         {events2.map((e) => (
@@ -94,10 +106,16 @@ function DateRow({ date, events }: { date: DateTime; events: Event[] }) {
 }
 
 function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
+  const todayText = getTodayText();
   return (
     <div className="grid w-full grid-cols-[min-content_1fr] border-t border-gray-200 dark:border-gray-500">
       {dates.map((d) => (
-        <DateRow key={d.toISO()} date={d} events={events} />
+        <DateRow
+          key={d.toISO()}
+          date={d}
+          isToday={d.toISODate() === todayText}
+          events={events}
+        />
       ))}
     </div>
   );
