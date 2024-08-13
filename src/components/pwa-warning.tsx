@@ -20,7 +20,7 @@ const PwaWarning = () => {
           choosing "Add to home screen" from your browser's menu.
         </p>
         <button
-          className="rounded-lg bg-orange-300 p-2 text-xl hover:bg-orange-400"
+          className="rounded-lg bg-orange-300 dark:bg-gray-800 p-2 text-xl hover:bg-orange-400 dark:hover:bg-gray-950"
           onClick={(_) => dismiss()}
         >
           <XLg />
