@@ -126,8 +126,8 @@ export default function CalendarPage() {
 
   // todo make period configurable
   const dates = getPeriod(
-    DateTime.fromISO("2024-07-20"),
-    DateTime.fromISO("2024-08-31"),
+    DateTime.fromISO("2025-07-19"),
+    DateTime.fromISO("2025-08-31"),
   );
 
   if (
