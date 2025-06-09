@@ -72,13 +72,8 @@ export default function InfoPage() {
           </Hyperlink>
         </Bullet>
         <Bullet>
-          <Hyperlink href="https://studlandholidays.org.uk/">
-            Studland Holidays
-          </Hyperlink>
-        </Bullet>
-        <Bullet>
-          <Hyperlink href="https://www.urbansaints.org/">
-            Urban Saints
+          <Hyperlink href="https://studlandcamps.org.uk/">
+            Studland Camps
           </Hyperlink>
         </Bullet>
         <Bullet>
