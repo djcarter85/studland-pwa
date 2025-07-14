@@ -15,13 +15,17 @@ const eventSchema = z.object({
 
 type Event = z.infer<typeof eventSchema>;
 
-const calendarSchema = z.object({ events: z.array(eventSchema) });
+const calendarSchema = z.object({
+  startDate: dateSchema,
+  endDate: dateSchema,
+  events: z.array(eventSchema),
+});
 
 function isWeekend(date: DateTime) {
   return date.weekday === 6 || date.weekday === 7;
 }
 
-function getPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
+function getDatesInPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
   if (firstDate > lastDate) {
     throw RangeError("The first date cannot be after the last date.");
   }
@@ -93,7 +97,8 @@ function DateRow({
         className={clsx(
           "flex flex-col border-b border-gray-300 dark:border-gray-500",
           {
-            "border-r-[16px] border-r-rose-400 dark:border-r-rose-700/60": isToday,
+            "border-r-[16px] border-r-rose-400 dark:border-r-rose-700/60":
+              isToday,
           },
         )}
       >
@@ -105,7 +110,8 @@ function DateRow({
   );
 }
 
-function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
+function Table({ data }: { data: z.infer<typeof calendarSchema> }) {
+  const dates = getDatesInPeriod(data.startDate, data.endDate);
   const todayText = getTodayText();
   return (
     <div className="grid w-full grid-cols-[min-content_1fr] border-t border-gray-200 dark:border-gray-500">
@@ -114,7 +120,7 @@ function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
           key={d.toISO()}
           date={d}
           isToday={d.toISODate() === todayText}
-          events={events}
+          events={data.events}
         />
       ))}
     </div>
@@ -123,12 +129,6 @@ function Table({ dates, events }: { dates: DateTime[]; events: Event[] }) {
 
 export default function CalendarPage() {
   const { data, loadingState } = useData("calendar", calendarSchema);
-
-  // todo make period configurable
-  const dates = getPeriod(
-    DateTime.fromISO("2025-07-19"),
-    DateTime.fromISO("2025-08-31"),
-  );
 
   if (
     !data &&
@@ -139,7 +139,7 @@ export default function CalendarPage() {
 
   return (
     <div>
-      <Table dates={dates} events={data!.events} />
+      <Table data={data!} />
     </div>
   );
 }
