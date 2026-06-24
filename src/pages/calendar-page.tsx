@@ -6,6 +6,8 @@ import { z } from "zod";
 import { dateSchema } from "../schemas/date-schema";
 import LastUpdatedSection from "../components/last-updated-section";
 import { getTodayText } from "../utils";
+import Heading from "../components/heading";
+import { Calendar4 } from "react-bootstrap-icons";
 
 const eventSchema = z.object({
   name: z.string(),
@@ -16,6 +18,7 @@ const eventSchema = z.object({
 type Event = z.infer<typeof eventSchema>;
 
 const calendarSchema = z.object({
+  year: z.number(),
   startDate: dateSchema,
   endDate: dateSchema,
   events: z.array(eventSchema),
@@ -139,6 +142,12 @@ export default function CalendarPage() {
 
   return (
     <div>
+      <Heading>
+        <div className="flex flex-row items-center gap-3 px-3">
+          <Calendar4 className="text-xl" />
+          <span className="text-2xl">{data!.year}</span>
+        </div>
+      </Heading>
       <Table data={data!} />
     </div>
   );
