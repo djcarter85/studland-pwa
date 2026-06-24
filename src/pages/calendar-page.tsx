@@ -24,11 +24,12 @@ const calendarSchema = z.object({
   events: z.array(eventSchema),
 });
 
-function isWeekend(date: DateTime) {
-  return date.weekday === 6 || date.weekday === 7;
-}
+const isWeekend = (date: DateTime) => date.weekday === 6 || date.weekday === 7;
 
-function getDatesInPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
+const getDatesInPeriod = (
+  firstDate: DateTime,
+  lastDate: DateTime,
+): DateTime[] => {
   if (firstDate > lastDate) {
     throw RangeError("The first date cannot be after the last date.");
   }
@@ -42,7 +43,7 @@ function getDatesInPeriod(firstDate: DateTime, lastDate: DateTime): DateTime[] {
   }
 
   return dates;
-}
+};
 
 const dayDiff = (start: DateTime, end: DateTime) =>
   end.diff(start, ["days", "hours"]).toObject().days ?? 0;
@@ -71,7 +72,7 @@ const DateEvent = ({ evt, date }: { evt: Event; date: DateTime }) => {
   );
 };
 
-function DateRow({
+const DateRow = ({
   date,
   isToday,
   events,
@@ -79,7 +80,7 @@ function DateRow({
   date: DateTime;
   isToday: boolean;
   events: Event[];
-}) {
+}) => {
   const events2 = events.filter((e) => {
     return e.startDate <= date && e.endDate >= date;
   });
@@ -111,9 +112,9 @@ function DateRow({
       </div>
     </>
   );
-}
+};
 
-function Table({ data }: { data: z.infer<typeof calendarSchema> }) {
+const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   const dates = getDatesInPeriod(data.startDate, data.endDate);
   const todayText = getTodayText();
   return (
@@ -128,9 +129,9 @@ function Table({ data }: { data: z.infer<typeof calendarSchema> }) {
       ))}
     </div>
   );
-}
+};
 
-export default function CalendarPage() {
+const CalendarPage = () => {
   const { data, loadingState } = useData("calendar", calendarSchema);
 
   if (
@@ -151,4 +152,6 @@ export default function CalendarPage() {
       <Table data={data!} />
     </div>
   );
-}
+};
+
+export default CalendarPage;
