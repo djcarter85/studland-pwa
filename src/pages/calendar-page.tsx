@@ -7,7 +7,7 @@ import { dateSchema } from "../schemas/date-schema";
 import LastUpdatedSection from "../components/last-updated-section";
 import { getTodayText } from "../utils";
 import Heading from "../components/heading";
-import { Calendar4 } from "react-bootstrap-icons";
+import { Calendar } from "react-bootstrap-icons";
 
 const eventSchema = z.object({
   name: z.string(),
@@ -145,7 +145,7 @@ const CalendarPage = () => {
     <div>
       <Heading>
         <div className="flex flex-row items-center gap-3 px-3">
-          <Calendar4 className="text-xl" />
+          <Calendar className="text-xl" />
           <span className="text-2xl">{data!.year}</span>
         </div>
       </Heading>
