@@ -78,7 +78,7 @@ export default function InfoPage() {
         </Bullet>
         <Bullet>
           <Hyperlink href="https://www.facebook.com/StudlandHolidays">
-            Studland Camp Site Friends (Facebook)
+            Studland Camps (Facebook)
           </Hyperlink>
         </Bullet>
       </Ul>
