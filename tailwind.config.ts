@@ -50,7 +50,7 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Rethink Sans", ...defaultTheme.fontFamily.sans],
       },
       screens: {
         pwa: { raw: "(display-mode: standalone)" },

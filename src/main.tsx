@@ -13,8 +13,8 @@ import TidesPage from "./pages/tides-page";
 import InfoPage from "./pages/info-page";
 import CalendarPage from "./pages/calendar-page";
 
-import "@fontsource/dm-sans/400.css";
-import "@fontsource/dm-sans/700.css";
+import "@fontsource/rethink-sans/400.css";
+import "@fontsource/rethink-sans/700.css";
 
 const router = createBrowserRouter([
   {
