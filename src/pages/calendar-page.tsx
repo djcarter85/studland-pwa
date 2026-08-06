@@ -146,7 +146,6 @@ const Cell = ({
   );
 };
 
-// TODO: can this be done with CSS grid instead of a spacer component?
 const Spacer = () => {
   return (
     <Cell>
@@ -156,32 +155,31 @@ const Spacer = () => {
 };
 
 const Day = ({ date, events }: { date: DateTime; events: Event[] }) => {
-  const events2 = events.filter((e) => {
+  const eventsOnThisDay = events.filter((e) => {
     return e.startDate <= date && e.endDate >= date;
   });
-
-  // TODO: support overlapping events
-  const evt =
-    events2.length > 0
-      ? events2[0]
-      : { name: "", shortName: "", startDate: date, endDate: date };
 
   return (
     <Cell>
       <div className="text-xs font-bold">{date.day}</div>
-      <div
-        className={clsx("w-full text-center text-lg", {
-          "border-sky-400 bg-sky-200 dark:border-sky-600 dark:bg-sky-700/60":
-            evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
-          "border-violet-400 bg-violet-200 dark:border-violet-500/80 dark:bg-violet-700/60":
-            evt.name === "Studland Venture" || evt.name === "Family Camp 2",
-          "border-teal-400 bg-teal-200 dark:border-teal-600 dark:bg-teal-700/60":
-            evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
-          "border-gray-400 bg-gray-200 dark:border-gray-500 dark:bg-gray-700/60":
-            evt.name === "Site set up" || evt.name === "Site pack down",
-        })}
-      >
-        {evt.shortName}
+      <div className="flex w-full flex-row justify-stretch">
+        {eventsOnThisDay.map((e) => (
+          <div
+            key={e.name}
+            className={clsx("flex-1 text-center", {
+              "bg-sky-200  dark:bg-sky-700/60":
+                e.name === "Dorset Venture" || e.name === "Family Camp 1",
+              "bg-violet-200  dark:bg-violet-700/60":
+                e.name === "Studland Venture" || e.name === "Family Camp 2",
+              "bg-teal-200  dark:bg-teal-700/60":
+                e.name === "Purbeck Venture" || e.name === "Family Camp 3",
+              "bg-gray-200  dark:bg-gray-700/60":
+                e.name === "Site set up" || e.name === "Site pack down",
+            })}
+          >
+            {e.shortName}
+          </div>
+        ))}
       </div>
     </Cell>
   );
@@ -219,12 +217,13 @@ const Month = ({
     (_, i) => firstDayOfMonth.plus({ days: i }),
   ).filter((d) => d >= data.startDate && d <= data.endDate);
 
+  // TODO: can this be done with CSS grid instead of a spacer component?
   const spacerCount = daysInMonth[0].weekday - 1; // weekday is 1 (Monday) to 7 (Sunday)
 
   return (
     <>
       <MonthHeader year={data.year} month={month} />
-      <div className="mx-2 grid grid-cols-7">
+      <div className="grid grid-cols-7 gap-0.5">
         {Array.from({ length: spacerCount }).map((_, i) => (
           <Spacer key={i} />
         ))}
