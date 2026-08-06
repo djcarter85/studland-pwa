@@ -131,6 +131,99 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   );
 };
 
+const Cell = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="flex aspect-square items-center justify-center bg-gray-200 text-lg">
+      {children}
+    </div>
+  );
+};
+
+// TODO: can this be done with CSS grid instead of a spacer component?
+const Spacer = () => {
+  return (
+    <Cell>
+      <div>&nbsp;</div>
+    </Cell>
+  );
+};
+
+const Day = ({ day }: { day: number }) => {
+  return (
+    <Cell>
+      <div>{day}</div>
+    </Cell>
+  );
+};
+
+const MonthHeader = ({ year, month }: { year: number; month: number }) => {
+  const firstDayOfMonth = DateTime.fromObject({ year, month, day: 1 });
+
+  return (
+    <h2 className="mx-2 my-2 text-lg font-bold">
+      {firstDayOfMonth.toFormat("MMMM")}
+    </h2>
+  );
+};
+
+const Month = ({
+  year,
+  month,
+  startDate,
+  endDate,
+}: {
+  year: number;
+  month: number;
+  startDate: DateTime;
+  endDate: DateTime;
+}) => {
+  const firstDayOfMonth = DateTime.fromObject({ year, month, day: 1 });
+
+  if (!firstDayOfMonth.isValid) {
+    throw new Error(`Invalid year/month: ${year}/${month}`);
+  }
+
+  const daysInMonth = Array.from(
+    { length: firstDayOfMonth.daysInMonth },
+    (_, i) => firstDayOfMonth.plus({ days: i }),
+  ).filter((d) => d >= startDate && d <= endDate);
+
+  const spacerCount = daysInMonth[0].weekday - 1; // weekday is 1 (Monday) to 7 (Sunday)
+
+  return (
+    <>
+      <MonthHeader year={year} month={month} />
+      <div className="mx-2 grid grid-cols-7">
+        {Array.from({ length: spacerCount }).map((_, i) => (
+          <Spacer key={i} />
+        ))}
+        {daysInMonth.map((day) => (
+          <Day key={day.toISO()} day={day.day} />
+        ))}
+      </div>
+    </>
+  );
+};
+
+const Cal = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
+  return (
+    <>
+      <Month
+        year={data.year}
+        month={7}
+        startDate={data.startDate}
+        endDate={data.endDate}
+      />
+      <Month
+        year={data.year}
+        month={8}
+        startDate={data.startDate}
+        endDate={data.endDate}
+      />
+    </>
+  );
+};
+
 const CalendarPage = () => {
   const { data, loadingState } = useData("calendar", calendarSchema);
 
@@ -149,6 +242,7 @@ const CalendarPage = () => {
           <span className="text-2xl">{data!.year}</span>
         </div>
       </Heading>
+      <Cal data={data!} />
       <Table data={data!} />
     </div>
   );
