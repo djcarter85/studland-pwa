@@ -131,9 +131,20 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   );
 };
 
-const Cell = ({ children }: { children: React.ReactNode }) => {
+const Cell = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="flex aspect-square items-center justify-center bg-gray-200 text-lg">
+    <div
+      className={clsx(
+        "flex aspect-square items-center justify-center text-lg",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -148,10 +159,30 @@ const Spacer = () => {
   );
 };
 
-const Day = ({ day }: { day: number }) => {
+const Day = ({ date, events }: { date: DateTime; events: Event[] }) => {
+  const events2 = events.filter((e) => {
+    return e.startDate <= date && e.endDate >= date;
+  });
+
+  const evt =
+    events2.length > 0
+      ? events2[0]
+      : { name: "", startDate: date, endDate: date };
+
   return (
-    <Cell>
-      <div>{day}</div>
+    <Cell
+      className={clsx({
+        "border-sky-400 bg-sky-200 dark:border-sky-600 dark:bg-sky-700/60":
+          evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
+        "border-violet-400 bg-violet-200 dark:border-violet-500/80 dark:bg-violet-700/60":
+          evt.name === "Studland Venture" || evt.name === "Family Camp 2",
+        "border-teal-400 bg-teal-200 dark:border-teal-600 dark:bg-teal-700/60":
+          evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
+        "border-gray-400 bg-gray-200 dark:border-gray-500 dark:bg-gray-700/60":
+          evt.name === "Site set up" || evt.name === "Site pack down",
+      })}
+    >
+      <div>{date.day}</div>
     </Cell>
   );
 };
@@ -167,38 +198,38 @@ const MonthHeader = ({ year, month }: { year: number; month: number }) => {
 };
 
 const Month = ({
-  year,
+  data,
   month,
-  startDate,
-  endDate,
 }: {
-  year: number;
+  data: z.infer<typeof calendarSchema>;
   month: number;
-  startDate: DateTime;
-  endDate: DateTime;
 }) => {
-  const firstDayOfMonth = DateTime.fromObject({ year, month, day: 1 });
+  const firstDayOfMonth = DateTime.fromObject({
+    year: data.year,
+    month,
+    day: 1,
+  });
 
   if (!firstDayOfMonth.isValid) {
-    throw new Error(`Invalid year/month: ${year}/${month}`);
+    throw new Error(`Invalid year/month: ${data.year}/${month}`);
   }
 
   const daysInMonth = Array.from(
     { length: firstDayOfMonth.daysInMonth },
     (_, i) => firstDayOfMonth.plus({ days: i }),
-  ).filter((d) => d >= startDate && d <= endDate);
+  ).filter((d) => d >= data.startDate && d <= data.endDate);
 
   const spacerCount = daysInMonth[0].weekday - 1; // weekday is 1 (Monday) to 7 (Sunday)
 
   return (
     <>
-      <MonthHeader year={year} month={month} />
+      <MonthHeader year={data.year} month={month} />
       <div className="mx-2 grid grid-cols-7">
         {Array.from({ length: spacerCount }).map((_, i) => (
           <Spacer key={i} />
         ))}
         {daysInMonth.map((day) => (
-          <Day key={day.toISO()} day={day.day} />
+          <Day key={day.toISO()} date={day} events={data.events} />
         ))}
       </div>
     </>
@@ -206,20 +237,11 @@ const Month = ({
 };
 
 const Cal = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
+  // TODO calculate the months to display based on startDate and endDate, rather than hardcoding July and August
   return (
     <>
-      <Month
-        year={data.year}
-        month={7}
-        startDate={data.startDate}
-        endDate={data.endDate}
-      />
-      <Month
-        year={data.year}
-        month={8}
-        startDate={data.startDate}
-        endDate={data.endDate}
-      />
+      <Month data={data} month={7} />
+      <Month data={data} month={8} />
     </>
   );
 };
