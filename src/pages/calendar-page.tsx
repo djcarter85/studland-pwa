@@ -146,6 +146,14 @@ const Cell = ({
   );
 };
 
+const WeekdayHeader = ({ weekday }: { weekday: string }) => {
+  return (
+    <Cell>
+      <div className="text-xs font-bold">{weekday}</div>
+    </Cell>
+  );
+};
+
 const Spacer = () => {
   return (
     <Cell>
@@ -159,9 +167,10 @@ const Day = ({ date, events }: { date: DateTime; events: Event[] }) => {
     return e.startDate <= date && e.endDate >= date;
   });
 
+  // TODO highlight today
   return (
-    <Cell>
-      <div className="text-xs font-bold">{date.day}</div>
+    <Cell className="border border-gray-200 dark:border-gray-500">
+      <div className="text-base">{date.day}</div>
       <div className="flex w-full flex-row justify-stretch">
         {eventsOnThisDay.map((e) => (
           <div
@@ -224,6 +233,13 @@ const Month = ({
     <>
       <MonthHeader year={data.year} month={month} />
       <div className="grid grid-cols-7 gap-0.5">
+        <WeekdayHeader weekday="Mon" />
+        <WeekdayHeader weekday="Tue" />
+        <WeekdayHeader weekday="Wed" />
+        <WeekdayHeader weekday="Thu" />
+        <WeekdayHeader weekday="Fri" />
+        <WeekdayHeader weekday="Sat" />
+        <WeekdayHeader weekday="Sun" />
         {Array.from({ length: spacerCount }).map((_, i) => (
           <Spacer key={i} />
         ))}
@@ -237,6 +253,7 @@ const Month = ({
 
 const Cal = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   // TODO calculate the months to display based on startDate and endDate, rather than hardcoding July and August
+  // TODO add event list
   return (
     <>
       <Month data={data} month={7} />
