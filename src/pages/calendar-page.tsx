@@ -11,6 +11,7 @@ import { Calendar } from "react-bootstrap-icons";
 
 const eventSchema = z.object({
   name: z.string(),
+  shortName: z.string(),
   startDate: dateSchema,
   endDate: dateSchema,
 });
@@ -139,12 +140,7 @@ const Cell = ({
   className?: string;
 }) => {
   return (
-    <div
-      className={clsx(
-        "flex aspect-square items-center justify-center text-lg",
-        className,
-      )}
-    >
+    <div className={clsx("flex flex-col items-center py-1", className)}>
       {children}
     </div>
   );
@@ -164,25 +160,29 @@ const Day = ({ date, events }: { date: DateTime; events: Event[] }) => {
     return e.startDate <= date && e.endDate >= date;
   });
 
+  // TODO: support overlapping events
   const evt =
     events2.length > 0
       ? events2[0]
-      : { name: "", startDate: date, endDate: date };
+      : { name: "", shortName: "", startDate: date, endDate: date };
 
   return (
-    <Cell
-      className={clsx({
-        "border-sky-400 bg-sky-200 dark:border-sky-600 dark:bg-sky-700/60":
-          evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
-        "border-violet-400 bg-violet-200 dark:border-violet-500/80 dark:bg-violet-700/60":
-          evt.name === "Studland Venture" || evt.name === "Family Camp 2",
-        "border-teal-400 bg-teal-200 dark:border-teal-600 dark:bg-teal-700/60":
-          evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
-        "border-gray-400 bg-gray-200 dark:border-gray-500 dark:bg-gray-700/60":
-          evt.name === "Site set up" || evt.name === "Site pack down",
-      })}
-    >
-      <div>{date.day}</div>
+    <Cell>
+      <div className="text-xs font-bold">{date.day}</div>
+      <div
+        className={clsx("w-full text-center text-lg", {
+          "border-sky-400 bg-sky-200 dark:border-sky-600 dark:bg-sky-700/60":
+            evt.name === "Dorset Venture" || evt.name === "Family Camp 1",
+          "border-violet-400 bg-violet-200 dark:border-violet-500/80 dark:bg-violet-700/60":
+            evt.name === "Studland Venture" || evt.name === "Family Camp 2",
+          "border-teal-400 bg-teal-200 dark:border-teal-600 dark:bg-teal-700/60":
+            evt.name === "Purbeck Venture" || evt.name === "Family Camp 3",
+          "border-gray-400 bg-gray-200 dark:border-gray-500 dark:bg-gray-700/60":
+            evt.name === "Site set up" || evt.name === "Site pack down",
+        })}
+      >
+        {evt.shortName}
+      </div>
     </Cell>
   );
 };
