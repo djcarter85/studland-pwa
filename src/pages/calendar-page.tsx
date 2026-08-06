@@ -167,10 +167,15 @@ const Day = ({ date, events }: { date: DateTime; events: Event[] }) => {
     return e.startDate <= date && e.endDate >= date;
   });
 
-  // TODO highlight today
   return (
-    <Cell className="border border-gray-200 dark:border-gray-500">
-      <div className="text-base">{date.day}</div>
+    <Cell>
+      <div
+        className={clsx("w-full text-center text-base", {
+          "bg-rose-300 font-bold": date.toISODate() === getTodayText(),
+        })}
+      >
+        {date.day}
+      </div>
       <div className="flex w-full flex-row justify-stretch">
         {eventsOnThisDay.map((e) => (
           <div
