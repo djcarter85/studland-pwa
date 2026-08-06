@@ -148,13 +148,25 @@ const Month = ({
   );
 };
 
+const EventList = ({ events }: { events: Event[] }) => {
+  return (
+    <ul className="mx-3 my-4 flex flex-col gap-1">
+      {events.map((evt) => (
+        <li key={evt.shortName}>
+          {evt.shortName}: {evt.name}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const Cal = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   // TODO calculate the months to display based on startDate and endDate, rather than hardcoding July and August
-  // TODO add event list
   return (
     <>
       <Month data={data} month={7} />
       <Month data={data} month={8} />
+      <EventList events={data!.events} />
     </>
   );
 };
