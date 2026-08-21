@@ -67,14 +67,14 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
     <div className="border-t border-gray-200 dark:border-gray-500">
       {getMonths(data.startDate, data.endDate).map((month) => (
         <section key={month.key} aria-labelledby={`month-${month.key}`}>
-          <h2 id={`month-${month.key}`} className="px-3 py-2 text-xl font-bold">
+          <h2 id={`month-${month.key}`} className="px-3 py-3 text-xl font-bold">
             {month.title}
           </h2>
           <div className="grid grid-cols-7 border-b border-gray-200 dark:border-gray-500">
             {weekdays.map((weekday) => (
               <div
                 key={weekday}
-                className="border-gray-200 px-1 py-2 text-center text-sm font-bold dark:border-gray-500"
+                className="border-gray-200 px-1 py-1 text-center text-sm font-bold dark:border-gray-500"
               >
                 {weekday}
               </div>
@@ -91,7 +91,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                 key={date.toISODate()}
                 dateTime={date.toISODate() ?? undefined}
                 className={clsx(
-                  "min-h-12 border-r border-t border-gray-200 px-2 py-2 text-right  dark:border-gray-500",
+                  "min-h-12 border-r border-t border-gray-200 px-2 py-2 text-right dark:border-gray-500",
                   { "border-r-0": date.weekday === 7 },
                 )}
               >
