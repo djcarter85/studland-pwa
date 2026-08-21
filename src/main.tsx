@@ -14,6 +14,7 @@ import InfoPage from "./pages/info-page";
 import CalendarPage from "./pages/calendar-page";
 
 import "@fontsource/rethink-sans/400.css";
+import "@fontsource/rethink-sans/500.css";
 import "@fontsource/rethink-sans/700.css";
 
 const router = createBrowserRouter([
