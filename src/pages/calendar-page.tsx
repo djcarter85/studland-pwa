@@ -25,7 +25,13 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
     return [];
   }
 
-  const months: { key: string; title: string; dates: DateTime[]; offset: number }[] = [];
+  const months: {
+    key: string;
+    title: string;
+    dates: DateTime[];
+    startBlanks: number;
+    endBlanks: number;
+  }[] = [];
   let monthStart = startDate.startOf("month");
 
   while (monthStart <= endDate) {
@@ -46,7 +52,8 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
       key: monthStart.toFormat("yyyy-MM"),
       title: monthStart.toFormat("LLLL"),
       dates,
-      offset: firstDate.weekday - 1,
+      startBlanks: firstDate.weekday - 1,
+      endBlanks: 7 - lastDate.weekday,
     });
     monthStart = monthStart.plus({ months: 1 }).startOf("month");
   }
@@ -59,10 +66,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
     <div className="border-t border-gray-200 dark:border-gray-500">
       {getMonths(data.startDate, data.endDate).map((month) => (
         <section key={month.key} aria-labelledby={`month-${month.key}`}>
-          <h2
-            id={`month-${month.key}`}
-            className="px-3 py-2 text-xl font-bold"
-          >
+          <h2 id={`month-${month.key}`} className="px-3 py-2 text-xl font-bold">
             {month.title}
           </h2>
           <div className="grid grid-cols-7 border-b border-gray-200 dark:border-gray-500">
@@ -74,9 +78,9 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                 {weekday}
               </div>
             ))}
-            {Array.from({ length: month.offset }, (_, index) => (
+            {Array.from({ length: month.startBlanks }, (_, index) => (
               <div
-                key={`empty-${index}`}
+                key={`empty-start-${index}`}
                 aria-hidden="true"
                 className="min-h-12 border-r border-t border-gray-200 dark:border-gray-500"
               />
@@ -89,6 +93,13 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
               >
                 {date.day}
               </time>
+            ))}
+            {Array.from({ length: month.endBlanks }, (_, index) => (
+              <div
+                key={`empty-end-${index}`}
+                aria-hidden="true"
+                className="min-h-12 border-r border-t border-gray-200 dark:border-gray-500"
+              />
             ))}
           </div>
         </section>
