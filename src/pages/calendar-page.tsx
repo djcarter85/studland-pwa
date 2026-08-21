@@ -5,6 +5,7 @@ import LastUpdatedSection from "../components/last-updated-section";
 import Heading from "../components/heading";
 import { Calendar } from "react-bootstrap-icons";
 import { DateTime } from "luxon";
+import clsx from "clsx";
 
 const calendarSchema = z.object({
   year: z.number(),
@@ -73,7 +74,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
             {weekdays.map((weekday) => (
               <div
                 key={weekday}
-                className="~border-r border-gray-200 px-1 py-2 text-center text-sm font-bold last:border-r-0 dark:border-gray-500"
+                className="border-gray-200 px-1 py-2 text-center text-sm font-bold dark:border-gray-500"
               >
                 {weekday}
               </div>
@@ -89,7 +90,10 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
               <time
                 key={date.toISODate()}
                 dateTime={date.toISODate() ?? undefined}
-                className="min-h-12 border-r border-t border-gray-200 px-2 py-2 text-right last:border-r-0 dark:border-gray-500"
+                className={clsx(
+                  "min-h-12 border-r border-t border-gray-200 px-2 py-2 text-right  dark:border-gray-500",
+                  { "border-r-0": date.weekday === 7 },
+                )}
               >
                 {date.day}
               </time>
@@ -98,7 +102,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
               <div
                 key={`empty-end-${index}`}
                 aria-hidden="true"
-                className="min-h-12 border-r border-t border-gray-200 dark:border-gray-500"
+                className="min-h-12 border-r border-t border-gray-200 last:border-r-0 dark:border-gray-500"
               />
             ))}
           </div>
