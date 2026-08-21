@@ -44,7 +44,7 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
 
     months.push({
       key: monthStart.toFormat("yyyy-MM"),
-      title: monthStart.toFormat("LLLL yyyy"),
+      title: monthStart.toFormat("LLLL"),
       dates,
       offset: firstDate.weekday - 1,
     });
@@ -69,7 +69,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
             {weekdays.map((weekday) => (
               <div
                 key={weekday}
-                className="border-r border-gray-200 px-1 py-2 text-center text-sm font-bold last:border-r-0 dark:border-gray-500"
+                className="~border-r border-gray-200 px-1 py-2 text-center text-sm font-bold last:border-r-0 dark:border-gray-500"
               >
                 {weekday}
               </div>
