@@ -7,27 +7,27 @@ import { Calendar } from "react-bootstrap-icons";
 import { DateTime } from "luxon";
 import clsx from "clsx";
 
+const eventSchema = z
+  .object({
+    name: z.string(),
+    shortName: z.string(),
+    startDate: dateSchema,
+    endDate: dateSchema,
+  })
+  .refine((event) => event.startDate <= event.endDate);
+
+type Event = z.infer<typeof eventSchema>;
+
 const calendarSchema = z.object({
   year: z.number(),
   startDate: dateSchema,
   endDate: dateSchema,
-  events: z.array(
-    z
-      .object({
-        name: z.string(),
-        shortName: z.string(),
-        startDate: dateSchema,
-        endDate: dateSchema,
-      })
-      .refine((event) => event.startDate <= event.endDate),
-  ),
+  events: z.array(eventSchema),
 });
 
 const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const maxCalendarDays = 3660;
 const eventBarHeight = 1.5;
-
-type CalendarEvent = z.infer<typeof calendarSchema>["events"][number];
 
 type Month = {
   key: string;
@@ -81,7 +81,7 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   return months;
 };
 
-const getEventSegments = (month: Month, events: CalendarEvent[]) =>
+const getEventSegments = (month: Month, events: Event[]) =>
   month.weeks.flatMap((week, weekIndex) => {
     const weekStart = week[0];
     const weekEnd = week[6];
@@ -140,10 +140,13 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                 <div
                   key={week[0].toISODate()}
                   className="relative col-span-7 grid grid-cols-7"
-                  style={{ minHeight: `${3 + segments.length * eventBarHeight}rem` }}
+                  style={{
+                    minHeight: `${3 + segments.length * eventBarHeight}rem`,
+                  }}
                 >
                   {week.map((date) => {
-                    const inRange = date >= data.startDate && date <= data.endDate;
+                    const inRange =
+                      date >= data.startDate && date <= data.endDate;
                     return inRange ? (
                       <time
                         key={date.toISODate()}
@@ -171,7 +174,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                     <div
                       key={`${segment.event.name}-${segment.weekIndex}`}
                       title={`${segment.event.name}: ${segment.event.startDate.toLocaleString()} - ${segment.event.endDate.toLocaleString()}`}
-                      className="absolute z-20 truncate rounded-sm bg-teal-600 px-1 text-left text-xs font-bold leading-6 text-white dark:bg-teal-400 dark:text-gray-950"
+                      className="text-white absolute z-20 truncate rounded-sm bg-teal-600 px-1 text-left text-xs font-bold leading-6 dark:bg-teal-400 dark:text-gray-950"
                       style={{
                         left: `${((segment.startColumn - 1) / 7) * 100}%`,
                         width: `${(segment.span / 7) * 100}%`,
