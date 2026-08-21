@@ -27,7 +27,60 @@ const calendarSchema = z.object({
 
 const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const maxCalendarDays = 3660;
-const eventBarHeight = 1.5;
+const colStartClasses = [
+  "col-start-1",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
+];
+const colSpanClasses = [
+  "col-span-1",
+  "col-span-2",
+  "col-span-3",
+  "col-span-4",
+  "col-span-5",
+  "col-span-6",
+  "col-span-7",
+];
+const eventRowClasses = [
+  "row-start-2",
+  "row-start-3",
+  "row-start-4",
+  "row-start-5",
+  "row-start-6",
+  "row-start-7",
+  "row-start-8",
+  "row-start-9",
+  "row-start-10",
+  "row-start-11",
+  "row-start-12",
+  "row-start-13",
+  "row-start-14",
+  "row-start-15",
+  "row-start-16",
+  "row-start-17",
+  "row-start-18",
+  "row-start-19",
+  "row-start-20",
+  "row-start-21",
+];
+
+const getEventSegmentClassName = (
+  segment: {
+    startColumn: number;
+    span: number;
+  },
+  index: number,
+) =>
+  clsx(
+    "text-white z-20 mt-1 truncate rounded-sm bg-teal-600 px-1 text-left text-xs font-bold leading-6 dark:bg-teal-400 dark:text-gray-950",
+    colStartClasses[segment.startColumn - 1],
+    colSpanClasses[Math.min(segment.span - 1, colSpanClasses.length - 1)],
+    eventRowClasses[Math.min(index, eventRowClasses.length - 1)],
+  );
 
 type Month = {
   key: string;
@@ -140,9 +193,6 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                 <div
                   key={week[0].toISODate()}
                   className="relative col-span-7 grid grid-cols-7"
-                  style={{
-                    minHeight: `${3 + segments.length * eventBarHeight}rem`,
-                  }}
                 >
                   {week.map((date) => {
                     const inRange =
@@ -152,7 +202,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                         key={date.toISODate()}
                         dateTime={date.toISODate() ?? undefined}
                         className={clsx(
-                          "border-r border-t border-gray-200 px-2 py-2 text-right dark:border-gray-500",
+                          "row-start-1 border-r border-t border-gray-200 px-2 py-2 text-right dark:border-gray-500",
                           {
                             "relative z-10 font-bold ring-2 ring-inset ring-teal-500":
                               date.hasSame(today, "day"),
@@ -166,21 +216,18 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
                       <div
                         key={date.toISODate()}
                         aria-hidden="true"
-                        className="border-r border-t border-gray-200 dark:border-gray-500"
+                        className="row-start-1 border-r border-t border-gray-200 dark:border-gray-500"
                       />
                     );
                   })}
                   {segments.map((segment, index) => (
                     <div
-                      key={`${segment.event.name}-${segment.weekIndex}`}
+                      key={`${segment.event.name}-${segment.weekIndex}-${segment.startColumn}-${segment.span}`}
                       title={`${segment.event.name}: ${segment.event.startDate.toLocaleString()} - ${segment.event.endDate.toLocaleString()}`}
-                      className="text-white absolute z-20 truncate rounded-sm bg-teal-600 px-1 text-left text-xs font-bold leading-6 dark:bg-teal-400 dark:text-gray-950"
-                      style={{
-                        left: `${((segment.startColumn - 1) / 7) * 100}%`,
-                        width: `${(segment.span / 7) * 100}%`,
-                        top: `${3 + index * eventBarHeight}rem`,
-                        height: `${eventBarHeight}rem`,
-                      }}
+                      className={clsx(
+                        "text-white mt-1 truncate rounded-sm bg-teal-600 px-1 text-left text-xs font-bold leading-6 dark:bg-teal-400 dark:text-gray-950",
+                        getEventSegmentClassName(segment, index),
+                      )}
                       aria-label={`${segment.event.name}, ${segment.event.startDate.toLocaleString()} to ${segment.event.endDate.toLocaleString()}`}
                     >
                       {segment.event.shortName}
