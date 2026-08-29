@@ -74,14 +74,30 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   return months;
 };
 
-const EventPill = ({ event }: { event: Event }) => (
-  <span
-    className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
-    title={event.name}
-  >
-    {event.shortName}
-  </span>
-);
+const EventPill = ({ event }: { event: Event }) => {
+  const colorClasses =
+    event.shortName === "SU" || event.shortName === "PD"
+      ? "bg-gray-200 text-gray-700"
+      : event.shortName === "DV" || event.shortName === "FC1"
+        ? "bg-blue-100 text-blue-800"
+        : event.shortName === "SV" || event.shortName === "FC2"
+          ? "bg-violet-100 text-violet-800"
+          : event.shortName === "PV" || event.shortName === "FC3"
+            ? "bg-teal-100 text-teal-800"
+            : "bg-slate-200 text-slate-700";
+
+  return (
+    <span
+      className={clsx(
+        "inline-flex max-w-full items-center justify-center overflow-hidden rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+        colorClasses,
+      )}
+      title={event.name}
+    >
+      {event.shortName}
+    </span>
+  );
+};
 
 const CalendarDateCell = ({
   date,
