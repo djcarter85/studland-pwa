@@ -74,6 +74,21 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   return months;
 };
 
+const EventPill = ({
+  event,
+  dateKey,
+}: {
+  event: Event;
+  dateKey: string | null;
+}) => (
+  <span
+    className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
+    title={event.name}
+  >
+    {event.shortName}
+  </span>
+);
+
 const CalendarDateCell = ({
   date,
   events,
@@ -101,13 +116,11 @@ const CalendarDateCell = ({
       {events.length > 0 && (
         <div className="mt-1 flex flex-col items-stretch gap-1">
           {events.map((event) => (
-            <span
-              key={`${dateKey}-${event.name}`}
-              className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
-              title={event.name}
-            >
-              {event.shortName}
-            </span>
+            <EventPill
+              key={`${dateKey ?? "unknown"}-${event.name}`}
+              event={event}
+              dateKey={dateKey}
+            />
           ))}
         </div>
       )}
