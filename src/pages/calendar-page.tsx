@@ -75,22 +75,20 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
 };
 
 const EventPill = ({ event }: { event: Event }) => {
-  const colorClasses =
-    event.shortName === "SU" || event.shortName === "PD"
-      ? "bg-gray-200 text-gray-900"
-      : event.shortName === "DV" || event.shortName === "FC1"
-        ? "bg-sky-200 text-sky-900"
-        : event.shortName === "SV" || event.shortName === "FC2"
-          ? "bg-violet-200 text-violet-900"
-          : event.shortName === "PV" || event.shortName === "FC3"
-            ? "bg-teal-200 text-teal-900"
-            : "bg-slate-200 text-slate-700";
-
   return (
     <span
       className={clsx(
         "inline-flex max-w-full items-center justify-center overflow-hidden rounded-full px-1.5 py-0.5 text-[10px] font-medium",
-        colorClasses,
+        {
+          "bg-gray-200 text-gray-900":
+            event.shortName === "SU" || event.shortName === "PD",
+          "bg-sky-200 text-sky-900":
+            event.shortName === "DV" || event.shortName === "FC1",
+          "bg-violet-200 text-violet-900":
+            event.shortName === "SV" || event.shortName === "FC2",
+          "bg-teal-200 text-teal-900":
+            event.shortName === "PV" || event.shortName === "FC3",
+        },
       )}
       title={event.name}
     >
