@@ -218,6 +218,24 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   );
 };
 
+const EventLegend = ({ events }: { events: Event[] }) => {
+  return (
+    <section aria-labelledby="event-legend">
+      <h2 id="event-legend" className="px-3 py-3 text-xl font-bold">
+        Events
+      </h2>
+      <ul className="grid grid-cols-1 gap-2 px-3 py-1 sm:grid-cols-2">
+        {events.map((event) => (
+          <li key={event.shortName} className="flex items-center gap-2">
+            <EventPill event={event} />
+            <span>{event.name}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
 const CalendarPage = () => {
   const { data, loadingState } = useData("calendar", calendarSchema);
 
@@ -237,6 +255,7 @@ const CalendarPage = () => {
         </div>
       </Heading>
       <Table data={data!} />
+      <EventLegend events={data!.events} />
     </div>
   );
 };
