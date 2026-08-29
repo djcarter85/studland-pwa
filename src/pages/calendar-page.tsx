@@ -77,13 +77,9 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
 const CalendarDateCell = ({
   date,
   events,
-  isToday,
-  isLastDayOfWeek,
 }: {
   date: DateTime;
   events: Event[];
-  isToday: boolean;
-  isLastDayOfWeek: boolean;
 }) => {
   const dateKey = date.toISODate();
 
@@ -93,9 +89,10 @@ const CalendarDateCell = ({
       className={clsx(
         "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
-          "relative z-10 font-bold ring-2 ring-inset ring-teal-500": isToday,
+          "relative z-10 font-bold ring-2 ring-inset ring-teal-500":
+            date.hasSame(DateTime.now(), "day"),
         },
-        { "border-r-0": isLastDayOfWeek },
+        { "border-r-0": date.weekday === 7 },
       )}
     >
       <time dateTime={dateKey ?? undefined} className="block text-right">
@@ -119,7 +116,6 @@ const CalendarDateCell = ({
 };
 
 const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
-  const today = DateTime.now();
   const eventsByDate = new Map<string, Event[]>();
 
   for (const event of data.events) {
@@ -162,15 +158,13 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
             ))}
             {month.dates.map((date) => {
               const dateKey = date.toISODate();
-              const events = dateKey ? eventsByDate.get(dateKey) ?? [] : [];
+              const events = dateKey ? (eventsByDate.get(dateKey) ?? []) : [];
 
               return (
                 <CalendarDateCell
                   key={dateKey ?? date.toISO()}
                   date={date}
                   events={events}
-                  isToday={date.hasSame(today, "day")}
-                  isLastDayOfWeek={date.weekday === 7}
                 />
               );
             })}
