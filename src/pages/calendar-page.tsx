@@ -78,7 +78,7 @@ const EventPill = ({ event }: { event: Event }) => {
   return (
     <span
       className={clsx(
-        "inline-flex max-w-full items-center justify-center overflow-hidden rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+        "inline-flex max-w-full items-center justify-center overflow-hidden rounded-full px-1.5 py-0.5 text-xs font-medium",
         {
           "bg-gray-200 text-gray-900":
             event.shortName === "SU" || event.shortName === "PD",
