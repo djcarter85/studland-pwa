@@ -110,14 +110,14 @@ const CalendarDateCell = ({
     <div
       key={dateKey}
       className={clsx(
-        "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
+        "min-h-12 border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
           "font-bold ring-2 ring-inset ring-teal-500": date.hasSame(
             DateTime.now(),
             "day",
           ),
+          "border-r": date.weekday !== 7,
         },
-        { "border-r-0": date.weekday === 7 },
       )}
     >
       <time dateTime={dateKey} className="block text-right">
@@ -182,7 +182,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
             ))}
             {month.dates.map((date) => {
               const dateKey = date.toISODate();
-              const events = dateKey ? (eventsByDate.get(dateKey) ?? []) : [];
+              const events = eventsByDate.get(dateKey) ?? [];
 
               return (
                 <CalendarDateCell key={dateKey} date={date} events={events} />
