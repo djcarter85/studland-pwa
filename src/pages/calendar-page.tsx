@@ -74,6 +74,50 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   return months;
 };
 
+const CalendarDateCell = ({
+  date,
+  events,
+  isToday,
+  isLastDayOfWeek,
+}: {
+  date: DateTime;
+  events: Event[];
+  isToday: boolean;
+  isLastDayOfWeek: boolean;
+}) => {
+  const dateKey = date.toISODate();
+
+  return (
+    <div
+      key={dateKey ?? date.toISO()}
+      className={clsx(
+        "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
+        {
+          "relative z-10 font-bold ring-2 ring-inset ring-teal-500": isToday,
+        },
+        { "border-r-0": isLastDayOfWeek },
+      )}
+    >
+      <time dateTime={dateKey ?? undefined} className="block text-right">
+        {date.day}
+      </time>
+      {events.length > 0 && (
+        <div className="mt-1 flex flex-col items-stretch gap-1">
+          {events.map((event) => (
+            <span
+              key={`${dateKey}-${event.name}`}
+              className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
+              title={event.name}
+            >
+              {event.shortName}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
   const today = DateTime.now();
   const eventsByDate = new Map<string, Event[]>();
@@ -121,37 +165,13 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
               const events = dateKey ? eventsByDate.get(dateKey) ?? [] : [];
 
               return (
-                <div
+                <CalendarDateCell
                   key={dateKey ?? date.toISO()}
-                  className={clsx(
-                    "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
-                    {
-                      "relative z-10 font-bold ring-2 ring-inset ring-teal-500":
-                        date.hasSame(today, "day"),
-                    },
-                    { "border-r-0": date.weekday === 7 },
-                  )}
-                >
-                  <time
-                    dateTime={dateKey ?? undefined}
-                    className="block text-right"
-                  >
-                    {date.day}
-                  </time>
-                  {events.length > 0 && (
-                    <div className="mt-1 flex flex-col items-stretch gap-1">
-                      {events.map((event) => (
-                        <span
-                          key={`${dateKey}-${event.name}`}
-                          className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
-                          title={event.name}
-                        >
-                          {event.shortName}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                  date={date}
+                  events={events}
+                  isToday={date.hasSame(today, "day")}
+                  isLastDayOfWeek={date.weekday === 7}
+                />
               );
             })}
             {Array.from({ length: month.endBlanks }, (_, index) => (
