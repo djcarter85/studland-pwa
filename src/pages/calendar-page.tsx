@@ -77,13 +77,13 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
 const EventPill = ({ event }: { event: Event }) => {
   const colorClasses =
     event.shortName === "SU" || event.shortName === "PD"
-      ? "bg-gray-200 text-gray-700"
+      ? "bg-gray-200 text-gray-900"
       : event.shortName === "DV" || event.shortName === "FC1"
-        ? "bg-blue-100 text-blue-800"
+        ? "bg-sky-200 text-sky-900"
         : event.shortName === "SV" || event.shortName === "FC2"
-          ? "bg-violet-100 text-violet-800"
+          ? "bg-violet-200 text-violet-900"
           : event.shortName === "PV" || event.shortName === "FC3"
-            ? "bg-teal-100 text-teal-800"
+            ? "bg-teal-200 text-teal-900"
             : "bg-slate-200 text-slate-700";
 
   return (
