@@ -112,8 +112,10 @@ const CalendarDateCell = ({
       className={clsx(
         "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
-          "relative z-10 font-bold ring-2 ring-inset ring-teal-500":
-            date.hasSame(DateTime.now(), "day"),
+          "font-bold ring-2 ring-inset ring-teal-500": date.hasSame(
+            DateTime.now(),
+            "day",
+          ),
         },
         { "border-r-0": date.weekday === 7 },
       )}
