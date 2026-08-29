@@ -105,6 +105,7 @@ const CalendarDateCell = ({
   events: Event[];
 }) => {
   const dateKey = date.toISODate();
+  const isToday = date.hasSame(DateTime.now(), "day");
 
   return (
     <div
@@ -112,15 +113,15 @@ const CalendarDateCell = ({
       className={clsx(
         "min-h-12 border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
-          "font-bold ring-2 ring-inset ring-teal-500": date.hasSame(
-            DateTime.now(),
-            "day",
-          ),
+          "ring-2 ring-inset ring-teal-500": isToday,
           "border-r": date.weekday !== 7,
         },
       )}
     >
-      <time dateTime={dateKey} className="block text-right">
+      <time
+        dateTime={dateKey}
+        className={clsx("block text-right", { "font-bold": isToday })}
+      >
         {date.day}
       </time>
       {events.length > 0 && (
