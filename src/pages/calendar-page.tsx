@@ -41,7 +41,7 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   const months: {
     key: string;
     title: string;
-    dates: DateTime[];
+    dates: DateTime<true>[];
     startBlanks: number;
     endBlanks: number;
   }[] = [];
@@ -51,7 +51,7 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
     const firstDate = monthStart < startDate ? startDate : monthStart;
     const monthEnd = monthStart.endOf("month");
     const lastDate = monthEnd > endDate ? endDate : monthEnd;
-    const dates: DateTime[] = [];
+    const dates: DateTime<true>[] = [];
 
     for (
       let date = firstDate;
@@ -74,13 +74,7 @@ const getMonths = (startDate: DateTime, endDate: DateTime) => {
   return months;
 };
 
-const EventPill = ({
-  event,
-  dateKey,
-}: {
-  event: Event;
-  dateKey: string | null;
-}) => (
+const EventPill = ({ event }: { event: Event }) => (
   <span
     className="inline-flex max-w-full items-center justify-center overflow-hidden rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-800"
     title={event.name}
@@ -93,14 +87,14 @@ const CalendarDateCell = ({
   date,
   events,
 }: {
-  date: DateTime;
+  date: DateTime<true>;
   events: Event[];
 }) => {
   const dateKey = date.toISODate();
 
   return (
     <div
-      key={dateKey ?? date.toISO()}
+      key={dateKey}
       className={clsx(
         "min-h-12 border-r border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
@@ -110,17 +104,13 @@ const CalendarDateCell = ({
         { "border-r-0": date.weekday === 7 },
       )}
     >
-      <time dateTime={dateKey ?? undefined} className="block text-right">
+      <time dateTime={dateKey} className="block text-right">
         {date.day}
       </time>
       {events.length > 0 && (
         <div className="mt-1 flex flex-col items-stretch gap-1">
           {events.map((event) => (
-            <EventPill
-              key={`${dateKey ?? "unknown"}-${event.name}`}
-              event={event}
-              dateKey={dateKey}
-            />
+            <EventPill key={`${dateKey}-${event.shortName}`} event={event} />
           ))}
         </div>
       )}
@@ -174,11 +164,7 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
               const events = dateKey ? (eventsByDate.get(dateKey) ?? []) : [];
 
               return (
-                <CalendarDateCell
-                  key={dateKey ?? date.toISO()}
-                  date={date}
-                  events={events}
-                />
+                <CalendarDateCell key={dateKey} date={date} events={events} />
               );
             })}
             {Array.from({ length: month.endBlanks }, (_, index) => (
