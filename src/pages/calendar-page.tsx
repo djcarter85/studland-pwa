@@ -134,10 +134,10 @@ const CalendarDateCell = ({
   );
 };
 
-const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
+const getEventsByDate = (events: Event[]) => {
   const eventsByDate = new Map<string, Event[]>();
 
-  for (const event of data.events) {
+  for (const event of events) {
     let current = event.startDate;
 
     while (current <= event.endDate) {
@@ -151,6 +151,11 @@ const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
       current = current.plus({ days: 1 });
     }
   }
+  return eventsByDate;
+};
+
+const Table = ({ data }: { data: z.infer<typeof calendarSchema> }) => {
+  const eventsByDate = getEventsByDate(data.events);
 
   return (
     <div className="border-t border-gray-200 dark:border-gray-500">
