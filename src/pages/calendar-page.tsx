@@ -7,10 +7,22 @@ import { Calendar } from "react-bootstrap-icons";
 import { DateTime } from "luxon";
 import clsx from "clsx";
 
+const eventSchema = z
+  .object({
+    name: z.string(),
+    shortName: z.string(),
+    startDate: dateSchema,
+    endDate: dateSchema,
+  })
+  .refine((event) => event.startDate <= event.endDate);
+
+type Event = z.infer<typeof eventSchema>;
+
 const calendarSchema = z.object({
   year: z.number(),
   startDate: dateSchema,
   endDate: dateSchema,
+  events: z.array(eventSchema),
 });
 
 const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
