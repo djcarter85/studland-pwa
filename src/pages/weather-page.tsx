@@ -191,7 +191,7 @@ const PageBody = ({
             <Sunrise />
           </div>
           <div className="text-lg">{selectedData.summary.sunrise}</div>
-          <div className="h-2 rounded-sm bg-gradient-to-r from-sky-300 via-amber-300 to-sky-300 dark:from-sky-600 dark:via-amber-400 dark:to-sky-600"></div>
+          <div className="h-2 rounded-xs bg-linear-to-r from-sky-300 via-amber-300 to-sky-300 dark:from-sky-600 dark:via-amber-400 dark:to-sky-600"></div>
           <div className="text-lg">{selectedData.summary.sunset}</div>
           <div className="text-xl">
             <Sunset />

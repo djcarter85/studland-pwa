@@ -35,7 +35,7 @@ const tidesSchema = z.object({ dates: z.array(tideDateSchema) });
 
 function TideRow({ tide }: { tide: Tide }) {
   return (
-    <tr className="odd:transparent text-center even:bg-gray-100 odd:dark:bg-gray-700 even:dark:bg-transparent">
+    <tr className="odd:transparent text-center even:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-transparent">
       <td className="py-2 text-3xl">{tide.time}</td>
       <td className="py-2">
         <span
@@ -124,7 +124,7 @@ const CurrentTide = ({ tides }: { tides: z.infer<typeof tidesSchema> }) => {
   });
 
   return (
-    <div className="border-t p-3 text-lg">
+    <div className="border-t p-3 text-lg border-gray-200">
       <div>
         The tide is currently{" "}
         <span className={tideTypeClassName}>
