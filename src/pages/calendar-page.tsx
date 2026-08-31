@@ -224,11 +224,31 @@ const EventLegend = ({ events }: { events: Event[] }) => {
       <h2 id="event-legend" className="px-3 py-3 text-xl font-bold">
         Events
       </h2>
-      <ul className="grid grid-cols-1 gap-2 px-3 py-1 sm:grid-cols-2">
+      <ul className="grid grid-cols-[auto_1fr_auto] gap-2 px-3 py-1 sm:grid-cols-[auto_1fr_auto_auto_1fr_auto]">
         {events.map((event) => (
-          <li key={event.shortName} className="flex items-center gap-2">
+          <li
+            key={event.shortName}
+            className="col-span-3 grid grid-cols-subgrid items-center"
+          >
             <EventPill event={event} />
-            <span>{event.name}</span>
+            <span className="truncate">{event.name}</span>
+            <span className="ml-auto flex gap-1 text-sm text-gray-500 dark:text-gray-400">
+              {event.startDate.toMillis() === event.endDate.toMillis() ? (
+                <time dateTime={event.startDate.toISODate()}>
+                  {event.startDate.toFormat("dd/MM")}
+                </time>
+              ) : (
+                <>
+                  <time dateTime={event.startDate.toISODate()}>
+                    {event.startDate.toFormat("dd/MM")}
+                  </time>
+                  <span>-</span>
+                  <time dateTime={event.endDate.toISODate()}>
+                    {event.endDate.toFormat("dd/MM")}
+                  </time>
+                </>
+              )}
+            </span>
           </li>
         ))}
       </ul>
