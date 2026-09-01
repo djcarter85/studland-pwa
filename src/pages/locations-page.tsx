@@ -53,7 +53,7 @@ const LocationIcon = ({ location }: { location: Location }) => {
 
 const Location = ({ location }: { location: Location }) => {
   return (
-    <div className="border-t first:border-t-0 border-gray-200">
+    <div className="border-t first:border-t-0 border-gray-200 dark:border-gray-500">
       <a
         href={getGoogleMapsUrl(location)}
         className="flex flex-row items-center justify-between gap-5 px-6 py-3 hover:bg-gray-100 dark:hover:bg-gray-800"

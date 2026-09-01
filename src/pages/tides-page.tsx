@@ -124,7 +124,7 @@ const CurrentTide = ({ tides }: { tides: z.infer<typeof tidesSchema> }) => {
   });
 
   return (
-    <div className="border-t p-3 text-lg border-gray-200">
+    <div className="border-t p-3 text-lg border-gray-200 dark:border-gray-500">
       <div>
         The tide is currently{" "}
         <span className={tideTypeClassName}>
