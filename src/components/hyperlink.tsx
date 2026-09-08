@@ -12,7 +12,10 @@ export default function Hyperlink({
 }) {
   return (
     <a
-      className={clsx("text-teal-600 underline hover:no-underline dark:text-teal-400", className)}
+      className={clsx(
+        "text-teal-600 underline hover:no-underline dark:text-teal-400",
+        className,
+      )}
       href={href}
     >
       {children}

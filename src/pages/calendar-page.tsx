@@ -84,7 +84,7 @@ const EventPill = ({ event }: { event: Event }) => {
             event.shortName === "SU" || event.shortName === "PD",
           "bg-sky-200 text-sky-900 dark:bg-sky-600 dark:text-sky-100":
             event.shortName === "DV" || event.shortName === "FC1",
-          "bg-violet-200 text-violet-900 dark:bg-violet-600 dark:text-violet-100  ":
+          "bg-violet-200 text-violet-900 dark:bg-violet-600 dark:text-violet-100":
             event.shortName === "SV" || event.shortName === "FC2",
           "bg-teal-200 text-teal-900 dark:bg-teal-600 dark:text-teal-100":
             event.shortName === "PV" || event.shortName === "FC3",
@@ -113,7 +113,7 @@ const CalendarDateCell = ({
       className={clsx(
         "min-h-12 border-t border-gray-200 px-2 py-2 dark:border-gray-500",
         {
-          "ring-2 ring-inset ring-teal-500": isToday,
+          "ring-2 ring-teal-500 ring-inset": isToday,
           "border-r": date.weekday !== 7,
         },
       )}
@@ -180,7 +180,7 @@ const MonthSection = ({
           <div
             key={`empty-start-${index}`}
             aria-hidden="true"
-            className="min-h-12 border-r border-t border-gray-200 dark:border-gray-500"
+            className="min-h-12 border-t border-r border-gray-200 dark:border-gray-500"
           />
         ))}
         {month.dates.map((date) => {
@@ -193,7 +193,7 @@ const MonthSection = ({
           <div
             key={`empty-end-${index}`}
             aria-hidden="true"
-            className="min-h-12 border-r border-t border-gray-200 last:border-r-0 dark:border-gray-500"
+            className="min-h-12 border-t border-r border-gray-200 last:border-r-0 dark:border-gray-500"
           />
         ))}
       </div>

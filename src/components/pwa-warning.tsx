@@ -13,14 +13,14 @@ const PwaWarning = () => {
   }
 
   return (
-    <div className="bg-orange-100 dark:bg-gray-600 pwa:hidden">
+    <div className="pwa:hidden bg-orange-100 dark:bg-gray-600">
       <div className="mx-auto flex max-w-xl flex-row items-center gap-2 border-b-2 border-orange-600 p-4 text-sm font-bold text-orange-900 dark:font-normal dark:text-orange-200">
         <p>
           This website works best when installed as an app. You can do this by
           choosing "Add to home screen" from your browser's menu.
         </p>
         <button
-          className="rounded-lg bg-orange-300 dark:bg-gray-800 p-2 text-xl hover:bg-orange-400 dark:hover:bg-gray-950"
+          className="rounded-lg bg-orange-300 p-2 text-xl hover:bg-orange-400 dark:bg-gray-800 dark:hover:bg-gray-950"
           onClick={(_) => dismiss()}
         >
           <XLg />

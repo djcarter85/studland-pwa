@@ -18,7 +18,7 @@ const Layout = () => {
       <StatusBar />
       <Nav />
       <PwaWarning />
-      <main className="mx-auto max-w-xl text-gray-900 pt-safe pb-safe-offset-20 dark:text-gray-100">
+      <main className="pt-safe pb-safe-offset-20 mx-auto max-w-xl text-gray-900 dark:text-gray-100">
         <Outlet />
       </main>
     </>

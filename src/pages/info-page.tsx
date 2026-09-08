@@ -9,7 +9,7 @@ function Subheading({ children }: { children: React.ReactNode }) {
 }
 
 function Ul({ children }: { children: React.ReactNode }) {
-  return <ul className="mb-3 ml-4 mr-2 list-inside list-disc">{children}</ul>;
+  return <ul className="mr-2 mb-3 ml-4 list-inside list-disc">{children}</ul>;
 }
 
 function Bullet({ children }: { children: React.ReactNode }) {
@@ -62,7 +62,7 @@ function ColourSchemeChooser() {
 }
 
 const ShareAppLink = () => {
-  const shareApp = async () =>{
+  const shareApp = async () => {
     await navigator.share({ url: `${window.location.origin}/` });
   };
 

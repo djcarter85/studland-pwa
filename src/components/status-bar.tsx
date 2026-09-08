@@ -1,6 +1,6 @@
 const StatusBar = () => {
   return (
-    <div className="fixed left-0 right-0 top-0 w-full bg-gray-50/80 backdrop-blur-xs pt-safe dark:bg-gray-900/80"></div>
+    <div className="pt-safe fixed top-0 right-0 left-0 w-full bg-gray-50/80 backdrop-blur-xs dark:bg-gray-900/80"></div>
   );
 };
 
