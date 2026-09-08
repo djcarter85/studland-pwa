@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Hyperlink from "../components/hyperlink";
-import { Laptop, Moon, Sun } from "react-bootstrap-icons";
+import { Laptop, Moon, Share, Sun } from "react-bootstrap-icons";
 import { useTernaryDarkMode } from "usehooks-ts";
 import { ReactNode } from "react";
 
@@ -61,6 +61,27 @@ function ColourSchemeChooser() {
   );
 }
 
+const ShareAppLink = () => {
+  const shareApp = async () =>{
+    await navigator.share({ url: `${window.location.origin}/` });
+  };
+
+  if (!navigator.share) {
+    return <></>;
+  }
+
+  return (
+    <button
+      className="flex flex-row items-center justify-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-center dark:border-gray-500 hover:dark:bg-gray-700"
+      onClick={shareApp}
+      type="button"
+    >
+      <Share />
+      Share this app
+    </button>
+  );
+};
+
 export default function InfoPage() {
   return (
     <div className="p-2">
@@ -96,6 +117,9 @@ export default function InfoPage() {
           djcarter85@gmail.com
         </Hyperlink>
         .
+      </Para>
+      <Para>
+        <ShareAppLink />
       </Para>
       <Para className="text-gray-300 dark:text-gray-400">
         Version: {import.meta.env.VITE_COMMIT_SHA?.substring(0, 7)}
